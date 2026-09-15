@@ -1,0 +1,30 @@
+min_version = "2026.8.8"
+
+# Development tools used outside FreeCAD. FreeCAD macros themselves run with
+# the Python and PySide versions bundled inside FreeCAD.
+[tools]
+python = "3.13"
+uv = "latest"
+
+[tasks.setup]
+description = "Install development tools and verify the system FreeCAD"
+run = [
+  "mise install",
+  "mise run check",
+]
+
+[tasks.freecad]
+description = "Open FreeCAD"
+run = "open -a FreeCAD"
+
+[tasks.check]
+description = "Verify FreeCAD's command-line interface"
+run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' --version"
+
+[tasks."fixtures:check"]
+description = "Validate fixtures without modifying them"
+run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tools/validate_fixtures.py"
+
+[tasks.test]
+description = "Run FreeCAD integration tests against temporary fixture copies"
+run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tests/run_freecad_tests.py"
