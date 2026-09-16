@@ -1,7 +1,7 @@
 """Create the immutable FreeCAD fixture documents.
 
-Run this file with FreeCADCmd, not a standalone Python interpreter. Existing
-fixtures are protected unless DESIGN_SYSTEM_OVERWRITE_FIXTURES=1 is set.
+Run this file with FreeCAD's GUI Python, not a standalone Python interpreter.
+Existing fixtures are protected unless DESIGN_SYSTEM_OVERWRITE_FIXTURES=1 is set.
 """
 
 import os
@@ -117,8 +117,49 @@ def build_t(doc):
     )
 
 
+def build_cycle(doc):
+    """Build four vertical panels whose butt-joint directions form a loop."""
+    add_panel(
+        doc,
+        "FrontXZ",
+        "Front (XZ)",
+        (0, 0, 0),
+        (100, 10, 100),
+        "XZ",
+        (0.86, 0.67, 0.39),
+    )
+    add_panel(
+        doc,
+        "RightYZ",
+        "Right (YZ)",
+        (100, 0, 0),
+        (10, 100, 100),
+        "YZ",
+        (0.76, 0.55, 0.28),
+    )
+    add_panel(
+        doc,
+        "BackXZ",
+        "Back (XZ)",
+        (10, 100, 0),
+        (100, 10, 100),
+        "XZ",
+        (0.95, 0.78, 0.48),
+    )
+    add_panel(
+        doc,
+        "LeftYZ",
+        "Left (YZ)",
+        (0, 10, 0),
+        (10, 100, 100),
+        "YZ",
+        (0.68, 0.47, 0.24),
+    )
+
+
 BUILDERS = {
     "Corner": build_corner,
+    "Cycle": build_cycle,
     "Mismatched": build_mismatched,
     "T": build_t,
 }

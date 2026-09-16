@@ -48,17 +48,51 @@ for name, widget in (
         f"{len(widget.actions())} expression action(s)\n"
     )
 
+panel.reject()
+assert receiver.ViewObject.Visibility
+App.closeDocument(doc.Name)
+
+# An invalid default radius must not disable controls needed to correct it,
+# and changing a formula must trigger validation even though FreeCAD's
+# ExpressionBinding does not emit the spinbox editing signals.
+mismatched = App.openDocument(str(PROJECT_DIR / "fixtures" / "Mismatched.FCStd"))
+mismatched_panel = FingerJointTaskPanel()
+Gui.Control.showDialog(mismatched_panel)
+mismatched_panel._begin_pick("receiver")
+mismatched_panel.addSelection(mismatched.Name, mismatched.Body.Name, "")
+mismatched_panel.addSelection(mismatched.Name, mismatched.DrawerFrontYZ.Name, "")
+mismatched_panel._finish_receiver_pick()
+mismatched_panel.addSelection(
+    mismatched.Name, mismatched.DrawerSideXZSolid.Name, "Face2"
+)
+mismatched_panel.addSelection(
+    mismatched.Name, mismatched.DrawerSideXZSolid.Name, "Edge6"
+)
+assert not mismatched_panel.create_button.isEnabled()
+assert mismatched_panel.receiver_overshoot.isEnabled()
+assert mismatched_panel.receiver_radius.isEnabled()
+
+mismatched_panel.parameters.setExpression(
+    "FilletRadius", "SelectedEdgeLength / 5"
+)
+mismatched_panel.parameters.setExpression(
+    "ReceiverFilletRadius", "ReceiverThickness / 10"
+)
+assert mismatched_panel._expression_update_pending
+mismatched_panel._run_scheduled_update()
+assert mismatched_panel.create_button.isEnabled()
+assert mismatched_panel.status.text().startswith("Ready")
+
 
 def finish():
-    panel.reject()
-    assert receiver.ViewObject.Visibility
-    App.closeDocument(doc.Name)
+    mismatched_panel.reject()
+    App.closeDocument(mismatched.Name)
     App.Console.PrintMessage("Finger Joint GUI smoke panel closed\n")
     Gui.getMainWindow().close()
 
 
 def capture():
-    panel.form.grab().save("/tmp/design-system-finger-joint-panel.png")
+    mismatched_panel.form.grab().save("/tmp/design-system-finger-joint-panel.png")
 
 
 QtCore.QTimer.singleShot(250, capture)

@@ -31,6 +31,19 @@ Three 10 mm panels meet without overlapping:
 The front's inside face contacts the side's 30 x 10 mm end face. Their bottom
 and front edges are aligned, modeling a drawer face against a drawer-box side.
 
+## Cycle.FCStd
+
+Four 10 mm thick, 100 mm tall panels form a closed rectangular loop with no
+overlapping volume:
+
+- `FrontXZ`: spans `(0, 0, 0)` to `(100, 10, 100)`.
+- `RightYZ`: spans `(100, 0, 0)` to `(110, 100, 100)`.
+- `BackXZ`: spans `(10, 100, 0)` to `(110, 110, 100)`.
+- `LeftYZ`: spans `(0, 10, 0)` to `(10, 110, 100)`.
+
+The directed butt-joint sequence Front → Right → Back → Left → Front closes a
+four-body dependency cycle.
+
 ## T.FCStd
 
 - `CrossPanelXZ`: 100 x 100 x 10 mm, spanning `(0, 0, 0)` to

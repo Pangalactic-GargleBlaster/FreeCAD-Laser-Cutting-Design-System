@@ -7,10 +7,42 @@ import Part
 
 if App.GuiUp:
     import FreeCADGui as Gui
+    from PySide import QtCore
 
 
 LINEAR_TOLERANCE = 1e-7
 ANGULAR_TOLERANCE = 1e-7
+
+
+_pending_recompute_documents = {}
+_recompute_timer = None
+
+
+def _flush_pending_recomputes():
+    """Recompute each edited GUI document once after rapid property changes."""
+    documents = list(_pending_recompute_documents.values())
+    _pending_recompute_documents.clear()
+    for doc in documents:
+        try:
+            if not doc.Recomputing:
+                doc.recompute()
+        except (AttributeError, RuntimeError):
+            # The document may have been closed before the timer fired.
+            pass
+
+
+def _schedule_recompute(doc):
+    """Coalesce GUI edits while retaining synchronous console behavior."""
+    global _recompute_timer
+    if not App.GuiUp:
+        doc.recompute()
+        return
+    _pending_recompute_documents[doc.Name] = doc
+    if _recompute_timer is None:
+        _recompute_timer = QtCore.QTimer()
+        _recompute_timer.setSingleShot(True)
+        _recompute_timer.timeout.connect(_flush_pending_recomputes)
+    _recompute_timer.start(150)
 
 
 class JointValidationError(ValueError):
@@ -574,7 +606,7 @@ class SourceJointProxy:
             return
         if getattr(self, "_executing", False) or obj.Document.Recomputing:
             return
-        obj.Document.recompute()
+        _schedule_recompute(obj.Document)
 
     def execute(self, obj):
         self._executing = True

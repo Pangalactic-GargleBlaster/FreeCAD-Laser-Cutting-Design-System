@@ -118,9 +118,15 @@ class FingerJointTaskPanel:
         self.pick_buttons = {}
         self.form = QtWidgets.QWidget()
         self.form.setWindowTitle("Finger Joint")
+        self._validation_timer = QtCore.QTimer(self.form)
+        self._validation_timer.setSingleShot(True)
+        self._validation_pending = False
+        self._expression_update_pending = False
+        self._validation_timer.timeout.connect(self._run_scheduled_update)
         self._build_form()
         self._install_receiver_shortcuts()
         Gui.Selection.addObserver(self)
+        App.addDocumentObserver(self)
         Gui.Selection.clearSelection()
         self._update_state()
 
@@ -149,8 +155,8 @@ class FingerJointTaskPanel:
         self.count.setRange(1, 1000)
         self.count.setValue(int(self.parameters.FingerCount))
         self._bind_expression(self.count, "FingerCount")
-        self.count.valueChanged.connect(self._parameters_changed)
-        self.count.editingFinished.connect(self._parameters_changed)
+        self.count.valueChanged.connect(self._schedule_update_state)
+        self.count.editingFinished.connect(self._update_state_now)
         count_row.addWidget(self.count)
         layout.addLayout(count_row)
 
@@ -229,8 +235,8 @@ class FingerJointTaskPanel:
         value.setProperty("maximum", 1_000_000.0)
         value.setProperty("value", getattr(self.parameters, property_name))
         self._bind_expression(value, property_name)
-        value.valueChanged.connect(self._parameters_changed)
-        value.editingFinished.connect(self._parameters_changed)
+        value.valueChanged.connect(self._schedule_update_state)
+        value.editingFinished.connect(self._update_state_now)
         row.addWidget(value)
         parent_layout.addLayout(row)
         return value
@@ -299,14 +305,16 @@ class FingerJointTaskPanel:
             default_length = base.Shape.Edges[edge_index].Length
             self.parameters.SelectedEdgeLength = default_length
             self.doc.recompute()
-            self.overshoot.setProperty("value", self.parameters.Overshoot)
-            self.radius.setProperty("value", self.parameters.FilletRadius)
-            self.receiver_overshoot.setProperty(
-                "value", self.parameters.ReceiverOvershoot
+            widgets = (
+                (self.overshoot, self.parameters.Overshoot),
+                (self.radius, self.parameters.FilletRadius),
+                (self.receiver_overshoot, self.parameters.ReceiverOvershoot),
+                (self.receiver_radius, self.parameters.ReceiverFilletRadius),
             )
-            self.receiver_radius.setProperty(
-                "value", self.parameters.ReceiverFilletRadius
-            )
+            for widget, value in widgets:
+                widget.blockSignals(True)
+                widget.setProperty("value", value)
+                widget.blockSignals(False)
         else:
             body = _body(obj)
             if body is None:
@@ -375,13 +383,23 @@ class FingerJointTaskPanel:
             self.receivers,
             int(self.parameters.FingerCount),
         )
+        # Determine this before validating radii so the receiving controls stay
+        # available when an invalid default needs to be corrected.
         applicable = receiver_fingers_applicable(geometry)
         self._receiver_parameters_applicable = applicable
         self.receiver_overshoot.blockSignals(True)
         self.receiver_radius.blockSignals(True)
         try:
-            self.parameters.ReceiverThickness = geometry.receiver_thickness
-            self.doc.recompute()
+            receiver_thickness_changed = (
+                abs(
+                    self.parameters.ReceiverThickness.Value
+                    - geometry.receiver_thickness
+                )
+                > 1e-7
+            )
+            if receiver_thickness_changed:
+                self.parameters.ReceiverThickness = geometry.receiver_thickness
+                self.doc.recompute()
             self.receiver_overshoot.setProperty(
                 "value", self.parameters.ReceiverOvershoot
             )
@@ -412,6 +430,8 @@ class FingerJointTaskPanel:
             return
         self._syncing_parameters = True
         try:
+            expressions_changed = self._expression_update_pending
+            self._expression_update_pending = False
             expressions = dict(self.parameters.ExpressionEngine)
             if "FingerCount" not in expressions:
                 self.parameters.FingerCount = int(self.count.value())
@@ -427,14 +447,38 @@ class FingerJointTaskPanel:
                 self.parameters.ReceiverFilletRadius = self.receiver_radius.property(
                     "value"
                 )
-            self.doc.recompute()
+            if expressions_changed:
+                self.doc.recompute()
         finally:
             self._syncing_parameters = False
 
-    def _parameters_changed(self, *args):
+    def slotChangedObject(self, obj, property_name):
+        if (
+            obj is self.parameters
+            and property_name == "ExpressionEngine"
+            and not self._syncing_parameters
+        ):
+            self._expression_update_pending = True
+            self._schedule_update_state()
+
+    def _schedule_update_state(self, *args):
+        self._validation_pending = True
+        self._validation_timer.start(150)
+
+    def _update_state_now(self, *args):
+        self._validation_timer.stop()
+        self._validation_pending = False
+        self._update_state()
+
+    def _run_scheduled_update(self):
+        if not self._validation_pending:
+            return
+        self._validation_pending = False
         self._update_state()
 
     def _update_state(self, *args):
+        self._validation_timer.stop()
+        self._validation_pending = False
         try:
             result = self._validated_geometry()
             if result is None:
@@ -468,6 +512,8 @@ class FingerJointTaskPanel:
             self.create_button.setEnabled(False)
 
     def _create(self):
+        self._validation_timer.stop()
+        self._validation_pending = False
         try:
             self._validated_geometry()
             expressions = dict(self.parameters.ExpressionEngine)
@@ -533,9 +579,12 @@ class FingerJointTaskPanel:
 
     def _finish(self):
         global _active_panel
+        self._validation_timer.stop()
+        self._validation_pending = False
         self._remove_selection_gate()
         self._restore_receiver_visibility()
         Gui.Selection.removeObserver(self)
+        App.removeDocumentObserver(self)
         Gui.Selection.clearSelection()
         _active_panel = None
 

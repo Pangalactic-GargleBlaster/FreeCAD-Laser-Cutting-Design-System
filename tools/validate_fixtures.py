@@ -74,7 +74,25 @@ def validate_t():
         App.closeDocument(doc.Name)
 
 
+def validate_cycle():
+    doc = App.openDocument(str(FIXTURE_DIR / "Cycle.FCStd"))
+    try:
+        front = check_panel(doc, "FrontXZ", (0, 0, 0, 100, 10, 100), 100_000)
+        right = check_panel(doc, "RightYZ", (100, 0, 0, 110, 100, 100), 100_000)
+        back = check_panel(doc, "BackXZ", (10, 100, 0, 110, 110, 100), 100_000)
+        left = check_panel(doc, "LeftYZ", (0, 10, 0, 10, 110, 100), 100_000)
+        check_contact(doc, front, right)
+        check_contact(doc, right, back)
+        check_contact(doc, back, left)
+        check_contact(doc, left, front)
+        assert front.distToShape(back)[0] > 0
+        assert right.distToShape(left)[0] > 0
+    finally:
+        App.closeDocument(doc.Name)
+
+
 validate_corner()
+validate_cycle()
 validate_mismatched()
 validate_t()
 print("Fixture geometry is valid.")
