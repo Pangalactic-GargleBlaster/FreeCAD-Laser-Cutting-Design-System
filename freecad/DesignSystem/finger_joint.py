@@ -606,9 +606,21 @@ class SourceJointProxy:
             return
         if getattr(self, "_executing", False) or obj.Document.Recomputing:
             return
+        if not all(
+            hasattr(obj, name)
+            for name in ("InputFeature", "SourceFace", "FirstFingerEdge")
+        ):
+            return
         _schedule_recompute(obj.Document)
 
     def execute(self, obj):
+        if not all(
+            hasattr(obj, name)
+            for name in ("InputFeature", "SourceFace", "FirstFingerEdge")
+        ):
+            return
+        if obj.InputFeature is None or not obj.SourceFace or not obj.FirstFingerEdge:
+            return
         self._executing = True
         try:
             source, face_name = _link_sub_value(obj.SourceFace)
@@ -657,6 +669,8 @@ class JointInputProxy:
             obj.Proxy = self
 
     def execute(self, obj):
+        if not hasattr(obj, "SelectedEdge") or not obj.SelectedEdge:
+            return
         source, edge_name = _link_sub_value(obj.SelectedEdge)
         obj.Shape = source.Shape
         obj.EdgeLength = _subshape(source, edge_name, "Edge").Length
@@ -670,6 +684,8 @@ class JointResultProxy:
             obj.Proxy = self
 
     def execute(self, obj):
+        if not hasattr(obj, "InputFeature") or not hasattr(obj, "Joint"):
+            return
         if obj.InputFeature is None or obj.Joint is None or obj.Joint.Shape.isNull():
             return
         if self.operation == "Add":

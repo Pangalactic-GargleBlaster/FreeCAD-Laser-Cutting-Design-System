@@ -264,6 +264,33 @@ def test_joint_cuts_through_multiple_receiving_bodies():
         App.closeDocument(doc.Name)
 
 
+def test_saved_joint_reopens(temp_dir):
+    path = copied_fixture("Corner.FCStd", temp_dir)
+    doc = App.openDocument(str(path))
+    try:
+        source = doc.getObject("BackXZSolid")
+        receiver = doc.getObject("BaseXYSolid")
+        face_name, face = find_face(source, App.Vector(0, 0, 1), 10, 1000)
+        edge_name = find_edge(source, face, 10, App.Vector(1, 0, 0), 0)
+        create_joint(source, face_name, edge_name, receiver, 2)
+        doc.recompute()
+        doc.save()
+    finally:
+        App.closeDocument(doc.Name)
+
+    reopened = App.openDocument(str(path))
+    try:
+        reopened.recompute()
+        joint = reopened.getObject("FingerJoint")
+        cut = reopened.getObject("FingerJointCut")
+        assert "Invalid" not in joint.State
+        assert "Invalid" not in cut.State
+        assert not joint.Shape.isNull()
+        assert not cut.Shape.isNull()
+    finally:
+        App.closeDocument(reopened.Name)
+
+
 with tempfile.TemporaryDirectory(prefix="design-system-tests-") as temp_dir:
     test_corner_success(temp_dir)
     test_mismatched_rejects_impossible_fillet(temp_dir)
@@ -272,5 +299,6 @@ with tempfile.TemporaryDirectory(prefix="design-system-tests-") as temp_dir:
     test_angled_binder_fixture_has_no_cycle_and_tracks_thickness(temp_dir)
     test_params_fixture_tracks_both_panel_thicknesses(temp_dir)
     test_joint_cuts_through_multiple_receiving_bodies()
+    test_saved_joint_reopens(temp_dir)
 
 print("Finger-joint integration tests passed.")
