@@ -65,9 +65,8 @@ mismatched_panel._finish_receiver_pick()
 mismatched_panel.addSelection(
     mismatched.Name, mismatched.DrawerSideXZSolid.Name, "Face2"
 )
-mismatched_panel.addSelection(
-    mismatched.Name, mismatched.DrawerSideXZSolid.Name, "Edge6"
-)
+assert mismatched_panel.pick_mode is None
+assert mismatched_panel.first_edge is not None
 assert not mismatched_panel.create_button.isEnabled()
 assert mismatched_panel.receiver_overshoot.isEnabled()
 assert mismatched_panel.receiver_radius.isEnabled()

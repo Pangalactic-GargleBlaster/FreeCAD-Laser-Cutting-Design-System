@@ -7,6 +7,7 @@ from PySide import QtCore, QtGui, QtWidgets
 from finger_joint import (
     JointValidationError,
     analyze_joint,
+    automatic_edge_name,
     build_fingers,
     build_receiver_fingers,
     create_joint,
@@ -41,23 +42,7 @@ class FingerJointSelectionGate:
             return bool(sub_name and sub_name.startswith("Face") and hasattr(obj, "Shape"))
         if self.mode == "receiver":
             return _body(obj) is not None
-        if not sub_name or not sub_name.startswith("Edge") or not hasattr(obj, "Shape"):
-            return False
-        if self.panel.source_face is None:
-            return True
-
-        source, face_name = self.panel.source_face
-        base = _base_feature(obj)
-        if base != source:
-            return False
-        try:
-            face_index = int(face_name[4:]) - 1
-            edge_index = int(sub_name[4:]) - 1
-            face = base.Shape.Faces[face_index]
-            edge = base.Shape.Edges[edge_index]
-        except (ValueError, IndexError):
-            return False
-        return any(edge.isSame(candidate) for candidate in face.Edges)
+        return False
 
 
 class FingerJointTaskPanel:
@@ -98,7 +83,7 @@ class FingerJointTaskPanel:
         self.parameters.setExpression("Overshoot", "SelectedEdgeLength")
         self.parameters.setExpression("FilletRadius", "SelectedEdgeLength")
         self.parameters.setExpression("ReceiverOvershoot", "ReceiverThickness")
-        self.parameters.setExpression("ReceiverFilletRadius", "ReceiverThickness")
+        self.parameters.setExpression("ReceiverFilletRadius", "0 mm")
         self.parameters.setEditorMode("SelectedEdgeLength", 2)
         self.parameters.setEditorMode("ReceiverThickness", 2)
         if hasattr(self.parameters.ViewObject, "ShowInTree"):
@@ -145,12 +130,9 @@ class FingerJointTaskPanel:
         self.face_value = self._add_picker(
             layout, "2. Source face", "Select face…", "face"
         )
-        self.edge_value = self._add_picker(
-            layout, "3. First-finger edge", "Select edge…", "edge"
-        )
 
         count_row = QtWidgets.QHBoxLayout()
-        count_row.addWidget(QtWidgets.QLabel("4. Number of fingers"))
+        count_row.addWidget(QtWidgets.QLabel("3. Number of fingers"))
         self.count = Gui.UiLoader().createWidget("Gui::IntSpinBox")
         self.count.setRange(1, 1000)
         self.count.setValue(int(self.parameters.FingerCount))
@@ -160,15 +142,15 @@ class FingerJointTaskPanel:
         count_row.addWidget(self.count)
         layout.addLayout(count_row)
 
-        self.overshoot = self._add_length_input(layout, "5. Overshoot", "Overshoot")
+        self.overshoot = self._add_length_input(layout, "4. Overshoot", "Overshoot")
         self.radius = self._add_length_input(
-            layout, "6. Fillet radius", "FilletRadius"
+            layout, "5. Fillet radius", "FilletRadius"
         )
         self.receiver_overshoot = self._add_length_input(
-            layout, "7. Receiving-panel overshoot", "ReceiverOvershoot"
+            layout, "6. Receiving-panel overshoot", "ReceiverOvershoot"
         )
         self.receiver_radius = self._add_length_input(
-            layout, "8. Receiving-panel fillet radius", "ReceiverFilletRadius"
+            layout, "7. Receiving-panel fillet radius", "ReceiverFilletRadius"
         )
 
         self.prompt = QtWidgets.QLabel("")
@@ -250,12 +232,10 @@ class FingerJointTaskPanel:
             self.receiver_value.setText("Not selected")
         prompts = {
             "face": "Click the rectangular face from which the fingers should protrude.",
-            "edge": "Click the edge where the first finger should begin.",
             "receiver": "Click each receiving body in the scene or model tree, then click Done.",
         }
         labels = {
             "face": "Select face…",
-            "edge": "Select edge…",
             "receiver": "Select bodies…",
         }
         for key, button in self.pick_buttons.items():
@@ -293,15 +273,15 @@ class FingerJointTaskPanel:
             base = _base_feature(obj)
             self.source_face = (base, sub_name)
             self.face_value.setText(f"{base.Label} · {sub_name}")
-            next_mode = "edge"
-        elif mode == "edge":
-            if not sub_name.startswith("Edge"):
-                self._selection_error("Please click an edge.")
+            try:
+                edge_name = automatic_edge_name(base, sub_name)
+            except JointValidationError as error:
+                self.source_face = None
+                self.face_value.setText("Not selected")
+                self._selection_error(str(error))
                 return
-            base = _base_feature(obj)
-            self.first_edge = (base, sub_name)
-            self.edge_value.setText(f"{base.Label} · {sub_name}")
-            edge_index = int(sub_name[4:]) - 1
+            self.first_edge = (base, edge_name)
+            edge_index = int(edge_name[4:]) - 1
             default_length = base.Shape.Edges[edge_index].Length
             self.parameters.SelectedEdgeLength = default_length
             self.doc.recompute()
@@ -336,7 +316,6 @@ class FingerJointTaskPanel:
         self._remove_selection_gate()
         labels = {
             "face": "Change face…",
-            "edge": "Change edge…",
             "receiver": "Change bodies…",
         }
         for key, button in self.pick_buttons.items():
@@ -360,26 +339,17 @@ class FingerJointTaskPanel:
                 self.source_face[0].Name,
                 self.source_face[1],
             )
-        if self.first_edge is not None:
-            Gui.Selection.addSelection(
-                self.first_edge[0].Document.Name,
-                self.first_edge[0].Name,
-                self.first_edge[1],
-            )
         for receiver in self.receivers:
             Gui.Selection.addSelection(receiver.Document.Name, receiver.Name)
 
     def _validated_geometry(self):
         self._sync_parameters_from_widgets()
         self._receiver_parameters_applicable = False
-        if self.source_face is None or self.first_edge is None or not self.receivers:
+        if self.source_face is None or not self.receivers:
             return None
-        if self.source_face[0] is not self.first_edge[0]:
-            raise JointValidationError("The selected face and edge must be on the same feature.")
         geometry = analyze_joint(
             self.source_face[0],
             self.source_face[1],
-            self.first_edge[1],
             self.receivers,
             int(self.parameters.FingerCount),
         )
@@ -486,8 +456,6 @@ class FingerJointTaskPanel:
                 missing = []
                 if self.source_face is None:
                     missing.append("source face")
-                if self.first_edge is None:
-                    missing.append("first-finger edge")
                 if not self.receivers:
                     missing.append("receiving bodies")
                 self.status.setText("Still needed: " + ", ".join(missing) + ".")
@@ -522,7 +490,6 @@ class FingerJointTaskPanel:
                 joint = create_joint(
                     self.source_face[0],
                     self.source_face[1],
-                    self.first_edge[1],
                     self.receivers,
                     int(self.parameters.FingerCount),
                     self.parameters.Overshoot,

@@ -31,16 +31,6 @@ def find_face(feature, axis, coordinate, area):
     raise AssertionError("Expected face not found")
 
 
-def find_edge(feature, face, length, coordinate_axis, coordinate):
-    for index, edge in enumerate(feature.Shape.Edges, start=1):
-        if not any(edge.isSame(candidate) for candidate in face.Edges):
-            continue
-        midpoint = sum((vertex.Point for vertex in edge.Vertexes), App.Vector()) / len(edge.Vertexes)
-        if abs(edge.Length - length) <= 1e-7 and abs(midpoint.dot(coordinate_axis) - coordinate) <= 1e-7:
-            return f"Edge{index}"
-    raise AssertionError("Expected edge not found")
-
-
 def copied_fixture(name, temp_dir):
     source = PROJECT_DIR / "fixtures" / name
     target = Path(temp_dir) / name
@@ -55,11 +45,8 @@ def test_corner_success(temp_dir):
         source = doc.getObject("BackXZSolid")
         receiver = doc.getObject("BaseXYSolid")
         face_name, face = find_face(source, App.Vector(0, 0, 1), 10, 1000)
-        edge_name = find_edge(source, face, 10, App.Vector(1, 0, 0), 0)
         source_volume = source.Shape.Volume
-        receiver_volume = receiver.Shape.Volume
-
-        joint = create_joint(source, face_name, edge_name, receiver, 2)
+        joint = create_joint(source, face_name, receiver, 2)
         doc.recompute()
 
         source_result = joint
@@ -72,14 +59,23 @@ def test_corner_success(temp_dir):
         assert "FingerJointInputs.EdgeLength" in expressions["Overshoot"]
         assert "FingerJointInputs.EdgeLength" in expressions["FilletRadius"]
         assert "FingerJointInputs.ReceiverThickness" in expressions["ReceiverOvershoot"]
-        assert "FingerJointInputs.ReceiverThickness" in expressions["ReceiverFilletRadius"]
+        assert "FingerJointInputs.ReceiverThickness" not in expressions["ReceiverFilletRadius"]
+        assert abs(joint.ReceiverFilletRadius.Value) <= 1e-7
+        assert abs(joint.ToolShape.BoundBox.XMin - 12.5) <= 1e-7
+        assert abs(joint.ToolShape.BoundBox.XMax - 87.5) <= 1e-7
         assert source_result.Shape.Volume > source_volume
-        assert receiver_result.Shape.Volume < receiver_volume
         assert receiver_result.Shape.Volume > 95_000.0
         assert abs(receiver_result.Shape.BoundBox.YMin + 10.0) <= 1e-7
         assert joint.ToolShape.Volume > source_result.Shape.Volume - source_volume
         assert len(source_result.Shape.Solids) == 1
         assert len(receiver_result.Shape.Solids) == 1
+        start_side_areas = sorted(
+            face.Area
+            for face in source_result.Shape.Faces
+            if all(abs(vertex.Point.x) <= 1e-7 for vertex in face.Vertexes)
+        )
+        assert len(start_side_areas) == 1
+        assert abs(start_side_areas[0] - 900.0) <= 1e-7
         assert receiver_result.Shape.common(joint.ToolShape).Volume <= 1e-7
         assert joint.getParentGeoFeatureGroup() is doc.getObject("BackXZ")
         assert receiver_result.getParentGeoFeatureGroup() is doc.getObject("BaseXY")
@@ -107,6 +103,8 @@ def test_corner_success(temp_dir):
 
         joint.FingerCount = 1
         assert abs(joint.FingerWidth.Value - 50.0) <= 1e-7
+        assert abs(joint.ToolShape.BoundBox.XMin - 25.0) <= 1e-7
+        assert abs(joint.ToolShape.BoundBox.XMax - 75.0) <= 1e-7
         assert abs(joint.ToolShape.Volume - two_finger_volume) > 1e-7
         assert receiver_result.Shape.common(joint.ToolShape).Volume <= 1e-7
         doc.save()
@@ -121,11 +119,10 @@ def test_mismatched_rejects_impossible_fillet(temp_dir):
         source = doc.getObject("DrawerSideXZSolid")
         receiver = doc.getObject("DrawerFrontYZSolid")
         face_name, face = find_face(source, App.Vector(1, 0, 0), 100, 300)
-        edge_name = find_edge(source, face, 10, App.Vector(0, 0, 1), 0)
-        geometry = analyze_joint(source, face_name, edge_name, receiver, 1)
+        geometry = analyze_joint(source, face_name, receiver, 1)
         assert receiver_fingers_applicable(geometry)
         try:
-            create_joint(source, face_name, edge_name, receiver, 1)
+            create_joint(source, face_name, receiver, 1)
         except JointValidationError as error:
             assert "require at least 20" in str(error)
         else:
@@ -141,8 +138,7 @@ def test_t_joint_has_no_receiving_panel_finger_extensions(temp_dir):
         source = doc.getObject("StemPanelYZSolid")
         receiver = doc.getObject("CrossPanelXZSolid")
         face_name, face = find_face(source, App.Vector(0, 1, 0), 10, 1000)
-        edge_name = find_edge(source, face, 10, App.Vector(0, 0, 1), 0)
-        joint = create_joint(source, face_name, edge_name, receiver, 2)
+        joint = create_joint(source, face_name, receiver, 2)
         doc.recompute()
         result = doc.getObject("CrossPanelXZ").Tip
         original = result.Shape.copy()
@@ -177,7 +173,7 @@ def test_angled_binder_fixture_has_no_cycle_and_tracks_thickness(temp_dir):
     path = copied_fixture("Angled.FCStd", temp_dir)
     doc = App.openDocument(str(path))
     try:
-        joint = create_joint(doc.Pad, "Face3", "Edge5", doc.Body001, 2)
+        joint = create_joint(doc.Pad, "Face3", doc.Body001, 2)
         doc.recompute()
         cut = doc.getObject("FingerJointCut")
         assert not joint.Shape.isNull()
@@ -203,7 +199,7 @@ def test_params_fixture_tracks_both_panel_thicknesses(temp_dir):
     path = copied_fixture("Params.FCStd", temp_dir)
     doc = App.openDocument(str(path))
     try:
-        joint = create_joint(doc.Pad, "Face4", "Edge1", doc.Body001, 2)
+        joint = create_joint(doc.Pad, "Face4", doc.Body001, 2)
         doc.recompute()
         assert abs(joint.FingerDepth.Value - 20.0) <= 1e-7
 
@@ -238,15 +234,14 @@ def test_joint_cuts_through_multiple_receiving_bodies():
         doc.recompute()
 
         face_name, face = find_face(source, App.Vector(0, 0, 1), 90, 1000)
-        edge_name = find_edge(source, face, 10, App.Vector(1, 0, 0), 0)
         joint = create_joint(
-            source, face_name, edge_name, [first_body, second_body], 2
+            source, face_name, [first_body, second_body], 2
         )
         doc.recompute()
 
         assert abs(joint.InputFeature.ReceiverThickness.Value - 12.0) <= 1e-7
         assert abs(joint.ReceiverOvershoot.Value - 12.0) <= 1e-7
-        assert abs(joint.ReceiverFilletRadius.Value - 12.0) <= 1e-7
+        assert abs(joint.ReceiverFilletRadius.Value) <= 1e-7
         assert abs(joint.FingerDepth.Value - 22.0) <= 1e-7
         assert first_body.Tip.Shape.Volume > 47_500.0
         assert second_body.Tip.Shape.Volume > 66_500.0
@@ -264,6 +259,37 @@ def test_joint_cuts_through_multiple_receiving_bodies():
         App.closeDocument(doc.Name)
 
 
+def test_receiver_coplanar_face_fragments_share_two_boundary_planes():
+    doc = App.newDocument("FragmentedReceiverTest")
+    try:
+        source_body = doc.addObject("PartDesign::Body", "SourceBody")
+        source = source_body.newObject("PartDesign::Feature", "Source")
+        source.Shape = Part.makeBox(100, 10, 90)
+
+        receiver_body = doc.addObject("PartDesign::Body", "ReceiverBody")
+        receiver = receiver_body.newObject("PartDesign::Feature", "Receiver")
+        receiver.Shape = Part.makeBox(
+            100, 100, 10, App.Vector(0, 0, 90)
+        ).fuse(Part.makeBox(20, 50, 10, App.Vector(100, 0, 90)))
+        doc.recompute()
+
+        parallel_faces = [
+            face
+            for face in receiver.Shape.Faces
+            if abs(abs(face.normalAt(0, 0).z) - 1.0) <= 1e-7
+        ]
+        assert len(parallel_faces) > 2
+        face_name, face = find_face(
+            source, App.Vector(0, 0, 1), 90, 1000
+        )
+        joint = create_joint(source, face_name, receiver, 2)
+        doc.recompute()
+        assert not joint.Shape.isNull()
+        assert not receiver_body.Tip.Shape.isNull()
+    finally:
+        App.closeDocument(doc.Name)
+
+
 def test_saved_joint_reopens(temp_dir):
     path = copied_fixture("Corner.FCStd", temp_dir)
     doc = App.openDocument(str(path))
@@ -271,8 +297,7 @@ def test_saved_joint_reopens(temp_dir):
         source = doc.getObject("BackXZSolid")
         receiver = doc.getObject("BaseXYSolid")
         face_name, face = find_face(source, App.Vector(0, 0, 1), 10, 1000)
-        edge_name = find_edge(source, face, 10, App.Vector(1, 0, 0), 0)
-        create_joint(source, face_name, edge_name, receiver, 2)
+        create_joint(source, face_name, receiver, 2)
         doc.recompute()
         doc.save()
     finally:
@@ -299,6 +324,7 @@ with tempfile.TemporaryDirectory(prefix="design-system-tests-") as temp_dir:
     test_angled_binder_fixture_has_no_cycle_and_tracks_thickness(temp_dir)
     test_params_fixture_tracks_both_panel_thicknesses(temp_dir)
     test_joint_cuts_through_multiple_receiving_bodies()
+    test_receiver_coplanar_face_fragments_share_two_boundary_planes()
     test_saved_joint_reopens(temp_dir)
 
 print("Finger-joint integration tests passed.")

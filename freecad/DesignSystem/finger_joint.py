@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import FreeCAD as App
 import Part
 
-if App.GuiUp:
+if getattr(App, "GuiUp", False):
     import FreeCADGui as Gui
     from PySide import QtCore
 
@@ -34,7 +34,7 @@ def _flush_pending_recomputes():
 def _schedule_recompute(doc):
     """Coalesce GUI edits while retaining synchronous console behavior."""
     global _recompute_timer
-    if not App.GuiUp:
+    if not getattr(App, "GuiUp", False):
         doc.recompute()
         return
     _pending_recompute_documents[doc.Name] = doc
@@ -195,10 +195,27 @@ def _source_frame(source_obj, face_name, edge_name):
     )
 
 
-def analyze_joint(source_obj, face_name, edge_name, receiver_obj, finger_count):
+def automatic_edge_name(source_obj, face_name):
+    """Return a deterministic shortest edge used to orient a centered pattern."""
+    _, source_base = _body_and_base(source_obj, "source")
+    selected_face = _subshape(source_base, face_name, "Face")
+    if not _is_rectangle(selected_face):
+        raise JointValidationError("The selected face must be a planar rectangle.")
+    selected_edge = min(selected_face.Edges, key=lambda edge: edge.Length)
+    for edge_index, edge in enumerate(source_base.Shape.Edges, start=1):
+        if edge.isSame(selected_edge):
+            return f"Edge{edge_index}"
+    raise JointValidationError("Could not identify a thickness edge on the selected face.")
+
+
+def analyze_joint(
+    source_obj, face_name, receiver_obj, finger_count, edge_name=None
+):
     """Validate selections and derive a local coordinate system for the joint."""
     if int(finger_count) != finger_count or finger_count < 1:
         raise JointValidationError("Finger count must be a positive integer.")
+    if edge_name is None:
+        edge_name = automatic_edge_name(source_obj, face_name)
 
     (
         source_body,
@@ -220,8 +237,8 @@ def analyze_joint(source_obj, face_name, edge_name, receiver_obj, finger_count):
 
     receiver_pairs = []
     seen_bodies = set()
-    parallel_by_body = []
-    contact_faces = []
+    parallel_planes_by_body = []
+    contact_planes = []
     for receiver_object in receiver_objects:
         receiver_body, receiver_base = _body_and_base(receiver_object, "receiving")
         if receiver_body is source_body:
@@ -239,54 +256,74 @@ def analyze_joint(source_obj, face_name, edge_name, receiver_obj, finger_count):
             normal = _unit(face.normalAt(0, 0))
             if _parallel(face_normal, normal):
                 parallel_faces.append(face)
-        if len(parallel_faces) != 2:
-            raise JointValidationError(
-                f"Receiving body {receiver_body.Label!r} must have exactly two faces "
-                "parallel to the selected face."
-            )
-        parallel_by_body.append(parallel_faces)
+        parallel_planes = []
         for face in parallel_faces:
-            plane_distance = abs(
-                (face.CenterOfMass - selected_face.CenterOfMass).dot(face_normal)
+            offset = (face.CenterOfMass - selected_face.CenterOfMass).dot(face_normal)
+            matching_plane = next(
+                (
+                    plane
+                    for plane in parallel_planes
+                    if abs(plane[0] - offset) <= LINEAR_TOLERANCE
+                ),
+                None,
             )
-            if plane_distance <= LINEAR_TOLERANCE:
-                overlap_area = selected_face.common(face).Area
-                if overlap_area > LINEAR_TOLERANCE:
-                    contact_faces.append((receiver_body, face, parallel_faces))
+            if matching_plane is None:
+                parallel_planes.append([offset, [face]])
+            else:
+                matching_plane[1].append(face)
+        if len(parallel_planes) != 2:
+            raise JointValidationError(
+                f"Receiving body {receiver_body.Label!r} must have exactly two "
+                "boundary planes parallel to the selected face."
+            )
+        parallel_planes_by_body.append(parallel_planes)
+        for plane_offset, plane_faces in parallel_planes:
+            if abs(plane_offset) > LINEAR_TOLERANCE:
+                continue
+            overlapping_faces = [
+                face
+                for face in plane_faces
+                if selected_face.common(face).Area > LINEAR_TOLERANCE
+            ]
+            if overlapping_faces:
+                contact_planes.append(
+                    (receiver_body, overlapping_faces[0], parallel_planes)
+                )
 
-    if len(contact_faces) != 1:
+    if len(contact_planes) != 1:
         raise JointValidationError(
-            "The selected face must have positive-area contact with exactly one face "
+            "The selected face must have positive-area contact with exactly one plane "
             "of the receiving bodies."
         )
 
-    _, contact_face, contact_parallel_faces = contact_faces[0]
-    contact_far_face = next(
-        face for face in contact_parallel_faces if not face.isSame(contact_face)
+    _, contact_face, contact_parallel_planes = contact_planes[0]
+    contact_far_plane = next(
+        plane
+        for plane in contact_parallel_planes
+        if abs(plane[0]) > LINEAR_TOLERANCE
     )
-    normal_offset = (
-        contact_far_face.CenterOfMass - contact_face.CenterOfMass
-    ).dot(face_normal)
+    normal_offset = contact_far_plane[0]
     extrusion_sign = 1 if normal_offset > 0 else -1
     extrusion_direction = face_normal * extrusion_sign
 
     far_face = None
     receiver_thickness = 0.0
-    for (receiver_body, _), parallel_faces in zip(receiver_pairs, parallel_by_body):
+    for (receiver_body, _), parallel_planes in zip(
+        receiver_pairs, parallel_planes_by_body
+    ):
         body_offsets = []
         has_overlap = False
-        for face in parallel_faces:
-            signed_offset = (
-                face.CenterOfMass - selected_face.CenterOfMass
-            ).dot(extrusion_direction)
+        for plane_offset, plane_faces in parallel_planes:
+            signed_offset = plane_offset * extrusion_sign
             body_offsets.append(signed_offset)
-            projected_face = face.copy()
-            projected_face.translate(-extrusion_direction * signed_offset)
-            if selected_face.common(projected_face).Area > LINEAR_TOLERANCE:
-                has_overlap = True
+            for face in plane_faces:
+                projected_face = face.copy()
+                projected_face.translate(-extrusion_direction * signed_offset)
+                if selected_face.common(projected_face).Area > LINEAR_TOLERANCE:
+                    has_overlap = True
             if signed_offset > receiver_thickness:
                 receiver_thickness = signed_offset
-                far_face = face
+                far_face = plane_faces[0]
         if min(body_offsets) < -LINEAR_TOLERANCE:
             raise JointValidationError(
                 f"Receiving body {receiver_body.Label!r} lies behind the selected face."
@@ -404,7 +441,10 @@ def build_finger_shapes(geometry, finger_count, overshoot=None, fillet_radius=No
     raw_fingers = []
     filleted_fingers = []
     for index in range(finger_count):
-        offset = geometry.across_direction * (2.0 * index * finger_width)
+        # Half a gap at each end centers the alternating pattern on the face.
+        offset = geometry.across_direction * (
+            (2.0 * index + 0.5) * finger_width
+        )
         next_offset = offset + geometry.across_direction * finger_width
         corners = [
             geometry.edge_start + offset,
@@ -465,48 +505,77 @@ def build_receiver_fingers(
         if _is_planar(face)
         and _parallel(face.normalAt(0, 0), geometry.extrusion_direction)
     ]
-    if len(parallel_faces) != 2:
-        raise JointValidationError(
-            f"Receiving body {receiver_base.Label!r} must have exactly two faces "
-            "parallel to the selected face."
-        )
-    offsets = [
-        (face.CenterOfMass - geometry.selected_face.CenterOfMass).dot(
+    parallel_planes = []
+    for face in parallel_faces:
+        offset = (face.CenterOfMass - geometry.selected_face.CenterOfMass).dot(
             geometry.extrusion_direction
         )
-        for face in parallel_faces
-    ]
+        matching_plane = next(
+            (
+                plane
+                for plane in parallel_planes
+                if abs(plane[0] - offset) <= LINEAR_TOLERANCE
+            ),
+            None,
+        )
+        if matching_plane is None:
+            parallel_planes.append([offset, [face]])
+        else:
+            matching_plane[1].append(face)
+    if len(parallel_planes) != 2:
+        raise JointValidationError(
+            f"Receiving body {receiver_base.Label!r} must have exactly two "
+            "boundary planes parallel to the selected face."
+        )
+    offsets = [plane[0] for plane in parallel_planes]
     near_index = 0 if offsets[0] <= offsets[1] else 1
-    near_face = parallel_faces[near_index]
+    near_faces = parallel_planes[near_index][1]
     near_offset = offsets[near_index]
     panel_thickness = abs(offsets[1] - offsets[0])
     edge_direction = _unit(geometry.edge_end - geometry.edge_start)
 
     extensions = []
     boundary_segments = 0
+    distribution_length = geometry.distribution_length
+    gap_intervals = [(0.0, 0.5 * finger_width)]
+    gap_intervals.extend(
+        (
+            (2.0 * index + 1.5) * finger_width,
+            (2.0 * index + 2.5) * finger_width,
+        )
+        for index in range(finger_count - 1)
+    )
+    gap_intervals.append(
+        (distribution_length - 0.5 * finger_width, distribution_length)
+    )
     for side_point, outward_direction in (
         (geometry.edge_start, -edge_direction),
         (geometry.edge_end, edge_direction),
     ):
-        for index in range(finger_count):
-            gap_start = side_point + geometry.across_direction * (
-                (2.0 * index + 1.0) * finger_width
+        for gap_offset, gap_end_offset in gap_intervals:
+            gap_width = gap_end_offset - gap_offset
+            gap_start = (
+                side_point + geometry.across_direction * gap_offset
             )
-            gap_end = gap_start + geometry.across_direction * finger_width
+            gap_end = (
+                side_point + geometry.across_direction * gap_end_offset
+            )
             gap_start = gap_start + geometry.extrusion_direction * near_offset
             gap_end = gap_end + geometry.extrusion_direction * near_offset
             boundary_edge = Part.makeLine(gap_start, gap_end)
             overlap_length = sum(
-                boundary_edge.common(edge).Length for edge in near_face.Edges
+                boundary_edge.common(edge).Length
+                for face in near_faces
+                for edge in face.Edges
             )
-            if not close(overlap_length, finger_width):
+            if not close(overlap_length, gap_width):
                 continue
             boundary_segments += 1
             if overshoot <= LINEAR_TOLERANCE:
                 continue
-            if finger_width < 2.0 * radius - LINEAR_TOLERANCE:
+            if gap_width < 2.0 * radius - LINEAR_TOLERANCE:
                 raise JointValidationError(
-                    f"Receiving finger width is {finger_width:g} mm, but two "
+                    f"Receiving finger width is {gap_width:g} mm, but two "
                     f"{radius:g} mm tip fillets require at least "
                     f"{2.0 * radius:g} mm. Reduce FingerCount."
                 )
@@ -579,7 +648,13 @@ class FingerJointProxy:
         edge_source, edge_name = _link_sub_value(obj.FirstFingerEdge)
         if source is not edge_source:
             raise JointValidationError("The face and first-finger edge must share a source.")
-        geometry = analyze_joint(source, face_name, edge_name, obj.ReceiverBase, obj.FingerCount)
+        geometry = analyze_joint(
+            source,
+            face_name,
+            obj.ReceiverBase,
+            obj.FingerCount,
+            edge_name=edge_name,
+        )
         fingers, width, depth, radius = build_fingers(geometry, obj.FingerCount)
         obj.Shape = fingers
         obj.FingerWidth = width
@@ -645,7 +720,11 @@ class SourceJointProxy:
                 )
             else:
                 geometry = analyze_joint(
-                    source, face_name, edge_name, obj.ReceiverBase, obj.FingerCount
+                    source,
+                    face_name,
+                    obj.ReceiverBase,
+                    obj.FingerCount,
+                    edge_name=edge_name,
                 )
             overshoot = obj.Overshoot if hasattr(obj, "Overshoot") else None
             fillet_radius = obj.FilletRadius if hasattr(obj, "FilletRadius") else None
@@ -653,7 +732,10 @@ class SourceJointProxy:
                 geometry, obj.FingerCount, overshoot, fillet_radius
             )
             obj.ToolShape = cutting_tool
-            obj.Shape = source.Shape.fuse(fingers).removeSplitter()
+            # Keep the seam between a finger's side and an adjacent coplanar
+            # panel face.  Refining this fuse merges those faces, effectively
+            # lengthening the adjacent face and making a later joint overlap.
+            obj.Shape = source.Shape.fuse(fingers)
             obj.FingerWidth = width
             obj.FingerDepth = depth
             obj.FilletRadius = radius
@@ -689,7 +771,7 @@ class JointResultProxy:
         if obj.InputFeature is None or obj.Joint is None or obj.Joint.Shape.isNull():
             return
         if self.operation == "Add":
-            obj.Shape = obj.InputFeature.Shape.fuse(obj.Joint.Shape).removeSplitter()
+            obj.Shape = obj.InputFeature.Shape.fuse(obj.Joint.Shape)
         else:
             tool = obj.Joint.ToolShape if hasattr(obj.Joint, "ToolShape") else obj.Joint.Shape
             result = obj.InputFeature.Shape.cut(tool)
@@ -763,14 +845,14 @@ def _add_result(body, name, label, base, joint, operation):
     result.InputFeature = base
     result.Joint = joint
     JointResultProxy(result, operation)
-    if App.GuiUp:
+    if getattr(App, "GuiUp", False):
         JointViewProvider(result.ViewObject)
     return result
 
 
 def show_body_tips(*bodies):
     """Show each body and only its current tip feature."""
-    if not App.GuiUp:
+    if not getattr(App, "GuiUp", False):
         return
     for body in bodies:
         tip = body.Tip
@@ -785,7 +867,6 @@ def show_body_tips(*bodies):
 def create_joint(
     source_obj,
     face_name,
-    edge_name,
     receiver_obj,
     finger_count,
     overshoot=None,
@@ -799,7 +880,8 @@ def create_joint(
     receiver_fillet_radius_expression=None,
 ):
     """Create one parametric joint feature in each affected body."""
-    geometry = analyze_joint(source_obj, face_name, edge_name, receiver_obj, finger_count)
+    geometry = analyze_joint(source_obj, face_name, receiver_obj, finger_count)
+    edge_name = geometry.selected_edge_name
     # Validate the exact requested fillet before changing the document.
     default_overshoot = overshoot is None or overshoot_expression is not None
     default_fillet_radius = fillet_radius is None or fillet_radius_expression is not None
@@ -816,7 +898,7 @@ def create_joint(
         receiver_overshoot, geometry.receiver_thickness
     )
     receiver_fillet_radius = _length_value(
-        receiver_fillet_radius, geometry.receiver_thickness
+        receiver_fillet_radius, 0
     )
     build_fingers(geometry, finger_count, overshoot, fillet_radius)
     for receiver_base in geometry.receiver_bases:
@@ -840,7 +922,10 @@ def create_joint(
         "App::PropertyLink", "InputFeature", "Inputs", "Unmodified source feature"
     )
     inputs.addProperty(
-        "App::PropertyLinkSub", "SelectedEdge", "Inputs", "Selected thickness edge"
+        "App::PropertyLinkSub",
+        "SelectedEdge",
+        "Inputs",
+        "Automatically derived thickness edge",
     )
     inputs.addProperty(
         "App::PropertyFloat", "ReceiverThicknessRatio", "Internal", "Receiver/source thickness ratio"
@@ -862,9 +947,10 @@ def create_joint(
     face_normal = _unit(geometry.selected_face.normalAt(0, 0))
     inputs.ExtrusionSign = 1 if geometry.extrusion_direction.dot(face_normal) > 0 else -1
     JointInputProxy(inputs)
-    if App.GuiUp:
+    if getattr(App, "GuiUp", False):
         JointViewProvider(inputs.ViewObject)
     for property_name in (
+        "SelectedEdge",
         "ReceiverThicknessRatio",
         "EdgeLength",
         "ReceiverThickness",
@@ -877,7 +963,12 @@ def create_joint(
     joint.Label = "Finger Joint (added)"
     joint.addProperty("App::PropertyLink", "InputFeature", "Inputs", "Unmodified source feature")
     joint.addProperty("App::PropertyLinkSub", "SourceFace", "Inputs", "Rectangular source face")
-    joint.addProperty("App::PropertyLinkSub", "FirstFingerEdge", "Inputs", "Edge where the pattern begins")
+    joint.addProperty(
+        "App::PropertyLinkSub",
+        "FirstFingerEdge",
+        "Inputs",
+        "Automatically derived orientation edge",
+    )
     joint.addProperty(
         "App::PropertyIntegerConstraint", "FingerCount", "Parameters", "Number of fingers"
     )
@@ -935,16 +1026,17 @@ def create_joint(
         expression = receiver_overshoot_expression or "ReceiverThickness"
         joint.setExpression("ReceiverOvershoot", transferred_expression(expression))
     if default_receiver_fillet_radius:
-        expression = receiver_fillet_radius_expression or "ReceiverThickness"
+        expression = receiver_fillet_radius_expression or "0 mm"
         joint.setExpression(
             "ReceiverFilletRadius", transferred_expression(expression)
         )
     SourceJointProxy(joint)
-    if App.GuiUp:
+    if getattr(App, "GuiUp", False):
         JointViewProvider(joint.ViewObject)
     for property_name in ("FingerWidth", "FingerDepth", "SelectedEdgeLength"):
         joint.setEditorMode(property_name, 1)
     joint.setEditorMode("ToolShape", 2)
+    joint.setEditorMode("FirstFingerEdge", 2)
 
     geometry.source_body.Tip = joint
     for receiver_body, receiver_base in zip(

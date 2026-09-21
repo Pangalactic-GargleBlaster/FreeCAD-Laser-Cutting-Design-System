@@ -28,3 +28,11 @@ run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tools/valid
 [tasks.test]
 description = "Run FreeCAD integration tests against temporary fixture copies"
 run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tests/run_freecad_tests.py"
+
+[tasks."bed:generate"]
+description = "Regenerate Bed.FCStd headlessly"
+run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tools/generate_bed.py"
+
+[tasks."bed:overlaps"]
+description = "Check final Bed body shapes for positive-volume overlaps"
+run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tools/check_bed_overlaps.py"
