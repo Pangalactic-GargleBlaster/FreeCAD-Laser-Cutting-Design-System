@@ -1,6 +1,7 @@
 """Generate the eight-cabinet platform-bed concept model."""
 
 import os
+import re
 import sys
 import xml.etree.ElementTree as ET
 
@@ -36,38 +37,145 @@ BOLT_HOLE_DIAMETER = 7.5
 DOWEL_DIAMETER = 6.0
 FINGER_OVERSHOOT = 2.0
 CABINET_GAP = 2 * FINGER_OVERSHOOT
-FILIGREE_TRACE = os.path.join(ROOT, "assets", "filigree_trace.svg")
+FILIGREE_SVG = os.path.join(ROOT, "assets", "filigree.svg")
+FILIGREE_IMAGE = os.path.join(ROOT, "assets", "filigree_drawer.png")
+FILIGREE_SMALL_LEFT = os.path.join(ROOT, "assets", "filigree_small_left.png")
+FILIGREE_SMALL_RIGHT = os.path.join(ROOT, "assets", "filigree_small_right.png")
 WOOD_MATERIAL = Materials.MaterialManager().getMaterial(
     "b588224e-e8d6-47ad-ba1f-a058333fd1c6"
 )
 
 
 def load_filigree_trace(doc):
-    """Embed the traced filigree as a hidden reusable source feature."""
-    root = ET.parse(FILIGREE_TRACE).getroot()
-    edges = []
-    for element in root.iter():
-        if not element.tag.endswith("polyline"):
-            continue
+    """Embed the supplied SVG filigree as a hidden reusable source feature."""
+    if not os.path.exists(FILIGREE_SVG):
+        raise FileNotFoundError(f"Filigree SVG not found: {FILIGREE_SVG}")
+    if not os.path.exists(FILIGREE_IMAGE):
+        raise FileNotFoundError(f"Filigree preview not found: {FILIGREE_IMAGE}")
+    paths = []
+    token_pattern = re.compile(
+        r"[MmLlHhVvCcZz]|[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
+    )
+
+    def add_path(path_data):
+        tokens = token_pattern.findall(path_data)
+        index = 0
+        command = None
+        x = y = 0.0
+        start_x = start_y = 0.0
         points = []
-        for token in element.attrib.get("points", "").split():
-            x_text, y_text = token.split(",")
-            points.append(App.Vector(float(x_text), float(y_text), 0))
-        if len(points) < 2:
+
+        def number():
+            nonlocal index
+            value = float(tokens[index])
+            index += 1
+            return value
+
+        def flush():
+            nonlocal points
+            if len(points) >= 2:
+                paths.append(points)
+            points = []
+
+        def line_to(end_x, end_y):
+            nonlocal x, y
+            if abs(end_x - x) > 1e-9 or abs(end_y - y) > 1e-9:
+                points.append((end_x, end_y))
+            x, y = end_x, end_y
+
+        while index < len(tokens):
+            if tokens[index].isalpha():
+                command = tokens[index]
+                index += 1
+            if command is None:
+                raise ValueError("SVG path data begins without a command.")
+            relative = command.islower()
+            opcode = command.upper()
+            if opcode == "Z":
+                line_to(start_x, start_y)
+                command = None
+            elif opcode == "M":
+                flush()
+                end_x, end_y = number(), number()
+                if relative:
+                    end_x, end_y = x + end_x, y + end_y
+                x, y = end_x, end_y
+                start_x, start_y = x, y
+                points.append((x, y))
+                command = "l" if relative else "L"
+            elif opcode == "L":
+                end_x, end_y = number(), number()
+                if relative:
+                    end_x, end_y = x + end_x, y + end_y
+                line_to(end_x, end_y)
+            elif opcode == "H":
+                end_x = number() + (x if relative else 0.0)
+                line_to(end_x, y)
+            elif opcode == "V":
+                end_y = number() + (y if relative else 0.0)
+                line_to(x, end_y)
+            elif opcode == "C":
+                values = [number() for _ in range(6)]
+                if relative:
+                    values = [
+                        values[0] + x,
+                        values[1] + y,
+                        values[2] + x,
+                        values[3] + y,
+                        values[4] + x,
+                        values[5] + y,
+                    ]
+                points.append((values[4], values[5]))
+                x, y = values[4], values[5]
+            else:
+                raise ValueError(f"Unsupported SVG path command: {command}")
+        flush()
+
+    root = ET.parse(FILIGREE_SVG).getroot()
+    for element in root.iter():
+        if element.tag.endswith("path") and element.attrib.get("d"):
+            add_path(element.attrib["d"])
+    if not paths:
+        raise ValueError(f"SVG contained no importable shapes: {FILIGREE_SVG}")
+
+    # The source is an Inkscape trace and contains hundreds of microscopic
+    # hatch marks and specks. Keep its principal ornamental contours so the
+    # embedded FreeCAD shape stays responsive at drawer scale.
+    def contour_area(points):
+        xs = [point[0] for point in points]
+        ys = [point[1] for point in points]
+        return (max(xs) - min(xs)) * (max(ys) - min(ys))
+
+    contours = []
+    for points in paths:
+        if contour_area(points) < 50000.0:
             continue
-        closed = len(points) > 3 and (points[0] - points[-1]).Length <= 1e-7
+        closed = (
+            abs(points[0][0] - points[-1][0]) <= 1e-7
+            and abs(points[0][1] - points[-1][1]) <= 1e-7
+        )
         interpolation_points = points[:-1] if closed else points
-        try:
-            curve = Part.BSplineCurve()
-            curve.interpolate(interpolation_points, PeriodicFlag=closed)
-            edges.append(curve.toShape())
-        except Part.OCCError:
-            edges.append(Part.makePolygon(points))
-    if not edges:
-        raise ValueError(f"No trace paths found in {FILIGREE_TRACE}")
+        # Collapse trace points that are closer than a few source pixels.
+        # At the fitted drawer size this is well below DrawerClearance and
+        # removes no visually meaningful turn from the ornament.
+        simplified = [interpolation_points[0]]
+        for point in interpolation_points[1:]:
+            dx = point[0] - simplified[-1][0]
+            dy = point[1] - simplified[-1][1]
+            if dx * dx + dy * dy >= 16.0:
+                simplified.append(point)
+        if len(simplified) > 12:
+            step = (len(simplified) + 11) // 12
+            simplified = simplified[::step]
+        if len(simplified) < 4:
+            continue
+        vectors = [App.Vector(point[0], point[1], 0) for point in simplified]
+        if closed:
+            vectors.append(vectors[0])
+        contours.append(Part.makePolygon(vectors))
     source = doc.addObject("Part::Feature", "FiligreeTraceSource")
-    source.Label = "Filigree trace source (embedded, hidden)"
-    source.Shape = Part.makeCompound(edges)
+    source.Label = "Filigree SVG source (embedded, hidden)"
+    source.Shape = Part.makeCompound(contours)
     if getattr(source, "ViewObject", None) is not None:
         source.ViewObject.Visibility = False
     return source
@@ -601,7 +709,9 @@ def create_large_drawer(
         drawer,
         key + "Engraving",
         label + " filigree engraving",
-        filigree_source,
+        filigree_source[0],
+        filigree_source[1],
+        filigree_source[2],
         face_outer_feature,
         -1 if front_direction == "-X" else 1,
     )
@@ -1132,11 +1242,14 @@ def create_bedside_drawer(
         "Y",
         tuple(max(0.0, c - 0.08) for c in color),
     )
-    drawer_components.create_filigree_engraving(
+    drawer_components.create_filigree_engraving_pair(
         drawer,
         key + "Engraving",
         label + " filigree engraving",
-        filigree_source,
+        filigree_source[0],
+        filigree_source[1],
+        filigree_source[2],
+        filigree_source[3],
         face_outer_feature,
         -1,
     )
@@ -2171,7 +2284,24 @@ def bedside_bolt_holes(left, right, y_centers, z_center):
 def generate(output_path):
     doc = App.newDocument("Bed")
     add_parameters(doc)
-    filigree_source = load_filigree_trace(doc)
+    if not os.path.exists(FILIGREE_SVG):
+        raise FileNotFoundError(f"Filigree SVG not found: {FILIGREE_SVG}")
+    if not os.path.exists(FILIGREE_IMAGE):
+        raise FileNotFoundError(f"Filigree preview not found: {FILIGREE_IMAGE}")
+    for filigree_small in (FILIGREE_SMALL_LEFT, FILIGREE_SMALL_RIGHT):
+        if not os.path.exists(filigree_small):
+            raise FileNotFoundError(
+                f"Filigree subpattern preview not found: {filigree_small}"
+            )
+    svg_root = ET.parse(FILIGREE_SVG).getroot()
+    view_box = [float(value) for value in svg_root.attrib["viewBox"].split()]
+    filigree_source = (FILIGREE_IMAGE, view_box[2], view_box[3])
+    small_filigree_source = (
+        FILIGREE_SMALL_LEFT,
+        FILIGREE_SMALL_RIGHT,
+        454.0,
+        323.0,
+    )
     bed_x = BEDSIDE_SIZE + CABINET_GAP
     right_x = bed_x + DEPTH + CABINET_GAP
     second_row_y = WIDTH + CABINET_GAP
@@ -2352,7 +2482,7 @@ def generate(output_path):
             wall_y,
             drawer_index,
             colors[6],
-            filigree_source,
+            small_filigree_source,
         )
         create_bedside_drawer(
             doc,
@@ -2364,7 +2494,7 @@ def generate(output_path):
             wall_y,
             drawer_index,
             colors[7],
-            filigree_source,
+            small_filigree_source,
         )
 
     layout = doc.addObject("App::FeaturePython", "ConnectorLayout")
@@ -2410,4 +2540,11 @@ def generate(output_path):
 if __name__ in ("__main__", "generate_bed"):
     output = os.path.join(ROOT, "Bed.FCStd")
     generate(output)
-    set_visibility(output)
+    set_visibility(
+        output,
+        hidden_names={
+            "FiligreeImageSource",
+            "FiligreeSmallLeftSource",
+            "FiligreeSmallRightSource",
+        },
+    )

@@ -8,7 +8,12 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 
-VISIBLE_TYPES = {"App::Part", "PartDesign::Body", "Part::FeaturePython"}
+VISIBLE_TYPES = {
+    "App::Link",
+    "App::Part",
+    "PartDesign::Body",
+    "Part::FeaturePython",
+}
 
 
 def property_element(parent, name, property_type, value_tag, value):

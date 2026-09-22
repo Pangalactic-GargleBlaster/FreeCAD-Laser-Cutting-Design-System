@@ -279,66 +279,165 @@ class ConnectedStripPairProxy:
 
 
 class FiligreeEngravingProxy:
-    """Place two horizontally mirrored trace copies on a drawer face."""
+    """Fit one centered SVG image inside a drawer face with clearance."""
 
     def __init__(self, obj=None):
         if obj is not None:
+            if "Proxy" not in obj.PropertiesList:
+                obj.addProperty("App::PropertyPythonObject", "Proxy", "Python")
             obj.Proxy = self
 
     def execute(self, obj):
-        if obj.TraceSource is None or obj.DrawerFront is None:
+        if obj.DrawerFront is None:
             return
-        source = obj.TraceSource.Shape
+        engraving = obj.Engraving if hasattr(obj, "Engraving") else obj
         front = obj.DrawerFront
-        if source.isNull() or front.FrameWidth.Value <= 0 or front.FrameHeight.Value <= 0:
+        if front.FrameWidth.Value <= 0 or front.FrameHeight.Value <= 0:
             return
 
         width = front.FrameWidth.Value
         height = front.FrameHeight.Value
-        source_box = source.BoundBox
-        # Pack two rotated copies exactly across the drawer face: one
-        # DrawerClearance at each side and one between the motifs.
         clearance = front.Clearance.Value
-        motif_width = (width - 3 * clearance) / 2
-        if motif_width <= 0:
-            raise ValueError("Drawer face is too narrow for two engravings.")
-        scale = motif_width / source_box.YLength
-        motif_height = scale * source_box.XLength
-        left_x = clearance
-        bottom = (height - motif_height) / 2
+        if clearance < 0 or width <= 2 * clearance or height <= 2 * clearance:
+            raise ValueError("Drawer face is too small for an engraving with clearance.")
 
-        placement = App.Matrix()
-        # This is the previous landscape orientation turned through another
-        # 180 degrees around the motif's own bounding-box center.
-        placement.A11 = 0.0
-        placement.A12 = scale
-        placement.A21 = scale
-        placement.A22 = 0.0
-        placement.A33 = 1.0
-        placement.A14 = left_x - scale * source_box.YMin
-        placement.A24 = bottom - scale * source_box.XMin
-        left = source.transformGeometry(placement)
-
-        mirror = App.Matrix()
-        mirror.A11 = -1.0
-        mirror.A22 = 1.0
-        mirror.A33 = 1.0
-        mirror.A14 = width
-        right = left.transformGeometry(mirror)
-        pattern = Part.makeCompound((left, right))
+        ply = front.Ply.Value
+        box_side = (width - front.DrawerBoxWidth.Value) / 2
+        maximum_frame_side = max(0.5, 2 * ply - clearance)
+        side_wave = max(
+            0.0, box_side - clearance - maximum_frame_side
+        )
+        side_margin = 2 * ply + side_wave + clearance
+        safe_bottom = 2 * ply + front.WaveAmplitude.Value + clearance
+        handle_shoulder = height - 2 * ply + 1.0
+        handle_bottom = handle_shoulder - front.HandleHeight.Value
+        # The handle arch can lower its nominal bottom by no more than the
+        # sum of its 20% arch and 7% ripple amplitudes.
+        safe_top = min(
+            height - 2 * ply - front.WaveAmplitude.Value - clearance,
+            handle_bottom - 0.27 * front.HandleHeight.Value - clearance,
+        )
+        safe_width = width - 2 * side_margin
+        safe_height = safe_top - safe_bottom
+        if safe_width <= 0 or safe_height <= 0:
+            raise ValueError("Drawer clearance leaves no safe engraving area.")
+        source_width = obj.SourceWidth.Value
+        source_height = obj.SourceHeight.Value
+        if source_width <= 0 or source_height <= 0:
+            raise ValueError("Filigree SVG dimensions must be positive.")
+        scale = min(
+            safe_width / source_width,
+            safe_height / source_height,
+        )
+        if scale <= 1e-9:
+            raise ValueError("Filigree cannot fit inside the drawer face.")
+        engraving.Scale = scale
+        motif_center_y = (safe_bottom + safe_top) / 2
         surface = (
             front.Thickness.Value + 0.15
             if obj.SurfaceSign > 0
             else -0.15
         )
-        pattern.translate(App.Vector(0, 0, surface))
-        obj.Shape = _transform(
-            pattern,
-            front.Axis,
-            front.X.Value,
-            front.Y.Value,
-            front.Z.Value,
+        placement = App.Matrix()
+        if front.Axis == "X":
+            placement.A11, placement.A12, placement.A13 = 0, 0, 1
+            placement.A21, placement.A22, placement.A23 = 1, 0, 0
+            placement.A31, placement.A32, placement.A33 = 0, 1, 0
+            placement.A14 = front.X.Value + surface
+            placement.A24 = front.Y.Value + width / 2
+            placement.A34 = front.Z.Value + motif_center_y
+        else:
+            placement.A11, placement.A12, placement.A13 = 1, 0, 0
+            placement.A21, placement.A22, placement.A23 = 0, 0, 1
+            placement.A31, placement.A32, placement.A33 = 0, 1, 0
+            placement.A14 = front.X.Value + width / 2
+            placement.A24 = front.Y.Value + surface
+            placement.A34 = front.Z.Value + motif_center_y
+        engraving.Placement = App.Placement(placement)
+
+    def dumps(self):
+        return None
+
+    def loads(self, state):
+        return None
+
+
+class FiligreePairEngravingProxy:
+    """Fit one half of a mirrored motif pair inside a drawer face."""
+
+    def __init__(self, obj=None):
+        if obj is not None:
+            if "Proxy" not in obj.PropertiesList:
+                obj.addProperty("App::PropertyPythonObject", "Proxy", "Python")
+            obj.Proxy = self
+
+    def execute(self, obj):
+        if obj.DrawerFront is None:
+            return
+        engraving = obj.Engraving if hasattr(obj, "Engraving") else obj
+        front = obj.DrawerFront
+        width = front.FrameWidth.Value
+        height = front.FrameHeight.Value
+        clearance = front.Clearance.Value
+        if clearance < 0 or width <= 2 * clearance or height <= 2 * clearance:
+            raise ValueError("Drawer face is too small for an engraving with clearance.")
+
+        ply = front.Ply.Value
+        box_side = (width - front.DrawerBoxWidth.Value) / 2
+        maximum_frame_side = max(0.5, 2 * ply - clearance)
+        side_wave = max(0.0, box_side - clearance - maximum_frame_side)
+        side_margin = 2 * ply + side_wave + clearance
+        safe_bottom = 2 * ply + front.WaveAmplitude.Value + clearance
+        handle_shoulder = height - 2 * ply + 1.0
+        handle_bottom = handle_shoulder - front.HandleHeight.Value
+        safe_top = min(
+            height - 2 * ply - front.WaveAmplitude.Value - clearance,
+            handle_bottom - 0.27 * front.HandleHeight.Value - clearance,
         )
+        safe_width = width - 2 * side_margin
+        safe_height = safe_top - safe_bottom
+        source_width = obj.SourceWidth.Value
+        source_height = obj.SourceHeight.Value
+        if safe_width <= clearance or safe_height <= 0:
+            raise ValueError("Drawer clearance leaves no safe paired engraving area.")
+        if source_width <= 0 or source_height <= 0:
+            raise ValueError("Filigree subpattern dimensions must be positive.")
+
+        scale = min(
+            (safe_width - clearance) / (2 * source_width),
+            safe_height / source_height,
+        )
+        if scale <= 1e-9:
+            raise ValueError("Filigree pair cannot fit inside the drawer face.")
+        engraving.Scale = scale
+        motif_width = source_width * scale
+        pair_width = 2 * motif_width + clearance
+        pair_left = side_margin + (safe_width - pair_width) / 2
+        motif_center_x = pair_left + motif_width / 2
+        if obj.PairIndex == 1:
+            motif_center_x += motif_width + clearance
+        motif_center_y = (safe_bottom + safe_top) / 2
+        surface = (
+            front.Thickness.Value + 0.15
+            if obj.SurfaceSign > 0
+            else -0.15
+        )
+        placement = App.Matrix()
+        if front.Axis == "X":
+            placement.A11, placement.A12, placement.A13 = 0, 0, 1
+            placement.A21, placement.A22, placement.A23 = 1, 0, 0
+            placement.A31, placement.A32, placement.A33 = 0, 1, 0
+            placement.A14 = front.X.Value + surface
+            placement.A24 = front.Y.Value + motif_center_x
+            placement.A34 = front.Z.Value + motif_center_y
+        else:
+            placement.A11, placement.A12, placement.A13 = 1, 0, 0
+            placement.A21, placement.A22, placement.A23 = 0, 0, 1
+            placement.A31, placement.A32, placement.A33 = 0, 1, 0
+            placement.A14 = front.X.Value + motif_center_x
+            placement.A24 = front.Y.Value + surface
+            placement.A34 = front.Z.Value + motif_center_y
+        engraving.Placement = App.Placement(placement)
 
     def dumps(self):
         return None
@@ -425,19 +524,125 @@ def create_connected_strip_pair(body, name, label):
 
 
 def create_filigree_engraving(
-    part, name, label, trace_source, drawer_front, surface_sign
+    part,
+    name,
+    label,
+    image_path,
+    source_width,
+    source_height,
+    drawer_front,
+    surface_sign,
 ):
-    engraving = part.newObject("Part::FeaturePython", name)
+    doc = part.Document
+    source = doc.getObject("FiligreeImageSource")
+    if source is None:
+        source = doc.addObject("Image::ImagePlane", "FiligreeImageSource")
+        source.Label = "Filigree SVG preview source (embedded, hidden)"
+        source.ImageFile = image_path
+        source.XSize = source_width
+        source.YSize = source_height
+        source.Visibility = False
+
+    engraving = part.newObject("App::Link", name)
     engraving.Label = label
-    engraving.addProperty("App::PropertyLinkGlobal", "TraceSource", "Engraving")
+    engraving.LinkedObject = source
+    engraving.LinkTransform = True
     engraving.addProperty("App::PropertyLinkGlobal", "DrawerFront", "Engraving")
     engraving.addProperty("App::PropertyInteger", "SurfaceSign", "Engraving")
-    engraving.TraceSource = trace_source
+    engraving.addProperty("App::PropertyLength", "SourceWidth", "Engraving")
+    engraving.addProperty("App::PropertyLength", "SourceHeight", "Engraving")
+    engraving.SourceWidth = source_width
+    engraving.SourceHeight = source_height
     engraving.DrawerFront = drawer_front
     engraving.SurfaceSign = surface_sign
-    FiligreeEngravingProxy(engraving)
-    if getattr(engraving, "ViewObject", None) is not None:
-        engraving.ViewObject.LineColor = (0.22, 0.08, 0.03)
-        engraving.ViewObject.LineWidth = 1.5
-    engraving.Proxy.execute(engraving)
+    controller = part.newObject("App::FeaturePython", name + "Controller")
+    controller.Label = label + " controller"
+    controller.addProperty("App::PropertyLinkGlobal", "Engraving", "Engraving")
+    controller.addProperty("App::PropertyLinkGlobal", "DrawerFront", "Engraving")
+    controller.addProperty("App::PropertyInteger", "SurfaceSign", "Engraving")
+    controller.addProperty("App::PropertyLength", "SourceWidth", "Engraving")
+    controller.addProperty("App::PropertyLength", "SourceHeight", "Engraving")
+    controller.Engraving = engraving
+    controller.DrawerFront = drawer_front
+    controller.SurfaceSign = surface_sign
+    controller.SourceWidth = source_width
+    controller.SourceHeight = source_height
+    proxy = FiligreeEngravingProxy(controller)
+    proxy.execute(controller)
     return engraving
+
+
+def create_filigree_engraving_pair(
+    part,
+    name,
+    label,
+    left_image_path,
+    right_image_path,
+    source_width,
+    source_height,
+    drawer_front,
+    surface_sign,
+):
+    """Create an inward-facing mirrored pair with DrawerClearance spacing."""
+    doc = part.Document
+    sources = []
+    for source_name, source_label, image_path in (
+        (
+            "FiligreeSmallLeftSource",
+            "Top-left filigree subpattern source (embedded, hidden)",
+            left_image_path,
+        ),
+        (
+            "FiligreeSmallRightSource",
+            "Mirrored top-left filigree subpattern source (embedded, hidden)",
+            right_image_path,
+        ),
+    ):
+        source = doc.getObject(source_name)
+        if source is None:
+            source = doc.addObject("Image::ImagePlane", source_name)
+            source.Label = source_label
+            source.ImageFile = image_path
+            source.XSize = source_width
+            source.YSize = source_height
+            source.Visibility = False
+        sources.append(source)
+
+    engravings = []
+    for pair_index, (suffix, source) in enumerate(
+        (("Left", sources[0]), ("Right", sources[1]))
+    ):
+        engraving = part.newObject("App::Link", name + suffix)
+        engraving.Label = label + " — " + suffix.lower()
+        engraving.LinkedObject = source
+        engraving.LinkTransform = True
+        engraving.addProperty("App::PropertyLinkGlobal", "DrawerFront", "Engraving")
+        engraving.addProperty("App::PropertyInteger", "SurfaceSign", "Engraving")
+        engraving.addProperty("App::PropertyInteger", "PairIndex", "Engraving")
+        engraving.addProperty("App::PropertyLength", "SourceWidth", "Engraving")
+        engraving.addProperty("App::PropertyLength", "SourceHeight", "Engraving")
+        engraving.SourceWidth = source_width
+        engraving.SourceHeight = source_height
+        engraving.DrawerFront = drawer_front
+        engraving.SurfaceSign = surface_sign
+        engraving.PairIndex = pair_index
+        controller = part.newObject(
+            "App::FeaturePython", name + suffix + "Controller"
+        )
+        controller.Label = engraving.Label + " controller"
+        controller.addProperty("App::PropertyLinkGlobal", "Engraving", "Engraving")
+        controller.addProperty("App::PropertyLinkGlobal", "DrawerFront", "Engraving")
+        controller.addProperty("App::PropertyInteger", "SurfaceSign", "Engraving")
+        controller.addProperty("App::PropertyInteger", "PairIndex", "Engraving")
+        controller.addProperty("App::PropertyLength", "SourceWidth", "Engraving")
+        controller.addProperty("App::PropertyLength", "SourceHeight", "Engraving")
+        controller.Engraving = engraving
+        controller.DrawerFront = drawer_front
+        controller.SurfaceSign = surface_sign
+        controller.PairIndex = pair_index
+        controller.SourceWidth = source_width
+        controller.SourceHeight = source_height
+        proxy = FiligreePairEngravingProxy(controller)
+        proxy.execute(controller)
+        engravings.append(engraving)
+    return tuple(engravings)
