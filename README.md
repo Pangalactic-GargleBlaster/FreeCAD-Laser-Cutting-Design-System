@@ -81,5 +81,6 @@ fillet radius when the requested finger width is too narrow for the default.
 Run all automated checks with `mise run test`. Tests modify temporary fixture
 copies only.
 
-Regenerate the bed with `mise run bed:generate`, then check every final body
+The bed model, design assets, and manufacturing DXFs are in `Bed/`.
+Regenerate it with `mise run bed:generate`, then check every final body
 tip for positive-volume intersections with `mise run bed:overlaps`.

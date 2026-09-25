@@ -31,8 +31,8 @@ run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tests/run_f
 
 [tasks."bed:generate"]
 description = "Regenerate Bed.FCStd headlessly"
-run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tools/generate_bed.py"
+run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' Bed/tools/generate_bed.py"
 
 [tasks."bed:overlaps"]
 description = "Check final Bed body shapes for positive-volume overlaps"
-run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' tools/check_bed_overlaps.py"
+run = "'/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd' Bed/tools/check_bed_overlaps.py"

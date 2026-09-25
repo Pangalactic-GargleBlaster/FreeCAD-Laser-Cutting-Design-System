@@ -1,0 +1,321 @@
+part_id,sheet,body_name,body_label,assembly,good_face_normal,x_mm,y_mm,rotation_deg,width_mm,height_mm,dxf_file
+P075,1,Cabinet7LeftSideOuterBody,LeftSide — outer002,"Cabinet 7 — left bedside table, front away from wall",-X,0.0,229.20000000000002,90,359.6,512.0,profiles/Cabinet7LeftSideOuterBody.dxf
+P076,1,Cabinet7LeftSideInnerBody,LeftSide — inner002,"Cabinet 7 — left bedside table, front away from wall",+X,364.6,229.20000000000002,90,359.6,512.0,profiles/Cabinet7LeftSideInnerBody.dxf
+P216,1,Cabinet4DrawerCabinetHighChannelBackLayer2Body,Cabinet 4 drawer cabinet high channel back — layer 2,Cabinet 4 — front right,-Y,0.0,84.2,0,914.8,79.2,profiles/Cabinet4DrawerCabinetHighChannelBackLayer2Body.dxf
+P215,1,Cabinet4DrawerCabinetHighChannelBackLayer1Body,Cabinet 4 drawer cabinet high channel back — layer 1,Cabinet 4 — front right,+Y,0.0,0.0,0,914.8,79.2,profiles/Cabinet4DrawerCabinetHighChannelBackLayer1Body.dxf
+P293,1,Cabinet7UpperDrawerCabinetLowChannelBackLayer2Body,Cabinet 7 upper drawer cabinet low channel back — layer 2,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,481.8,0,457.6,79.2,profiles/Cabinet7UpperDrawerCabinetLowChannelBackLayer2Body.dxf
+P241,1,Cabinet7LowerDrawerCabinetLowChannelBackLayer2Body,Cabinet 7 lower drawer cabinet low channel back — layer 2,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,313.40000000000003,0,457.6,79.2,profiles/Cabinet7LowerDrawerCabinetLowChannelBackLayer2Body.dxf
+P240,1,Cabinet7LowerDrawerCabinetLowChannelBackLayer1Body,Cabinet 7 lower drawer cabinet low channel back — layer 1,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,229.20000000000002,0,457.6,79.2,profiles/Cabinet7LowerDrawerCabinetLowChannelBackLayer1Body.dxf
+P292,1,Cabinet7UpperDrawerCabinetLowChannelBackLayer1Body,Cabinet 7 upper drawer cabinet low channel back — layer 1,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,397.6,0,457.6,79.2,profiles/Cabinet7UpperDrawerCabinetLowChannelBackLayer1Body.dxf
+P212,1,Cabinet4DrawerCabinetHighAntiTipLayer4Body,Cabinet 4 drawer cabinet highantitip strip — layer 4,Cabinet 4 — front right,-Y,0.0,198.8,0,914.8,25.4,profiles/Cabinet4DrawerCabinetHighAntiTipLayer4Body.dxf
+P211,1,Cabinet4DrawerCabinetHighAntiTipLayer3Body,Cabinet 4 drawer cabinet highantitip strip — layer 3,Cabinet 4 — front right,+Y,0.0,168.4,0,914.8,25.4,profiles/Cabinet4DrawerCabinetHighAntiTipLayer3Body.dxf
+P285,1,Cabinet7UpperDrawerCabinetLowSupportLayer4Body,Cabinet 7 upper drawer cabinet lowsupport strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,717.9999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetLowSupportLayer4Body.dxf
+P235,1,Cabinet7LowerDrawerCabinetLowAntiTipLayer4Body,Cabinet 7 lower drawer cabinet lowantitip strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,657.1999999999999,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetLowAntiTipLayer4Body.dxf
+P233,1,Cabinet7LowerDrawerCabinetLowSupportLayer4Body,Cabinet 7 lower drawer cabinet lowsupport strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,596.4,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetLowSupportLayer4Body.dxf
+P234,1,Cabinet7LowerDrawerCabinetLowAntiTipLayer3Body,Cabinet 7 lower drawer cabinet lowantitip strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,626.8,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetLowAntiTipLayer3Body.dxf
+P284,1,Cabinet7UpperDrawerCabinetLowSupportLayer3Body,Cabinet 7 upper drawer cabinet lowsupport strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,687.5999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetLowSupportLayer3Body.dxf
+P287,1,Cabinet7UpperDrawerCabinetLowAntiTipLayer4Body,Cabinet 7 upper drawer cabinet lowantitip strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",+X,462.6,748.3999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetLowAntiTipLayer4Body.dxf
+P232,1,Cabinet7LowerDrawerCabinetLowSupportLayer3Body,Cabinet 7 lower drawer cabinet lowsupport strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,566.0,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetLowSupportLayer3Body.dxf
+P286,1,Cabinet7UpperDrawerCabinetLowAntiTipLayer3Body,Cabinet 7 upper drawer cabinet lowantitip strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",-X,0.0,748.3999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetLowAntiTipLayer3Body.dxf
+P041,2,Cabinet4UpperSideOuterBody,UpperSide — outer003,Cabinet 4 — front right,+Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet4UpperSideOuterBody.dxf
+P042,2,Cabinet4UpperSideInnerBody,UpperSide — inner003,Cabinet 4 — front right,-Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet4UpperSideInnerBody.dxf
+P199,2,Cabinet4DrawerBackOuterBody,Drawer back — outer003,Cabinet 4 drawer,-X,974.2,0.0,90,177.8,693.4,profiles/Cabinet4DrawerBackOuterBody.dxf
+P210,2,Cabinet4DrawerCabinetHighSupportLayer4Body,Cabinet 4 drawer cabinet highsupport strip — layer 4,Cabinet 4 — front right,-Y,0.0,759.6,0,914.8,25.4,profiles/Cabinet4DrawerCabinetHighSupportLayer4Body.dxf
+P209,2,Cabinet4DrawerCabinetHighSupportLayer3Body,Cabinet 4 drawer cabinet highsupport strip — layer 3,Cabinet 4 — front right,+Y,0.0,729.2,0,914.8,25.4,profiles/Cabinet4DrawerCabinetHighSupportLayer3Body.dxf
+P039,3,Cabinet4LowerSideOuterBody,LowerSide — outer003,Cabinet 4 — front right,-Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet4LowerSideOuterBody.dxf
+P040,3,Cabinet4LowerSideInnerBody,LowerSide — inner003,Cabinet 4 — front right,+Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet4LowerSideInnerBody.dxf
+P198,3,Cabinet4DrawerBackInnerBody,Drawer back — inner003,Cabinet 4 drawer,+X,974.2,0.0,90,177.8,693.4,profiles/Cabinet4DrawerBackInnerBody.dxf
+P030,4,Cabinet3UpperSideInnerBody,UpperSide — inner002,Cabinet 3 — front left,-Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet3UpperSideInnerBody.dxf
+P170,4,Cabinet3DrawerBackOuterBody,Drawer back — outer002,Cabinet 3 drawer,+X,974.2,0.0,90,177.8,693.4,profiles/Cabinet3DrawerBackOuterBody.dxf
+P214,4,Cabinet4DrawerCabinetLowChannelBackLayer2Body,Cabinet 4 drawer cabinet low channel back — layer 2,Cabinet 4 — front right,+Y,0.0,570.4,0,914.8,79.2,profiles/Cabinet4DrawerCabinetLowChannelBackLayer2Body.dxf
+P213,4,Cabinet4DrawerCabinetLowChannelBackLayer1Body,Cabinet 4 drawer cabinet low channel back — layer 1,Cabinet 4 — front right,-Y,0.0,486.19999999999993,0,914.8,79.2,profiles/Cabinet4DrawerCabinetLowChannelBackLayer1Body.dxf
+P207,4,Cabinet4DrawerCabinetLowAntiTipLayer3Body,Cabinet 4 drawer cabinet lowantitip strip — layer 3,Cabinet 4 — front right,-Y,0.0,715.4,0,914.8,25.4,profiles/Cabinet4DrawerCabinetLowAntiTipLayer3Body.dxf
+P183,4,Cabinet3DrawerCabinetHighAntiTipLayer4Body,Cabinet 3 drawer cabinet highantitip strip — layer 4,Cabinet 3 — front left,-Y,0.0,455.79999999999995,0,914.8,25.4,profiles/Cabinet3DrawerCabinetHighAntiTipLayer4Body.dxf
+P182,4,Cabinet3DrawerCabinetHighAntiTipLayer3Body,Cabinet 3 drawer cabinet highantitip strip — layer 3,Cabinet 3 — front left,+Y,0.0,425.4,0,914.8,25.4,profiles/Cabinet3DrawerCabinetHighAntiTipLayer3Body.dxf
+P205,4,Cabinet4DrawerCabinetLowSupportLayer3Body,Cabinet 4 drawer cabinet lowsupport strip — layer 3,Cabinet 4 — front right,-Y,0.0,654.6,0,914.8,25.4,profiles/Cabinet4DrawerCabinetLowSupportLayer3Body.dxf
+P181,4,Cabinet3DrawerCabinetHighSupportLayer4Body,Cabinet 3 drawer cabinet highsupport strip — layer 4,Cabinet 3 — front left,-Y,0.0,395.0,0,914.8,25.4,profiles/Cabinet3DrawerCabinetHighSupportLayer4Body.dxf
+P180,4,Cabinet3DrawerCabinetHighSupportLayer3Body,Cabinet 3 drawer cabinet highsupport strip — layer 3,Cabinet 3 — front left,+Y,0.0,364.6,0,914.8,25.4,profiles/Cabinet3DrawerCabinetHighSupportLayer3Body.dxf
+P208,4,Cabinet4DrawerCabinetLowAntiTipLayer4Body,Cabinet 4 drawer cabinet lowantitip strip — layer 4,Cabinet 4 — front right,+Y,0.0,745.8,0,914.8,25.4,profiles/Cabinet4DrawerCabinetLowAntiTipLayer4Body.dxf
+P206,4,Cabinet4DrawerCabinetLowSupportLayer4Body,Cabinet 4 drawer cabinet lowsupport strip — layer 4,Cabinet 4 — front right,+Y,0.0,685.0,0,914.8,25.4,profiles/Cabinet4DrawerCabinetLowSupportLayer4Body.dxf
+P029,5,Cabinet3UpperSideOuterBody,UpperSide — outer002,Cabinet 3 — front left,+Y,0.0,229.20000000000002,0,969.2,359.6,profiles/Cabinet3UpperSideOuterBody.dxf
+P169,5,Cabinet3DrawerBackInnerBody,Drawer back — inner002,Cabinet 3 drawer,-X,974.2,0.0,90,177.8,693.4,profiles/Cabinet3DrawerBackInnerBody.dxf
+P185,5,Cabinet3DrawerCabinetLowChannelBackLayer2Body,Cabinet 3 drawer cabinet low channel back — layer 2,Cabinet 3 — front left,+Y,0.0,84.2,0,914.8,79.2,profiles/Cabinet3DrawerCabinetLowChannelBackLayer2Body.dxf
+P187,5,Cabinet3DrawerCabinetHighChannelBackLayer2Body,Cabinet 3 drawer cabinet high channel back — layer 2,Cabinet 3 — front left,-Y,0.0,678.0000000000001,0,914.8,79.2,profiles/Cabinet3DrawerCabinetHighChannelBackLayer2Body.dxf
+P184,5,Cabinet3DrawerCabinetLowChannelBackLayer1Body,Cabinet 3 drawer cabinet low channel back — layer 1,Cabinet 3 — front left,-Y,0.0,0.0,0,914.8,79.2,profiles/Cabinet3DrawerCabinetLowChannelBackLayer1Body.dxf
+P186,5,Cabinet3DrawerCabinetHighChannelBackLayer1Body,Cabinet 3 drawer cabinet high channel back — layer 1,Cabinet 3 — front left,+Y,0.0,593.8000000000001,0,914.8,79.2,profiles/Cabinet3DrawerCabinetHighChannelBackLayer1Body.dxf
+P178,5,Cabinet3DrawerCabinetLowAntiTipLayer3Body,Cabinet 3 drawer cabinet lowantitip strip — layer 3,Cabinet 3 — front left,-Y,0.0,168.4,0,914.8,25.4,profiles/Cabinet3DrawerCabinetLowAntiTipLayer3Body.dxf
+P179,5,Cabinet3DrawerCabinetLowAntiTipLayer4Body,Cabinet 3 drawer cabinet lowantitip strip — layer 4,Cabinet 3 — front left,+Y,0.0,198.8,0,914.8,25.4,profiles/Cabinet3DrawerCabinetLowAntiTipLayer4Body.dxf
+P027,6,Cabinet3LowerSideOuterBody,LowerSide — outer002,Cabinet 3 — front left,-Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet3LowerSideOuterBody.dxf
+P028,6,Cabinet3LowerSideInnerBody,LowerSide — inner002,Cabinet 3 — front left,+Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet3LowerSideInnerBody.dxf
+P141,6,Cabinet2DrawerBackOuterBody,Drawer back — outer001,Cabinet 2 drawer,-X,974.2,0.0,90,177.8,693.4,profiles/Cabinet2DrawerBackOuterBody.dxf
+P176,6,Cabinet3DrawerCabinetLowSupportLayer3Body,Cabinet 3 drawer cabinet lowsupport strip — layer 3,Cabinet 3 — front left,-Y,0.0,729.2,0,914.8,25.4,profiles/Cabinet3DrawerCabinetLowSupportLayer3Body.dxf
+P177,6,Cabinet3DrawerCabinetLowSupportLayer4Body,Cabinet 3 drawer cabinet lowsupport strip — layer 4,Cabinet 3 — front left,+Y,0.0,759.6,0,914.8,25.4,profiles/Cabinet3DrawerCabinetLowSupportLayer4Body.dxf
+P018,7,Cabinet2UpperSideInnerBody,UpperSide — inner001,Cabinet 2 — front right,-Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet2UpperSideInnerBody.dxf
+P017,7,Cabinet2UpperSideOuterBody,UpperSide — outer001,Cabinet 2 — front right,+Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet2UpperSideOuterBody.dxf
+P140,7,Cabinet2DrawerBackInnerBody,Drawer back — inner001,Cabinet 2 drawer,+X,974.2,0.0,90,177.8,693.4,profiles/Cabinet2DrawerBackInnerBody.dxf
+P016,8,Cabinet2LowerSideInnerBody,LowerSide — inner001,Cabinet 2 — front right,+Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet2LowerSideInnerBody.dxf
+P112,8,Cabinet1DrawerBackOuterBody,Drawer back — outer,Cabinet 1 drawer,+X,974.2,0.0,90,177.8,693.4,profiles/Cabinet1DrawerBackOuterBody.dxf
+P157,8,Cabinet2DrawerCabinetHighChannelBackLayer1Body,Cabinet 2 drawer cabinet high channel back — layer 1,Cabinet 2 — front right,+Y,0.0,486.19999999999993,0,914.8,79.2,profiles/Cabinet2DrawerCabinetHighChannelBackLayer1Body.dxf
+P158,8,Cabinet2DrawerCabinetHighChannelBackLayer2Body,Cabinet 2 drawer cabinet high channel back — layer 2,Cabinet 2 — front right,-Y,0.0,570.4,0,914.8,79.2,profiles/Cabinet2DrawerCabinetHighChannelBackLayer2Body.dxf
+P154,8,Cabinet2DrawerCabinetHighAntiTipLayer4Body,Cabinet 2 drawer cabinet highantitip strip — layer 4,Cabinet 2 — front right,-Y,0.0,745.8,0,914.8,25.4,profiles/Cabinet2DrawerCabinetHighAntiTipLayer4Body.dxf
+P153,8,Cabinet2DrawerCabinetHighAntiTipLayer3Body,Cabinet 2 drawer cabinet highantitip strip — layer 3,Cabinet 2 — front right,+Y,0.0,715.4,0,914.8,25.4,profiles/Cabinet2DrawerCabinetHighAntiTipLayer3Body.dxf
+P152,8,Cabinet2DrawerCabinetHighSupportLayer4Body,Cabinet 2 drawer cabinet highsupport strip — layer 4,Cabinet 2 — front right,-Y,0.0,685.0,0,914.8,25.4,profiles/Cabinet2DrawerCabinetHighSupportLayer4Body.dxf
+P151,8,Cabinet2DrawerCabinetHighSupportLayer3Body,Cabinet 2 drawer cabinet highsupport strip — layer 3,Cabinet 2 — front right,+Y,0.0,654.6,0,914.8,25.4,profiles/Cabinet2DrawerCabinetHighSupportLayer3Body.dxf
+P148,8,Cabinet2DrawerCabinetLowSupportLayer4Body,Cabinet 2 drawer cabinet lowsupport strip — layer 4,Cabinet 2 — front right,+Y,0.0,395.0,0,914.8,25.4,profiles/Cabinet2DrawerCabinetLowSupportLayer4Body.dxf
+P150,8,Cabinet2DrawerCabinetLowAntiTipLayer4Body,Cabinet 2 drawer cabinet lowantitip strip — layer 4,Cabinet 2 — front right,+Y,0.0,455.79999999999995,0,914.8,25.4,profiles/Cabinet2DrawerCabinetLowAntiTipLayer4Body.dxf
+P147,8,Cabinet2DrawerCabinetLowSupportLayer3Body,Cabinet 2 drawer cabinet lowsupport strip — layer 3,Cabinet 2 — front right,-Y,0.0,364.6,0,914.8,25.4,profiles/Cabinet2DrawerCabinetLowSupportLayer3Body.dxf
+P149,8,Cabinet2DrawerCabinetLowAntiTipLayer3Body,Cabinet 2 drawer cabinet lowantitip strip — layer 3,Cabinet 2 — front right,-Y,0.0,425.4,0,914.8,25.4,profiles/Cabinet2DrawerCabinetLowAntiTipLayer3Body.dxf
+P015,9,Cabinet2LowerSideOuterBody,LowerSide — outer001,Cabinet 2 — front right,-Y,0.0,229.20000000000002,0,969.2,359.6,profiles/Cabinet2LowerSideOuterBody.dxf
+P111,9,Cabinet1DrawerBackInnerBody,Drawer back — inner,Cabinet 1 drawer,-X,974.2,0.0,90,177.8,693.4,profiles/Cabinet1DrawerBackInnerBody.dxf
+P128,9,Cabinet1DrawerCabinetHighChannelBackLayer1Body,Cabinet 1 drawer cabinet high channel back — layer 1,Cabinet 1 — front left,+Y,0.0,0.0,0,914.8,79.2,profiles/Cabinet1DrawerCabinetHighChannelBackLayer1Body.dxf
+P129,9,Cabinet1DrawerCabinetHighChannelBackLayer2Body,Cabinet 1 drawer cabinet high channel back — layer 2,Cabinet 1 — front left,-Y,0.0,84.2,0,914.8,79.2,profiles/Cabinet1DrawerCabinetHighChannelBackLayer2Body.dxf
+P156,9,Cabinet2DrawerCabinetLowChannelBackLayer2Body,Cabinet 2 drawer cabinet low channel back — layer 2,Cabinet 2 — front right,+Y,0.0,678.0000000000001,0,914.8,79.2,profiles/Cabinet2DrawerCabinetLowChannelBackLayer2Body.dxf
+P155,9,Cabinet2DrawerCabinetLowChannelBackLayer1Body,Cabinet 2 drawer cabinet low channel back — layer 1,Cabinet 2 — front right,-Y,0.0,593.8000000000001,0,914.8,79.2,profiles/Cabinet2DrawerCabinetLowChannelBackLayer1Body.dxf
+P125,9,Cabinet1DrawerCabinetHighAntiTipLayer4Body,Cabinet 1 drawer cabinet highantitip strip — layer 4,Cabinet 1 — front left,-Y,0.0,198.8,0,914.8,25.4,profiles/Cabinet1DrawerCabinetHighAntiTipLayer4Body.dxf
+P124,9,Cabinet1DrawerCabinetHighAntiTipLayer3Body,Cabinet 1 drawer cabinet highantitip strip — layer 3,Cabinet 1 — front left,+Y,0.0,168.4,0,914.8,25.4,profiles/Cabinet1DrawerCabinetHighAntiTipLayer3Body.dxf
+P200,10,Cabinet4DrawerBottomBody,Drawer bottom — single ply003,Cabinet 4 drawer,+Z,0.0,0.0,0,947.8,693.4,profiles/Cabinet4DrawerBottomBody.dxf
+P005,11,Cabinet1UpperSideOuterBody,UpperSide — outer,Cabinet 1 — front left,+Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet1UpperSideOuterBody.dxf
+P006,11,Cabinet1UpperSideInnerBody,UpperSide — inner,Cabinet 1 — front left,-Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet1UpperSideInnerBody.dxf
+P048,11,Cabinet4BackBottomStripInnerBody,BackBottomStrip — inner003,Cabinet 4 — front right,+Z,974.2,0.0,0,166.0,766.0,profiles/Cabinet4BackBottomStripInnerBody.dxf
+P123,11,Cabinet1DrawerCabinetHighSupportLayer4Body,Cabinet 1 drawer cabinet highsupport strip — layer 4,Cabinet 1 — front left,-Y,0.0,759.6,0,914.8,25.4,profiles/Cabinet1DrawerCabinetHighSupportLayer4Body.dxf
+P122,11,Cabinet1DrawerCabinetHighSupportLayer3Body,Cabinet 1 drawer cabinet highsupport strip — layer 3,Cabinet 1 — front left,+Y,0.0,729.2,0,914.8,25.4,profiles/Cabinet1DrawerCabinetHighSupportLayer3Body.dxf
+P003,12,Cabinet1LowerSideOuterBody,LowerSide — outer,Cabinet 1 — front left,-Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet1LowerSideOuterBody.dxf
+P004,12,Cabinet1LowerSideInnerBody,LowerSide — inner,Cabinet 1 — front left,+Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet1LowerSideInnerBody.dxf
+P047,12,Cabinet4BackBottomStripOuterBody,BackBottomStrip — outer003,Cabinet 4 — front right,-Z,974.2,0.0,0,166.0,766.0,profiles/Cabinet4BackBottomStripOuterBody.dxf
+P116,12,Cabinet1DrawerHighSlideLayer1Body,Drawer slide — high side — layer 1,Cabinet 1 drawer,-Y,0.0,729.2,0,928.4,25.4,profiles/Cabinet1DrawerHighSlideLayer1Body.dxf
+P117,12,Cabinet1DrawerHighSlideLayer2Body,Drawer slide — high side — layer 2,Cabinet 1 drawer,+Y,0.0,759.6,0,928.4,25.4,profiles/Cabinet1DrawerHighSlideLayer2Body.dxf
+P304,13,Cabinet8UpperDrawerBottomBody,Drawer bottom — single ply007,Cabinet 8 upper drawer,+Z,0.0,0.0,0,439.4,490.6,profiles/Cabinet8UpperDrawerBottomBody.dxf
+P279,13,Cabinet7UpperDrawerBottomBody,Drawer bottom — single ply006,Cabinet 7 upper drawer,+Z,444.4,0.0,0,439.4,490.6,profiles/Cabinet7UpperDrawerBottomBody.dxf
+P127,13,Cabinet1DrawerCabinetLowChannelBackLayer2Body,Cabinet 1 drawer cabinet low channel back — layer 2,Cabinet 1 — front left,+Y,0.0,495.6,0,914.8,79.2,profiles/Cabinet1DrawerCabinetLowChannelBackLayer2Body.dxf
+P126,13,Cabinet1DrawerCabinetLowChannelBackLayer1Body,Cabinet 1 drawer cabinet low channel back — layer 1,Cabinet 1 — front left,-Y,0.0,579.8000000000001,0,914.8,79.2,profiles/Cabinet1DrawerCabinetLowChannelBackLayer1Body.dxf
+P274,13,Cabinet7UpperDrawerSideLowInnerBody,Drawer side — lowinner006,Cabinet 7 upper drawer,+X,888.8,0.0,90,100.0,490.6,profiles/Cabinet7UpperDrawerSideLowInnerBody.dxf
+P273,13,Cabinet7UpperDrawerSideLowOuterBody,Drawer side — lowouter006,Cabinet 7 upper drawer,-X,993.8,0.0,90,100.0,490.6,profiles/Cabinet7UpperDrawerSideLowOuterBody.dxf
+P119,13,Cabinet1DrawerCabinetLowSupportLayer4Body,Cabinet 1 drawer cabinet lowsupport strip — layer 4,Cabinet 1 — front left,+Y,0.0,664.0000000000001,0,914.8,25.4,profiles/Cabinet1DrawerCabinetLowSupportLayer4Body.dxf
+P121,13,Cabinet1DrawerCabinetLowAntiTipLayer4Body,Cabinet 1 drawer cabinet lowantitip strip — layer 4,Cabinet 1 — front left,+Y,0.0,694.4000000000001,0,914.8,25.4,profiles/Cabinet1DrawerCabinetLowAntiTipLayer4Body.dxf
+P118,13,Cabinet1DrawerCabinetLowSupportLayer3Body,Cabinet 1 drawer cabinet lowsupport strip — layer 3,Cabinet 1 — front left,-Y,0.0,724.8000000000001,0,914.8,25.4,profiles/Cabinet1DrawerCabinetLowSupportLayer3Body.dxf
+P120,13,Cabinet1DrawerCabinetLowAntiTipLayer3Body,Cabinet 1 drawer cabinet lowantitip strip — layer 3,Cabinet 1 — front left,-Y,0.0,755.2,0,914.8,25.4,profiles/Cabinet1DrawerCabinetLowAntiTipLayer3Body.dxf
+P281,13,Cabinet7UpperDrawerLowSlideLayer2Body,Drawer slide — low side — layer 012,Cabinet 7 upper drawer,+X,1098.8,0.0,90,25.4,471.2,profiles/Cabinet7UpperDrawerLowSlideLayer2Body.dxf
+P280,13,Cabinet7UpperDrawerLowSlideLayer1Body,Drawer slide — low side — layer 011,Cabinet 7 upper drawer,-X,1129.2,0.0,90,25.4,471.2,profiles/Cabinet7UpperDrawerLowSlideLayer1Body.dxf
+P062,14,Cabinet6TopInnerBody,Top — inner005,Cabinet 6 — front against wall,-Z,0.0,0.0,0,969.2,512.0,profiles/Cabinet6TopInnerBody.dxf
+P110,14,Cabinet1DrawerSideHighOuterBody,Drawer side — highouter,Cabinet 1 drawer,+Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet1DrawerSideHighOuterBody.dxf
+P191,14,Cabinet4CenterSupportInnerBody,Center top support — inner003,Cabinet 4 — front right,+Y,0.0,739.0,0,961.4,34.2,profiles/Cabinet4CenterSupportInnerBody.dxf
+P190,14,Cabinet4CenterSupportOuterBody,Center top support — outer003,Cabinet 4 — front right,-Y,0.0,699.8,0,961.4,34.2,profiles/Cabinet4CenterSupportOuterBody.dxf
+P061,15,Cabinet6TopOuterBody,Top — outer005,Cabinet 6 — front against wall,+Z,0.0,0.0,0,969.2,512.0,profiles/Cabinet6TopOuterBody.dxf
+P109,15,Cabinet1DrawerSideHighInnerBody,Drawer side — highinner,Cabinet 1 drawer,-Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet1DrawerSideHighInnerBody.dxf
+P302,15,Cabinet8UpperDrawerBackInnerBody,Drawer back — inner007,Cabinet 8 upper drawer,-Y,974.2,0.0,90,100.0,439.4,profiles/Cabinet8UpperDrawerBackInnerBody.dxf
+P303,15,Cabinet8UpperDrawerBackOuterBody,Drawer back — outer007,Cabinet 8 upper drawer,+Y,1079.2,0.0,90,100.0,439.4,profiles/Cabinet8UpperDrawerBackOuterBody.dxf
+P161,15,Cabinet3CenterSupportOuterBody,Center top support — outer002,Cabinet 3 — front left,-Y,0.0,699.8,0,961.4,34.2,profiles/Cabinet3CenterSupportOuterBody.dxf
+P162,15,Cabinet3CenterSupportInnerBody,Center top support — inner002,Cabinet 3 — front left,+Y,0.0,739.0,0,961.4,34.2,profiles/Cabinet3CenterSupportInnerBody.dxf
+P100,16,Cabinet6FrontSupportInnerBody,Front support — inner001,Cabinet 6 — front against wall,-Y,0.0,118.6,0,969.2,113.6,profiles/Cabinet6FrontSupportInnerBody.dxf
+P099,16,Cabinet6FrontSupportOuterBody,Front support — outer001,Cabinet 6 — front against wall,+Y,0.0,0.0,0,969.2,113.6,profiles/Cabinet6FrontSupportOuterBody.dxf
+P096,16,Cabinet8BackBottomStripInnerBody,BackBottomStrip — inner007,"Cabinet 8 — right bedside table, front away from wall",+Z,171.0,237.2,90,166.0,512.0,profiles/Cabinet8BackBottomStripInnerBody.dxf
+P095,16,Cabinet8BackBottomStripOuterBody,BackBottomStrip — outer007,"Cabinet 8 — right bedside table, front away from wall",-Z,0.0,237.2,90,166.0,512.0,profiles/Cabinet8BackBottomStripOuterBody.dxf
+P094,16,Cabinet8FrontBottomStripInnerBody,FrontBottomStrip — inner007,"Cabinet 8 — right bedside table, front away from wall",+Z,501.4,237.2,90,154.4,512.0,profiles/Cabinet8FrontBottomStripInnerBody.dxf
+P093,16,Cabinet8FrontBottomStripOuterBody,FrontBottomStrip — outer007,"Cabinet 8 — right bedside table, front away from wall",-Z,342.0,237.2,90,154.4,512.0,profiles/Cabinet8FrontBottomStripOuterBody.dxf
+P223,16,Cabinet7LowerDrawerSideHighInnerBody,Drawer side — highinner004,Cabinet 7 lower drawer,-X,660.8,237.2,0,490.6,100.0,profiles/Cabinet7LowerDrawerSideHighInnerBody.dxf
+P224,16,Cabinet7LowerDrawerSideHighOuterBody,Drawer side — highouter004,Cabinet 7 lower drawer,+X,660.8,342.2,0,490.6,100.0,profiles/Cabinet7LowerDrawerSideHighOuterBody.dxf
+P249,16,Cabinet8LowerDrawerSideLowInnerBody,Drawer side — lowinner005,Cabinet 8 lower drawer,+X,660.8,552.2,0,490.6,100.0,profiles/Cabinet8LowerDrawerSideLowInnerBody.dxf
+P248,16,Cabinet8LowerDrawerSideLowOuterBody,Drawer side — lowouter005,Cabinet 8 lower drawer,-X,660.8,447.2,0,490.6,100.0,profiles/Cabinet8LowerDrawerSideLowOuterBody.dxf
+P230,16,Cabinet7LowerDrawerHighSlideLayer1Body,Drawer slide — high side — layer 007,Cabinet 7 lower drawer,-X,0.0,754.2,0,471.2,25.4,profiles/Cabinet7LowerDrawerHighSlideLayer1Body.dxf
+P231,16,Cabinet7LowerDrawerHighSlideLayer2Body,Drawer slide — high side — layer 008,Cabinet 7 lower drawer,+X,476.2,754.2,0,471.2,25.4,profiles/Cabinet7LowerDrawerHighSlideLayer2Body.dxf
+P255,16,Cabinet8LowerDrawerLowSlideLayer1Body,Drawer slide — low side — layer 009,Cabinet 8 lower drawer,-X,1156.4,0.0,90,25.4,471.2,profiles/Cabinet8LowerDrawerLowSlideLayer1Body.dxf
+P256,16,Cabinet8LowerDrawerLowSlideLayer2Body,Drawer slide — low side — layer 010,Cabinet 8 lower drawer,+X,660.8,657.2,0,471.2,25.4,profiles/Cabinet8LowerDrawerLowSlideLayer2Body.dxf
+P091,17,Cabinet8BackOuterBody,Back — outer007,"Cabinet 8 — right bedside table, front away from wall",+Y,0.0,0.0,90,359.6,512.0,profiles/Cabinet8BackOuterBody.dxf
+P079,17,Cabinet7BackOuterBody,Back — outer006,"Cabinet 7 — left bedside table, front away from wall",+Y,364.6,0.0,90,359.6,512.0,profiles/Cabinet7BackOuterBody.dxf
+P080,17,Cabinet7BackInnerBody,Back — inner006,"Cabinet 7 — left bedside table, front away from wall",-Y,729.2,0.0,90,359.6,512.0,profiles/Cabinet7BackInnerBody.dxf
+P138,17,Cabinet2DrawerSideHighInnerBody,Drawer side — highinner001,Cabinet 2 drawer,-Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet2DrawerSideHighInnerBody.dxf
+P145,17,Cabinet2DrawerHighSlideLayer1Body,Drawer slide — high side — layer 001,Cabinet 2 drawer,-Y,0.0,699.8,0,928.4,25.4,profiles/Cabinet2DrawerHighSlideLayer1Body.dxf
+P146,17,Cabinet2DrawerHighSlideLayer2Body,Drawer slide — high side — layer 002,Cabinet 2 drawer,+Y,0.0,730.1999999999999,0,928.4,25.4,profiles/Cabinet2DrawerHighSlideLayer2Body.dxf
+P092,18,Cabinet8BackInnerBody,Back — inner007,"Cabinet 8 — right bedside table, front away from wall",-Y,0.0,0.0,90,359.6,512.0,profiles/Cabinet8BackInnerBody.dxf
+P217,18,Cabinet7LowerDrawerCombinedFaceFrameOuterBody,Cabinet 7 drawer combined face frame — outer,"Cabinet 7 — left bedside table, front away from wall",-Y,364.6,0.0,90,359.6,512.0,profiles/Cabinet7LowerDrawerCombinedFaceFrameOuterBody.dxf
+P219,18,Cabinet7LowerDrawerFaceOuterBody,Drawer face — outer004,Cabinet 7 lower drawer,-Y,556.0,25.19999999999997,90,143.0,461.6,profiles/Cabinet7LowerDrawerFaceOuterBody.dxf
+P271,18,Cabinet7UpperDrawerFaceOuterBody,Drawer face — outer006,Cabinet 7 upper drawer,-Y,389.80000000000007,25.19999999999997,90,143.0,461.6,profiles/Cabinet7UpperDrawerFaceOuterBody.dxf
+P218,18,Cabinet7LowerDrawerCombinedFaceFrameInnerBody,Cabinet 7 drawer combined face frame — inner,"Cabinet 7 — left bedside table, front away from wall",+Y,729.2,0.0,90,359.6,512.0,profiles/Cabinet7LowerDrawerCombinedFaceFrameInnerBody.dxf
+P220,18,Cabinet7LowerDrawerFaceInnerBody,Drawer face — inner004,Cabinet 7 lower drawer,+Y,920.6000000000001,25.19999999999709,90,143.0,461.6,profiles/Cabinet7LowerDrawerFaceInnerBody.dxf
+P272,18,Cabinet7UpperDrawerFaceInnerBody,Drawer face — inner006,Cabinet 7 upper drawer,+Y,754.4000000000002,25.19999999999709,90,143.0,461.6,profiles/Cabinet7UpperDrawerFaceInnerBody.dxf
+P139,18,Cabinet2DrawerSideHighOuterBody,Drawer side — highouter001,Cabinet 2 drawer,+Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet2DrawerSideHighOuterBody.dxf
+P032,19,Cabinet3BackInnerBody,Back — inner002,Cabinet 3 — front left,-X,729.2,0.0,90,359.6,766.0,profiles/Cabinet3BackInnerBody.dxf
+P020,19,Cabinet2BackInnerBody,Back — inner001,Cabinet 2 — front right,+X,0.0,0.0,90,359.6,766.0,profiles/Cabinet2BackInnerBody.dxf
+P031,19,Cabinet3BackOuterBody,Back — outer002,Cabinet 3 — front left,+X,364.6,0.0,90,359.6,766.0,profiles/Cabinet3BackOuterBody.dxf
+P019,20,Cabinet2BackOuterBody,Back — outer001,Cabinet 2 — front right,-X,729.2,0.0,90,359.6,766.0,profiles/Cabinet2BackOuterBody.dxf
+P008,20,Cabinet1BackInnerBody,Back — inner,Cabinet 1 — front left,-X,364.6,0.0,90,359.6,766.0,profiles/Cabinet1BackInnerBody.dxf
+P007,20,Cabinet1BackOuterBody,Back — outer,Cabinet 1 — front left,+X,0.0,0.0,90,359.6,766.0,profiles/Cabinet1BackOuterBody.dxf
+P113,21,Cabinet1DrawerBottomBody,Drawer bottom — single ply,Cabinet 1 drawer,+Z,0.0,0.0,0,947.8,693.4,profiles/Cabinet1DrawerBottomBody.dxf
+P053,22,Cabinet5RightSideOuterBody,RightSide — outer,Cabinet 5 — front against wall,+X,0.0,0.0,90,359.6,512.0,profiles/Cabinet5RightSideOuterBody.dxf
+P054,22,Cabinet5RightSideInnerBody,RightSide — inner,Cabinet 5 — front against wall,-X,364.6,0.0,90,359.6,512.0,profiles/Cabinet5RightSideInnerBody.dxf
+P063,22,Cabinet6LeftSideOuterBody,LeftSide — outer001,Cabinet 6 — front against wall,-X,729.2,0.0,90,359.6,512.0,profiles/Cabinet6LeftSideOuterBody.dxf
+P136,22,Cabinet2DrawerSideLowOuterBody,Drawer side — lowouter001,Cabinet 2 drawer,-Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet2DrawerSideLowOuterBody.dxf
+P064,23,Cabinet6LeftSideInnerBody,LeftSide — inner001,Cabinet 6 — front against wall,+X,0.0,0.0,90,359.6,512.0,profiles/Cabinet6LeftSideInnerBody.dxf
+P065,23,Cabinet6RightSideOuterBody,RightSide — outer001,Cabinet 6 — front against wall,+X,364.6,0.0,90,359.6,512.0,profiles/Cabinet6RightSideOuterBody.dxf
+P066,23,Cabinet6RightSideInnerBody,RightSide — inner001,Cabinet 6 — front against wall,-X,729.2,0.0,90,359.6,512.0,profiles/Cabinet6RightSideInnerBody.dxf
+P137,23,Cabinet2DrawerSideLowInnerBody,Drawer side — lowinner001,Cabinet 2 drawer,+Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet2DrawerSideLowInnerBody.dxf
+P144,23,Cabinet2DrawerLowSlideLayer2Body,Drawer slide — low side — layer 002,Cabinet 2 drawer,+Y,0.0,699.8,0,928.4,25.4,profiles/Cabinet2DrawerLowSlideLayer2Body.dxf
+P143,23,Cabinet2DrawerLowSlideLayer1Body,Drawer slide — low side — layer 001,Cabinet 2 drawer,-Y,0.0,730.1999999999999,0,928.4,25.4,profiles/Cabinet2DrawerLowSlideLayer1Body.dxf
+P142,24,Cabinet2DrawerBottomBody,Drawer bottom — single ply001,Cabinet 2 drawer,+Z,0.0,0.0,0,947.8,693.4,profiles/Cabinet2DrawerBottomBody.dxf
+P037,25,Cabinet4TopOuterBody,Top — outer003,Cabinet 4 — front right,+Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet4TopOuterBody.dxf
+P038,26,Cabinet4TopInnerBody,Top — inner003,Cabinet 4 — front right,-Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet4TopInnerBody.dxf
+P275,26,Cabinet7UpperDrawerSideHighInnerBody,Drawer side — highinner006,Cabinet 7 upper drawer,-X,974.2,0.0,90,100.0,490.6,profiles/Cabinet7UpperDrawerSideHighInnerBody.dxf
+P276,26,Cabinet7UpperDrawerSideHighOuterBody,Drawer side — highouter006,Cabinet 7 upper drawer,+X,1079.2,0.0,90,100.0,490.6,profiles/Cabinet7UpperDrawerSideHighOuterBody.dxf
+P001,27,Cabinet1TopOuterBody,Top — outer,Cabinet 1 — front left,+Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet1TopOuterBody.dxf
+P021,27,Cabinet2FrontBottomStripOuterBody,FrontBottomStrip — outer001,Cabinet 2 — front right,-Z,974.2,0.0,0,154.4,766.0,profiles/Cabinet2FrontBottomStripOuterBody.dxf
+P282,27,Cabinet7UpperDrawerHighSlideLayer1Body,Drawer slide — high side — layer 011,Cabinet 7 upper drawer,-X,1133.6000000000001,0.0,90,25.4,471.2,profiles/Cabinet7UpperDrawerHighSlideLayer1Body.dxf
+P283,27,Cabinet7UpperDrawerHighSlideLayer2Body,Drawer slide — high side — layer 012,Cabinet 7 upper drawer,+X,1164.0000000000002,0.0,90,25.4,471.2,profiles/Cabinet7UpperDrawerHighSlideLayer2Body.dxf
+P002,28,Cabinet1TopInnerBody,Top — inner,Cabinet 1 — front left,-Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet1TopInnerBody.dxf
+P022,28,Cabinet2FrontBottomStripInnerBody,FrontBottomStrip — inner001,Cabinet 2 — front right,+Z,974.2,0.0,0,154.4,766.0,profiles/Cabinet2FrontBottomStripInnerBody.dxf
+P305,28,Cabinet8UpperDrawerLowSlideLayer1Body,Drawer slide — low side — layer 013,Cabinet 8 upper drawer,-X,1133.6000000000001,0.0,90,25.4,471.2,profiles/Cabinet8UpperDrawerLowSlideLayer1Body.dxf
+P306,28,Cabinet8UpperDrawerLowSlideLayer2Body,Drawer slide — low side — layer 014,Cabinet 8 upper drawer,+X,1164.0000000000002,0.0,90,25.4,471.2,profiles/Cabinet8UpperDrawerLowSlideLayer2Body.dxf
+P014,29,Cabinet2TopInnerBody,Top — inner001,Cabinet 2 — front right,-Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet2TopInnerBody.dxf
+P034,29,Cabinet3FrontBottomStripInnerBody,FrontBottomStrip — inner002,Cabinet 3 — front left,+Z,974.2,0.0,0,154.4,766.0,profiles/Cabinet3FrontBottomStripInnerBody.dxf
+P013,30,Cabinet2TopOuterBody,Top — outer001,Cabinet 2 — front right,+Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet2TopOuterBody.dxf
+P033,30,Cabinet3FrontBottomStripOuterBody,FrontBottomStrip — outer002,Cabinet 3 — front left,-Z,974.2,0.0,0,154.4,766.0,profiles/Cabinet3FrontBottomStripOuterBody.dxf
+P308,30,Cabinet8UpperDrawerHighSlideLayer2Body,Drawer slide — high side — layer 014,Cabinet 8 upper drawer,+X,1164.0000000000002,0.0,90,25.4,471.2,profiles/Cabinet8UpperDrawerHighSlideLayer2Body.dxf
+P307,30,Cabinet8UpperDrawerHighSlideLayer1Body,Drawer slide — high side — layer 013,Cabinet 8 upper drawer,-X,1133.6000000000001,0.0,90,25.4,471.2,profiles/Cabinet8UpperDrawerHighSlideLayer1Body.dxf
+P050,31,Cabinet5TopInnerBody,Top — inner004,Cabinet 5 — front against wall,-Z,0.0,0.0,0,969.2,512.0,profiles/Cabinet5TopInnerBody.dxf
+P108,31,Cabinet1DrawerSideLowInnerBody,Drawer side — lowinner,Cabinet 1 drawer,+Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet1DrawerSideLowInnerBody.dxf
+P301,31,Cabinet8UpperDrawerSideHighOuterBody,Drawer side — highouter007,Cabinet 8 upper drawer,+X,1079.2,0.0,90,100.0,490.6,profiles/Cabinet8UpperDrawerSideHighOuterBody.dxf
+P300,31,Cabinet8UpperDrawerSideHighInnerBody,Drawer side — highinner007,Cabinet 8 upper drawer,-X,974.2,0.0,90,100.0,490.6,profiles/Cabinet8UpperDrawerSideHighInnerBody.dxf
+P133,31,Cabinet2CenterSupportInnerBody,Center top support — inner001,Cabinet 2 — front right,+Y,0.0,739.0,0,961.4,34.2,profiles/Cabinet2CenterSupportInnerBody.dxf
+P132,31,Cabinet2CenterSupportOuterBody,Center top support — outer001,Cabinet 2 — front right,-Y,0.0,699.8,0,961.4,34.2,profiles/Cabinet2CenterSupportOuterBody.dxf
+P049,32,Cabinet5TopOuterBody,Top — outer004,Cabinet 5 — front against wall,+Z,0.0,0.0,0,969.2,512.0,profiles/Cabinet5TopOuterBody.dxf
+P107,32,Cabinet1DrawerSideLowOuterBody,Drawer side — lowouter,Cabinet 1 drawer,-Y,0.0,517.0,0,947.8,177.8,profiles/Cabinet1DrawerSideLowOuterBody.dxf
+P299,32,Cabinet8UpperDrawerSideLowInnerBody,Drawer side — lowinner007,Cabinet 8 upper drawer,+X,1079.2,0.0,90,100.0,490.6,profiles/Cabinet8UpperDrawerSideLowInnerBody.dxf
+P298,32,Cabinet8UpperDrawerSideLowOuterBody,Drawer side — lowouter007,Cabinet 8 upper drawer,-X,974.2,0.0,90,100.0,490.6,profiles/Cabinet8UpperDrawerSideLowOuterBody.dxf
+P104,32,Cabinet1CenterSupportInnerBody,Center top support — inner,Cabinet 1 — front left,+Y,0.0,739.0,0,961.4,34.2,profiles/Cabinet1CenterSupportInnerBody.dxf
+P103,32,Cabinet1CenterSupportOuterBody,Center top support — outer,Cabinet 1 — front left,-Y,0.0,699.8,0,961.4,34.2,profiles/Cabinet1CenterSupportOuterBody.dxf
+P067,33,Cabinet6BackOuterBody,Back — outer005,Cabinet 6 — front against wall,-Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet6BackOuterBody.dxf
+P068,33,Cabinet6BackInnerBody,Back — inner005,Cabinet 6 — front against wall,+Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet6BackInnerBody.dxf
+P175,33,Cabinet3DrawerHighSlideLayer2Body,Drawer slide — high side — layer 004,Cabinet 3 drawer,+Y,0.0,759.6,0,928.4,25.4,profiles/Cabinet3DrawerHighSlideLayer2Body.dxf
+P174,33,Cabinet3DrawerHighSlideLayer1Body,Drawer slide — high side — layer 003,Cabinet 3 drawer,-Y,0.0,729.2,0,928.4,25.4,profiles/Cabinet3DrawerHighSlideLayer1Body.dxf
+P167,34,Cabinet3DrawerSideHighInnerBody,Drawer side — highinner002,Cabinet 3 drawer,-Y,0.0,182.8,0,947.8,177.8,profiles/Cabinet3DrawerSideHighInnerBody.dxf
+P166,34,Cabinet3DrawerSideLowInnerBody,Drawer side — lowinner002,Cabinet 3 drawer,+Y,0.0,0.0,0,947.8,177.8,profiles/Cabinet3DrawerSideLowInnerBody.dxf
+P194,34,Cabinet4DrawerSideLowOuterBody,Drawer side — lowouter003,Cabinet 4 drawer,-Y,0.0,548.4000000000001,0,947.8,177.8,profiles/Cabinet4DrawerSideLowOuterBody.dxf
+P168,34,Cabinet3DrawerSideHighOuterBody,Drawer side — highouter002,Cabinet 3 drawer,+Y,0.0,365.6,0,947.8,177.8,profiles/Cabinet3DrawerSideHighOuterBody.dxf
+P115,34,Cabinet1DrawerLowSlideLayer2Body,Drawer slide — low side — layer 2,Cabinet 1 drawer,+Y,0.0,761.6,0,928.4,25.4,profiles/Cabinet1DrawerLowSlideLayer2Body.dxf
+P114,34,Cabinet1DrawerLowSlideLayer1Body,Drawer slide — low side — layer 1,Cabinet 1 drawer,-Y,0.0,731.2,0,928.4,25.4,profiles/Cabinet1DrawerLowSlideLayer1Body.dxf
+P245,35,Cabinet8LowerDrawerCombinedFaceFrameInnerBody,Cabinet 8 drawer combined face frame — inner,"Cabinet 8 — right bedside table, front away from wall",+Y,0.0,0.0,90,359.6,512.0,profiles/Cabinet8LowerDrawerCombinedFaceFrameInnerBody.dxf
+P247,35,Cabinet8LowerDrawerFaceInnerBody,Drawer face — inner005,Cabinet 8 lower drawer,+Y,191.40000000000003,25.199999999985266,90,143.0,461.6,profiles/Cabinet8LowerDrawerFaceInnerBody.dxf
+P297,35,Cabinet8UpperDrawerFaceInnerBody,Drawer face — inner007,Cabinet 8 upper drawer,+Y,25.200000000000045,25.199999999985266,90,143.0,461.6,profiles/Cabinet8UpperDrawerFaceInnerBody.dxf
+P244,35,Cabinet8LowerDrawerCombinedFaceFrameOuterBody,Cabinet 8 drawer combined face frame — outer,"Cabinet 8 — right bedside table, front away from wall",-Y,364.6,0.0,90,359.6,512.0,profiles/Cabinet8LowerDrawerCombinedFaceFrameOuterBody.dxf
+P246,35,Cabinet8LowerDrawerFaceOuterBody,Drawer face — outer005,Cabinet 8 lower drawer,-Y,556.0,25.20000000002574,90,143.0,461.6,profiles/Cabinet8LowerDrawerFaceOuterBody.dxf
+P296,35,Cabinet8UpperDrawerFaceOuterBody,Drawer face — outer007,Cabinet 8 upper drawer,-Y,389.80000000000007,25.20000000002574,90,143.0,461.6,profiles/Cabinet8UpperDrawerFaceOuterBody.dxf
+P165,35,Cabinet3DrawerSideLowOuterBody,Drawer side — lowouter002,Cabinet 3 drawer,-Y,0.0,609.5999999999999,0,947.8,177.8,profiles/Cabinet3DrawerSideLowOuterBody.dxf
+P083,35,Cabinet7BackBottomStripOuterBody,BackBottomStrip — outer006,"Cabinet 7 — left bedside table, front away from wall",-Z,729.2,0.0,90,166.0,512.0,profiles/Cabinet7BackBottomStripOuterBody.dxf
+P084,35,Cabinet7BackBottomStripInnerBody,BackBottomStrip — inner006,"Cabinet 7 — left bedside table, front away from wall",+Z,900.2,0.0,90,166.0,512.0,profiles/Cabinet7BackBottomStripInnerBody.dxf
+P173,35,Cabinet3DrawerLowSlideLayer2Body,Drawer slide — low side — layer 004,Cabinet 3 drawer,+Y,0.0,517.0,0,928.4,25.4,profiles/Cabinet3DrawerLowSlideLayer2Body.dxf
+P172,35,Cabinet3DrawerLowSlideLayer1Body,Drawer slide — low side — layer 003,Cabinet 3 drawer,-Y,0.0,547.4,0,928.4,25.4,profiles/Cabinet3DrawerLowSlideLayer1Body.dxf
+P227,36,Cabinet7LowerDrawerBottomBody,Drawer bottom — single ply004,Cabinet 7 lower drawer,+Z,0.0,0.0,0,439.4,490.6,profiles/Cabinet7LowerDrawerBottomBody.dxf
+P254,36,Cabinet8LowerDrawerBottomBody,Drawer bottom — single ply005,Cabinet 8 lower drawer,+Z,444.4,0.0,90,490.6,439.4,profiles/Cabinet8LowerDrawerBottomBody.dxf
+P024,36,Cabinet2BackBottomStripInnerBody,BackBottomStrip — inner001,Cabinet 2 — front right,+Z,0.0,495.6,90,766.0,166.0,profiles/Cabinet2BackBottomStripInnerBody.dxf
+P023,36,Cabinet2BackBottomStripOuterBody,BackBottomStrip — outer001,Cabinet 2 — front right,-Z,940.0,0.0,0,166.0,766.0,profiles/Cabinet2BackBottomStripOuterBody.dxf
+P277,36,Cabinet7UpperDrawerBackInnerBody,Drawer back — inner006,Cabinet 7 upper drawer,-Y,0.0,666.6,0,439.4,100.0,profiles/Cabinet7UpperDrawerBackInnerBody.dxf
+P278,36,Cabinet7UpperDrawerBackOuterBody,Drawer back — outer006,Cabinet 7 upper drawer,+Y,444.4,666.6,0,439.4,100.0,profiles/Cabinet7UpperDrawerBackOuterBody.dxf
+P258,36,Cabinet8LowerDrawerHighSlideLayer2Body,Drawer slide — high side — layer 010,Cabinet 8 lower drawer,+X,1111.0,0.0,90,25.4,471.2,profiles/Cabinet8LowerDrawerHighSlideLayer2Body.dxf
+P257,36,Cabinet8LowerDrawerHighSlideLayer1Body,Drawer slide — high side — layer 009,Cabinet 8 lower drawer,-X,444.4,444.4,0,471.2,25.4,profiles/Cabinet8LowerDrawerHighSlideLayer1Body.dxf
+P195,37,Cabinet4DrawerSideLowInnerBody,Drawer side — lowinner003,Cabinet 4 drawer,+Y,0.0,0.0,0,947.8,177.8,profiles/Cabinet4DrawerSideLowInnerBody.dxf
+P196,37,Cabinet4DrawerSideHighInnerBody,Drawer side — highinner003,Cabinet 4 drawer,-Y,0.0,182.8,0,947.8,177.8,profiles/Cabinet4DrawerSideHighInnerBody.dxf
+P197,37,Cabinet4DrawerSideHighOuterBody,Drawer side — highouter003,Cabinet 4 drawer,+Y,0.0,365.6,0,947.8,177.8,profiles/Cabinet4DrawerSideHighOuterBody.dxf
+P057,37,Cabinet5BackBottomStripOuterBody,BackBottomStrip — outer004,Cabinet 5 — front against wall,-Z,0.0,548.4000000000001,0,969.2,166.0,profiles/Cabinet5BackBottomStripOuterBody.dxf
+P251,37,Cabinet8LowerDrawerSideHighOuterBody,Drawer side — highouter005,Cabinet 8 lower drawer,+X,1057.8,0.0,90,100.0,490.6,profiles/Cabinet8LowerDrawerSideHighOuterBody.dxf
+P250,37,Cabinet8LowerDrawerSideHighInnerBody,Drawer side — highinner005,Cabinet 8 lower drawer,-X,952.8,0.0,90,100.0,490.6,profiles/Cabinet8LowerDrawerSideHighInnerBody.dxf
+P204,37,Cabinet4DrawerHighSlideLayer2Body,Drawer slide — high side — layer 006,Cabinet 4 drawer,+Y,0.0,749.8000000000001,0,928.4,25.4,profiles/Cabinet4DrawerHighSlideLayer2Body.dxf
+P203,37,Cabinet4DrawerHighSlideLayer1Body,Drawer slide — high side — layer 005,Cabinet 4 drawer,-Y,0.0,719.4000000000001,0,928.4,25.4,profiles/Cabinet4DrawerHighSlideLayer1Body.dxf
+P086,38,Cabinet8TopInnerBody,Top — inner007,"Cabinet 8 — right bedside table, front away from wall",-Z,0.0,0.0,0,512.0,512.0,profiles/Cabinet8TopInnerBody.dxf
+P051,38,Cabinet5LeftSideOuterBody,LeftSide — outer,Cabinet 5 — front against wall,-X,517.0,0.0,0,512.0,359.6,profiles/Cabinet5LeftSideOuterBody.dxf
+P052,38,Cabinet5LeftSideInnerBody,LeftSide — inner,Cabinet 5 — front against wall,+X,517.0,364.6,0,512.0,359.6,profiles/Cabinet5LeftSideInnerBody.dxf
+P081,38,Cabinet7FrontBottomStripOuterBody,FrontBottomStrip — outer006,"Cabinet 7 — left bedside table, front away from wall",-Z,0.0,517.0,0,512.0,154.4,profiles/Cabinet7FrontBottomStripOuterBody.dxf
+P082,38,Cabinet7FrontBottomStripInnerBody,FrontBottomStrip — inner006,"Cabinet 7 — left bedside table, front away from wall",+Z,1034.0,0.0,90,154.4,512.0,profiles/Cabinet7FrontBottomStripInnerBody.dxf
+P202,38,Cabinet4DrawerLowSlideLayer2Body,Drawer slide — low side — layer 006,Cabinet 4 drawer,+Y,0.0,759.6,0,928.4,25.4,profiles/Cabinet4DrawerLowSlideLayer2Body.dxf
+P201,38,Cabinet4DrawerLowSlideLayer1Body,Drawer slide — low side — layer 005,Cabinet 4 drawer,-Y,0.0,729.2,0,928.4,25.4,profiles/Cabinet4DrawerLowSlideLayer1Body.dxf
+P069,39,Cabinet6BackBottomStripOuterBody,BackBottomStrip — outer005,Cabinet 6 — front against wall,-Z,0.0,171.0,0,969.2,166.0,profiles/Cabinet6BackBottomStripOuterBody.dxf
+P058,39,Cabinet5BackBottomStripInnerBody,BackBottomStrip — inner004,Cabinet 5 — front against wall,+Z,0.0,0.0,0,969.2,166.0,profiles/Cabinet5BackBottomStripInnerBody.dxf
+P070,39,Cabinet6BackBottomStripInnerBody,BackBottomStrip — inner005,Cabinet 6 — front against wall,+Z,0.0,342.0,0,969.2,166.0,profiles/Cabinet6BackBottomStripInnerBody.dxf
+P059,39,Cabinet5FrontBottomStripOuterBody,FrontBottomStrip — outer004,Cabinet 5 — front against wall,-Z,0.0,513.0,0,969.2,152.4,profiles/Cabinet5FrontBottomStripOuterBody.dxf
+P098,39,Cabinet5FrontSupportInnerBody,Front support — inner,Cabinet 5 — front against wall,-Y,0.0,670.4,0,969.2,113.6,profiles/Cabinet5FrontSupportInnerBody.dxf
+P072,40,Cabinet6FrontBottomStripInnerBody,FrontBottomStrip — inner005,Cabinet 6 — front against wall,+Z,0.0,314.8,0,969.2,152.4,profiles/Cabinet6FrontBottomStripInnerBody.dxf
+P060,40,Cabinet5FrontBottomStripInnerBody,FrontBottomStrip — inner004,Cabinet 5 — front against wall,+Z,0.0,0.0,0,969.2,152.4,profiles/Cabinet5FrontBottomStripInnerBody.dxf
+P071,40,Cabinet6FrontBottomStripOuterBody,FrontBottomStrip — outer005,Cabinet 6 — front against wall,-Z,0.0,157.4,0,969.2,152.4,profiles/Cabinet6FrontBottomStripOuterBody.dxf
+P011,40,Cabinet1BackBottomStripOuterBody,BackBottomStrip — outer,Cabinet 1 — front left,-Z,974.2,0.0,0,166.0,766.0,profiles/Cabinet1BackBottomStripOuterBody.dxf
+P012,40,Cabinet1BackBottomStripInnerBody,BackBottomStrip — inner,Cabinet 1 — front left,+Z,0.0,472.20000000000005,90,766.0,166.0,profiles/Cabinet1BackBottomStripInnerBody.dxf
+P097,40,Cabinet5FrontSupportOuterBody,Front support — outer,Cabinet 5 — front against wall,+Y,0.0,643.2,0,969.2,113.6,profiles/Cabinet5FrontSupportOuterBody.dxf
+P229,40,Cabinet7LowerDrawerLowSlideLayer2Body,Drawer slide — low side — layer 008,Cabinet 7 lower drawer,+X,476.2,761.8000000000001,0,471.2,25.4,profiles/Cabinet7LowerDrawerLowSlideLayer2Body.dxf
+P228,40,Cabinet7LowerDrawerLowSlideLayer1Body,Drawer slide — low side — layer 007,Cabinet 7 lower drawer,-X,0.0,761.8000000000001,0,471.2,25.4,profiles/Cabinet7LowerDrawerLowSlideLayer1Body.dxf
+P074,41,Cabinet7TopInnerBody,Top — inner006,"Cabinet 7 — left bedside table, front away from wall",-Z,0.0,0.0,0,512.0,512.0,profiles/Cabinet7TopInnerBody.dxf
+P085,41,Cabinet8TopOuterBody,Top — outer007,"Cabinet 8 — right bedside table, front away from wall",+Z,517.0,0.0,0,512.0,512.0,profiles/Cabinet8TopOuterBody.dxf
+P009,41,Cabinet1FrontBottomStripOuterBody,FrontBottomStrip — outer,Cabinet 1 — front left,-Z,1034.0,0.0,0,154.4,766.0,profiles/Cabinet1FrontBottomStripOuterBody.dxf
+P010,41,Cabinet1FrontBottomStripInnerBody,FrontBottomStrip — inner,Cabinet 1 — front left,+Z,0.0,517.0,90,766.0,154.4,profiles/Cabinet1FrontBottomStripInnerBody.dxf
+P221,41,Cabinet7LowerDrawerSideLowOuterBody,Drawer side — lowouter004,Cabinet 7 lower drawer,-X,0.0,676.4,0,490.6,100.0,profiles/Cabinet7LowerDrawerSideLowOuterBody.dxf
+P222,41,Cabinet7LowerDrawerSideLowInnerBody,Drawer side — lowinner004,Cabinet 7 lower drawer,+X,495.6,676.4,0,490.6,100.0,profiles/Cabinet7LowerDrawerSideLowInnerBody.dxf
+P189,42,Cabinet4DrawerFaceFrameInnerBody,Cabinet 4 drawer face frame — inner,Cabinet 4 — front right,-X,0.0,0.0,90,359.6,766.0,profiles/Cabinet4DrawerFaceFrameInnerBody.dxf
+P193,42,Cabinet4DrawerFaceInnerBody,Drawer face — inner003,Cabinet 4 drawer,-X,25.200000000000045,25.199999999999363,90,309.2,715.6,profiles/Cabinet4DrawerFaceInnerBody.dxf
+P073,42,Cabinet7TopOuterBody,Top — outer006,"Cabinet 7 — left bedside table, front away from wall",+Z,364.6,0.0,0,512.0,512.0,profiles/Cabinet7TopOuterBody.dxf
+P159,43,Cabinet3DrawerFaceFrameOuterBody,Cabinet 3 drawer face frame — outer,Cabinet 3 — front left,-X,0.0,0.0,90,359.6,766.0,profiles/Cabinet3DrawerFaceFrameOuterBody.dxf
+P163,43,Cabinet3DrawerFaceOuterBody,Drawer face — outer002,Cabinet 3 drawer,-X,25.200000000000045,25.19999999999459,90,309.2,715.6,profiles/Cabinet3DrawerFaceOuterBody.dxf
+P188,43,Cabinet4DrawerFaceFrameOuterBody,Cabinet 4 drawer face frame — outer,Cabinet 4 — front right,+X,729.2,0.0,90,359.6,766.0,profiles/Cabinet4DrawerFaceFrameOuterBody.dxf
+P192,43,Cabinet4DrawerFaceOuterBody,Drawer face — outer003,Cabinet 4 drawer,+X,754.4000000000001,25.200000000000273,90,309.2,715.6,profiles/Cabinet4DrawerFaceOuterBody.dxf
+P160,43,Cabinet3DrawerFaceFrameInnerBody,Cabinet 3 drawer face frame — inner,Cabinet 3 — front left,+X,364.6,0.0,90,359.6,766.0,profiles/Cabinet3DrawerFaceFrameInnerBody.dxf
+P164,43,Cabinet3DrawerFaceInnerBody,Drawer face — inner002,Cabinet 3 drawer,+X,389.8,25.199999999997885,90,309.2,715.6,profiles/Cabinet3DrawerFaceInnerBody.dxf
+P090,44,Cabinet8RightSideInnerBody,RightSide — inner003,"Cabinet 8 — right bedside table, front away from wall",-X,0.0,0.0,90,359.6,512.0,profiles/Cabinet8RightSideInnerBody.dxf
+P035,44,Cabinet3BackBottomStripOuterBody,BackBottomStrip — outer002,Cabinet 3 — front left,-Z,827.2,0.0,0,166.0,766.0,profiles/Cabinet3BackBottomStripOuterBody.dxf
+P036,44,Cabinet3BackBottomStripInnerBody,BackBottomStrip — inner002,Cabinet 3 — front left,+Z,998.2,0.0,0,166.0,766.0,profiles/Cabinet3BackBottomStripInnerBody.dxf
+P252,44,Cabinet8LowerDrawerBackInnerBody,Drawer back — inner005,Cabinet 8 lower drawer,-Y,605.0,0.0,90,100.0,439.4,profiles/Cabinet8LowerDrawerBackInnerBody.dxf
+P225,44,Cabinet7LowerDrawerBackInnerBody,Drawer back — inner004,Cabinet 7 lower drawer,-Y,395.0,0.0,90,100.0,439.4,profiles/Cabinet7LowerDrawerBackInnerBody.dxf
+P253,44,Cabinet8LowerDrawerBackOuterBody,Drawer back — outer005,Cabinet 8 lower drawer,+Y,710.0,0.0,90,100.0,439.4,profiles/Cabinet8LowerDrawerBackOuterBody.dxf
+P226,44,Cabinet7LowerDrawerBackOuterBody,Drawer back — outer004,Cabinet 7 lower drawer,+Y,500.0,0.0,90,100.0,439.4,profiles/Cabinet7LowerDrawerBackOuterBody.dxf
+P314,44,Cabinet8UpperDrawerCabinetHighSupportLayer4Body,Cabinet 8 upper drawer cabinet highsupport strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",-X,0.0,517.0,0,457.6,25.4,profiles/Cabinet8UpperDrawerCabinetHighSupportLayer4Body.dxf
+P316,44,Cabinet8UpperDrawerCabinetHighAntiTipLayer4Body,Cabinet 8 upper drawer cabinet highantitip strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",-X,364.6,462.6,0,457.6,25.4,profiles/Cabinet8UpperDrawerCabinetHighAntiTipLayer4Body.dxf
+P315,44,Cabinet8UpperDrawerCabinetHighAntiTipLayer3Body,Cabinet 8 upper drawer cabinet highantitip strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",+X,364.6,0.0,90,25.4,457.6,profiles/Cabinet8UpperDrawerCabinetHighAntiTipLayer3Body.dxf
+P078,45,Cabinet7RightSideInnerBody,RightSide — inner002,"Cabinet 7 — left bedside table, front away from wall",-X,364.6,0.0,90,359.6,512.0,profiles/Cabinet7RightSideInnerBody.dxf
+P077,45,Cabinet7RightSideOuterBody,RightSide — outer002,"Cabinet 7 — left bedside table, front away from wall",+X,0.0,0.0,90,359.6,512.0,profiles/Cabinet7RightSideOuterBody.dxf
+P243,45,Cabinet7LowerDrawerCabinetHighChannelBackLayer2Body,Cabinet 7 lower drawer cabinet high channel back — layer 2,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,84.2,0,457.6,79.2,profiles/Cabinet7LowerDrawerCabinetHighChannelBackLayer2Body.dxf
+P295,45,Cabinet7UpperDrawerCabinetHighChannelBackLayer2Body,Cabinet 7 upper drawer cabinet high channel back — layer 2,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,252.60000000000002,0,457.6,79.2,profiles/Cabinet7UpperDrawerCabinetHighChannelBackLayer2Body.dxf
+P294,45,Cabinet7UpperDrawerCabinetHighChannelBackLayer1Body,Cabinet 7 upper drawer cabinet high channel back — layer 1,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,168.4,0,457.6,79.2,profiles/Cabinet7UpperDrawerCabinetHighChannelBackLayer1Body.dxf
+P242,45,Cabinet7LowerDrawerCabinetHighChannelBackLayer1Body,Cabinet 7 lower drawer cabinet high channel back — layer 1,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,0.0,0,457.6,79.2,profiles/Cabinet7LowerDrawerCabinetHighChannelBackLayer1Body.dxf
+P317,45,Cabinet8UpperDrawerCabinetLowChannelBackLayer1Body,Cabinet 8 upper drawer cabinet low channel back — layer 1,"Cabinet 8 — right bedside table, front away from wall",-X,462.6,519.1999999999999,0,457.6,79.2,profiles/Cabinet8UpperDrawerCabinetLowChannelBackLayer1Body.dxf
+P267,45,Cabinet8LowerDrawerCabinetLowChannelBackLayer1Body,Cabinet 8 lower drawer cabinet low channel back — layer 1,"Cabinet 8 — right bedside table, front away from wall",-X,0.0,579.9999999999999,0,457.6,79.2,profiles/Cabinet8LowerDrawerCabinetLowChannelBackLayer1Body.dxf
+P318,45,Cabinet8UpperDrawerCabinetLowChannelBackLayer2Body,Cabinet 8 upper drawer cabinet low channel back — layer 2,"Cabinet 8 — right bedside table, front away from wall",+X,462.6,603.4,0,457.6,79.2,profiles/Cabinet8UpperDrawerCabinetLowChannelBackLayer2Body.dxf
+P268,45,Cabinet8LowerDrawerCabinetLowChannelBackLayer2Body,Cabinet 8 lower drawer cabinet low channel back — layer 2,"Cabinet 8 — right bedside table, front away from wall",+X,0.0,664.1999999999999,0,457.6,79.2,profiles/Cabinet8LowerDrawerCabinetLowChannelBackLayer2Body.dxf
+P239,45,Cabinet7LowerDrawerCabinetHighAntiTipLayer4Body,Cabinet 7 lower drawer cabinet highantitip strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,427.99999999999994,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetHighAntiTipLayer4Body.dxf
+P289,45,Cabinet7UpperDrawerCabinetHighSupportLayer4Body,Cabinet 7 upper drawer cabinet highsupport strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,488.7999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetHighSupportLayer4Body.dxf
+P288,45,Cabinet7UpperDrawerCabinetHighSupportLayer3Body,Cabinet 7 upper drawer cabinet highsupport strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,458.3999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetHighSupportLayer3Body.dxf
+P238,45,Cabinet7LowerDrawerCabinetHighAntiTipLayer3Body,Cabinet 7 lower drawer cabinet highantitip strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,397.59999999999997,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetHighAntiTipLayer3Body.dxf
+P237,45,Cabinet7LowerDrawerCabinetHighSupportLayer4Body,Cabinet 7 lower drawer cabinet highsupport strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",-X,729.2,367.2,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetHighSupportLayer4Body.dxf
+P236,45,Cabinet7LowerDrawerCabinetHighSupportLayer3Body,Cabinet 7 lower drawer cabinet highsupport strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",+X,729.2,336.8,0,457.6,25.4,profiles/Cabinet7LowerDrawerCabinetHighSupportLayer3Body.dxf
+P291,45,Cabinet7UpperDrawerCabinetHighAntiTipLayer4Body,Cabinet 7 upper drawer cabinet highantitip strip — layer 4,"Cabinet 7 — left bedside table, front away from wall",-X,0.0,549.5999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetHighAntiTipLayer4Body.dxf
+P290,45,Cabinet7UpperDrawerCabinetHighAntiTipLayer3Body,Cabinet 7 upper drawer cabinet highantitip strip — layer 3,"Cabinet 7 — left bedside table, front away from wall",+X,0.0,519.1999999999999,0,457.6,25.4,profiles/Cabinet7UpperDrawerCabinetHighAntiTipLayer3Body.dxf
+P262,45,Cabinet8LowerDrawerCabinetLowAntiTipLayer4Body,Cabinet 8 lower drawer cabinet lowantitip strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",+X,462.6,748.4,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetLowAntiTipLayer4Body.dxf
+P260,45,Cabinet8LowerDrawerCabinetLowSupportLayer4Body,Cabinet 8 lower drawer cabinet lowsupport strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",+X,462.6,687.6,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetLowSupportLayer4Body.dxf
+P259,45,Cabinet8LowerDrawerCabinetLowSupportLayer3Body,Cabinet 8 lower drawer cabinet lowsupport strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",-X,0.0,748.4,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetLowSupportLayer3Body.dxf
+P261,45,Cabinet8LowerDrawerCabinetLowAntiTipLayer3Body,Cabinet 8 lower drawer cabinet lowantitip strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",-X,462.6,718.0,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetLowAntiTipLayer3Body.dxf
+P089,46,Cabinet8RightSideOuterBody,RightSide — outer003,"Cabinet 8 — right bedside table, front away from wall",+X,729.2,121.6,90,359.6,512.0,profiles/Cabinet8RightSideOuterBody.dxf
+P088,46,Cabinet8LeftSideInnerBody,LeftSide — inner003,"Cabinet 8 — right bedside table, front away from wall",+X,364.6,0.0,90,359.6,512.0,profiles/Cabinet8LeftSideInnerBody.dxf
+P087,46,Cabinet8LeftSideOuterBody,LeftSide — outer003,"Cabinet 8 — right bedside table, front away from wall",-X,0.0,0.0,90,359.6,512.0,profiles/Cabinet8LeftSideOuterBody.dxf
+P320,46,Cabinet8UpperDrawerCabinetHighChannelBackLayer2Body,Cabinet 8 upper drawer cabinet high channel back — layer 2,"Cabinet 8 — right bedside table, front away from wall",-X,462.6,638.6,0,457.6,79.2,profiles/Cabinet8UpperDrawerCabinetHighChannelBackLayer2Body.dxf
+P270,46,Cabinet8LowerDrawerCabinetHighChannelBackLayer2Body,Cabinet 8 lower drawer cabinet high channel back — layer 2,"Cabinet 8 — right bedside table, front away from wall",-X,0.0,638.6,0,457.6,79.2,profiles/Cabinet8LowerDrawerCabinetHighChannelBackLayer2Body.dxf
+P269,46,Cabinet8LowerDrawerCabinetHighChannelBackLayer1Body,Cabinet 8 lower drawer cabinet high channel back — layer 1,"Cabinet 8 — right bedside table, front away from wall",+X,1093.8000000000002,121.6,90,79.2,457.6,profiles/Cabinet8LowerDrawerCabinetHighChannelBackLayer1Body.dxf
+P319,46,Cabinet8UpperDrawerCabinetHighChannelBackLayer1Body,Cabinet 8 upper drawer cabinet high channel back — layer 1,"Cabinet 8 — right bedside table, front away from wall",+X,0.0,517.0,0,457.6,79.2,profiles/Cabinet8UpperDrawerCabinetHighChannelBackLayer1Body.dxf
+P310,46,Cabinet8UpperDrawerCabinetLowSupportLayer4Body,Cabinet 8 upper drawer cabinet lowsupport strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",+X,729.2,30.4,0,457.6,25.4,profiles/Cabinet8UpperDrawerCabinetLowSupportLayer4Body.dxf
+P309,46,Cabinet8UpperDrawerCabinetLowSupportLayer3Body,Cabinet 8 upper drawer cabinet lowsupport strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",-X,729.2,0.0,0,457.6,25.4,profiles/Cabinet8UpperDrawerCabinetLowSupportLayer3Body.dxf
+P313,46,Cabinet8UpperDrawerCabinetHighSupportLayer3Body,Cabinet 8 upper drawer cabinet highsupport strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",+X,462.6,753.2,0,457.6,25.4,profiles/Cabinet8UpperDrawerCabinetHighSupportLayer3Body.dxf
+P266,46,Cabinet8LowerDrawerCabinetHighAntiTipLayer4Body,Cabinet 8 lower drawer cabinet highantitip strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",-X,462.6,722.8000000000001,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetHighAntiTipLayer4Body.dxf
+P265,46,Cabinet8LowerDrawerCabinetHighAntiTipLayer3Body,Cabinet 8 lower drawer cabinet highantitip strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",+X,0.0,753.2,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetHighAntiTipLayer3Body.dxf
+P264,46,Cabinet8LowerDrawerCabinetHighSupportLayer4Body,Cabinet 8 lower drawer cabinet highsupport strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",-X,0.0,722.8000000000001,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetHighSupportLayer4Body.dxf
+P263,46,Cabinet8LowerDrawerCabinetHighSupportLayer3Body,Cabinet 8 lower drawer cabinet highsupport strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",+X,0.0,601.2,0,457.6,25.4,profiles/Cabinet8LowerDrawerCabinetHighSupportLayer3Body.dxf
+P312,46,Cabinet8UpperDrawerCabinetLowAntiTipLayer4Body,Cabinet 8 upper drawer cabinet lowantitip strip — layer 4,"Cabinet 8 — right bedside table, front away from wall",+X,729.2,91.19999999999999,0,457.6,25.4,profiles/Cabinet8UpperDrawerCabinetLowAntiTipLayer4Body.dxf
+P311,46,Cabinet8UpperDrawerCabinetLowAntiTipLayer3Body,Cabinet 8 upper drawer cabinet lowantitip strip — layer 3,"Cabinet 8 — right bedside table, front away from wall",-X,729.2,60.8,0,457.6,25.4,profiles/Cabinet8UpperDrawerCabinetLowAntiTipLayer3Body.dxf
+P043,47,Cabinet4BackOuterBody,Back — outer003,Cabinet 4 — front right,-X,0.0,0.0,90,359.6,766.0,profiles/Cabinet4BackOuterBody.dxf
+P044,47,Cabinet4BackInnerBody,Back — inner003,Cabinet 4 — front right,+X,364.6,0.0,90,359.6,766.0,profiles/Cabinet4BackInnerBody.dxf
+P101,47,Cabinet1DrawerFaceFrameOuterBody,Cabinet 1 drawer face frame — outer,Cabinet 1 — front left,-X,729.2,0.0,90,359.6,766.0,profiles/Cabinet1DrawerFaceFrameOuterBody.dxf
+P105,47,Cabinet1DrawerFaceOuterBody,Drawer face — outer,Cabinet 1 drawer,-X,754.4000000000001,25.199999999997885,90,309.2,715.6,profiles/Cabinet1DrawerFaceOuterBody.dxf
+P130,48,Cabinet2DrawerFaceFrameOuterBody,Cabinet 2 drawer face frame — outer,Cabinet 2 — front right,+X,364.6,0.0,90,359.6,766.0,profiles/Cabinet2DrawerFaceFrameOuterBody.dxf
+P134,48,Cabinet2DrawerFaceOuterBody,Drawer face — outer001,Cabinet 2 drawer,+X,389.8,25.2,90,309.2,715.6,profiles/Cabinet2DrawerFaceOuterBody.dxf
+P102,48,Cabinet1DrawerFaceFrameInnerBody,Cabinet 1 drawer face frame — inner,Cabinet 1 — front left,+X,0.0,0.0,90,359.6,766.0,profiles/Cabinet1DrawerFaceFrameInnerBody.dxf
+P106,48,Cabinet1DrawerFaceInnerBody,Drawer face — inner,Cabinet 1 drawer,+X,25.200000000000045,25.2,90,309.2,715.6,profiles/Cabinet1DrawerFaceInnerBody.dxf
+P131,48,Cabinet2DrawerFaceFrameInnerBody,Cabinet 2 drawer face frame — inner,Cabinet 2 — front right,-X,729.2,0.0,90,359.6,766.0,profiles/Cabinet2DrawerFaceFrameInnerBody.dxf
+P135,48,Cabinet2DrawerFaceInnerBody,Drawer face — inner001,Cabinet 2 drawer,-X,754.4000000000001,25.199999999999704,90,309.2,715.6,profiles/Cabinet2DrawerFaceInnerBody.dxf
+P025,49,Cabinet3TopOuterBody,Top — outer002,Cabinet 3 — front left,+Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet3TopOuterBody.dxf
+P045,49,Cabinet4FrontBottomStripOuterBody,FrontBottomStrip — outer003,Cabinet 4 — front right,-Z,974.2,0.0,0,154.4,766.0,profiles/Cabinet4FrontBottomStripOuterBody.dxf
+P026,50,Cabinet3TopInnerBody,Top — inner002,Cabinet 3 — front left,-Z,0.0,0.0,0,969.2,766.0,profiles/Cabinet3TopInnerBody.dxf
+P046,50,Cabinet4FrontBottomStripInnerBody,FrontBottomStrip — inner003,Cabinet 4 — front right,+Z,974.2,0.0,0,154.4,766.0,profiles/Cabinet4FrontBottomStripInnerBody.dxf
+P055,51,Cabinet5BackOuterBody,Back — outer004,Cabinet 5 — front against wall,-Y,0.0,0.0,0,969.2,359.6,profiles/Cabinet5BackOuterBody.dxf
+P056,51,Cabinet5BackInnerBody,Back — inner004,Cabinet 5 — front against wall,+Y,0.0,364.6,0,969.2,359.6,profiles/Cabinet5BackInnerBody.dxf
+P171,52,Cabinet3DrawerBottomBody,Drawer bottom — single ply002,Cabinet 3 drawer,+Z,0.0,0.0,0,947.8,693.4,profiles/Cabinet3DrawerBottomBody.dxf

@@ -124,6 +124,21 @@ def _is_rectangle(face):
     )
 
 
+def _panel_boundary_planes(planes, label):
+    """Use the two broad ply faces, ignoring small faces left by other joints."""
+    if len(planes) < 2:
+        raise JointValidationError(
+            f"Receiving body {label!r} needs two boundary planes parallel to the selected face."
+        )
+    if len(planes) > 2:
+        planes = sorted(
+            planes,
+            key=lambda plane: sum(face.Area for face in plane[1]),
+            reverse=True,
+        )[:2]
+    return planes
+
+
 def close(actual, expected, tolerance=LINEAR_TOLERANCE):
     return abs(actual - expected) <= tolerance
 
@@ -271,11 +286,7 @@ def analyze_joint(
                 parallel_planes.append([offset, [face]])
             else:
                 matching_plane[1].append(face)
-        if len(parallel_planes) != 2:
-            raise JointValidationError(
-                f"Receiving body {receiver_body.Label!r} must have exactly two "
-                "boundary planes parallel to the selected face."
-            )
+        parallel_planes = _panel_boundary_planes(parallel_planes, receiver_body.Label)
         parallel_planes_by_body.append(parallel_planes)
         for plane_offset, plane_faces in parallel_planes:
             if abs(plane_offset) > LINEAR_TOLERANCE:
@@ -522,11 +533,7 @@ def build_receiver_fingers(
             parallel_planes.append([offset, [face]])
         else:
             matching_plane[1].append(face)
-    if len(parallel_planes) != 2:
-        raise JointValidationError(
-            f"Receiving body {receiver_base.Label!r} must have exactly two "
-            "boundary planes parallel to the selected face."
-        )
+    parallel_planes = _panel_boundary_planes(parallel_planes, receiver_base.Label)
     offsets = [plane[0] for plane in parallel_planes]
     near_index = 0 if offsets[0] <= offsets[1] else 1
     near_faces = parallel_planes[near_index][1]
@@ -732,10 +739,7 @@ class SourceJointProxy:
                 geometry, obj.FingerCount, overshoot, fillet_radius
             )
             obj.ToolShape = cutting_tool
-            # Keep the seam between a finger's side and an adjacent coplanar
-            # panel face.  Refining this fuse merges those faces, effectively
-            # lengthening the adjacent face and making a later joint overlap.
-            obj.Shape = source.Shape.fuse(fingers)
+            obj.Shape = source.Shape.fuse(fingers).removeSplitter()
             obj.FingerWidth = width
             obj.FingerDepth = depth
             obj.FilletRadius = radius
@@ -755,6 +759,9 @@ class JointInputProxy:
             return
         source, edge_name = _link_sub_value(obj.SelectedEdge)
         obj.Shape = source.Shape
+        # FreeCAD's FeaturePython shape assignment drops the source Placement.
+        # Preserve it before the joint uses this copied feature as its base.
+        obj.Placement = source.Placement
         obj.EdgeLength = _subshape(source, edge_name, "Edge").Length
         obj.ReceiverThickness = obj.EdgeLength * obj.ReceiverThicknessRatio
 
@@ -771,7 +778,7 @@ class JointResultProxy:
         if obj.InputFeature is None or obj.Joint is None or obj.Joint.Shape.isNull():
             return
         if self.operation == "Add":
-            obj.Shape = obj.InputFeature.Shape.fuse(obj.Joint.Shape)
+            obj.Shape = obj.InputFeature.Shape.fuse(obj.Joint.Shape).removeSplitter()
         else:
             tool = obj.Joint.ToolShape if hasattr(obj.Joint, "ToolShape") else obj.Joint.Shape
             result = obj.InputFeature.Shape.cut(tool)
@@ -803,6 +810,21 @@ class JointResultProxy:
 
     def loads(self, state):
         self.operation = state["operation"]
+
+
+class RefinedBodyProxy:
+    """Merge redundant coplanar faces once all joints and cuts are complete."""
+
+    def __init__(self, obj=None):
+        if obj is not None:
+            obj.Proxy = self
+
+    def execute(self, obj):
+        if not hasattr(obj, "InputFeature") or obj.InputFeature is None:
+            return
+        source = obj.InputFeature
+        obj.Shape = source.Shape.removeSplitter()
+        obj.Placement = source.Placement
 
 
 class JointViewProvider:

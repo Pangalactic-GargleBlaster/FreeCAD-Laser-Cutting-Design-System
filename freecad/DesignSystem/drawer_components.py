@@ -68,6 +68,14 @@ def _transform(shape, axis, x, y, z):
     return transformed
 
 
+def _update_engraving_link(engraving, scale, placement):
+    """Avoid touching a link when its preview transform is already current."""
+    if abs(engraving.Scale - scale) > 1e-10:
+        engraving.Scale = scale
+    if not engraving.Placement.isSame(placement, 1e-9):
+        engraving.Placement = placement
+
+
 class DrawerFrontPanelProxy:
     """Build a prototype-derived drawer front or matching face frame."""
 
@@ -331,7 +339,6 @@ class FiligreeEngravingProxy:
         )
         if scale <= 1e-9:
             raise ValueError("Filigree cannot fit inside the drawer face.")
-        engraving.Scale = scale
         motif_center_y = (safe_bottom + safe_top) / 2
         surface = (
             front.Thickness.Value + 0.15
@@ -353,7 +360,7 @@ class FiligreeEngravingProxy:
             placement.A14 = front.X.Value + width / 2
             placement.A24 = front.Y.Value + surface
             placement.A34 = front.Z.Value + motif_center_y
-        engraving.Placement = App.Placement(placement)
+        _update_engraving_link(engraving, scale, App.Placement(placement))
 
     def dumps(self):
         return None
@@ -409,7 +416,6 @@ class FiligreePairEngravingProxy:
         )
         if scale <= 1e-9:
             raise ValueError("Filigree pair cannot fit inside the drawer face.")
-        engraving.Scale = scale
         motif_width = source_width * scale
         pair_width = 2 * motif_width + clearance
         pair_left = side_margin + (safe_width - pair_width) / 2
@@ -437,7 +443,7 @@ class FiligreePairEngravingProxy:
             placement.A14 = front.X.Value + motif_center_x
             placement.A24 = front.Y.Value + surface
             placement.A34 = front.Z.Value + motif_center_y
-        engraving.Placement = App.Placement(placement)
+        _update_engraving_link(engraving, scale, App.Placement(placement))
 
     def dumps(self):
         return None

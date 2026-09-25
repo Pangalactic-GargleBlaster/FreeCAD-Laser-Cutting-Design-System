@@ -183,6 +183,57 @@ class ParametricHoleCutProxy:
         return None
 
 
+class AlignmentBoundsProxy:
+    """Expose live bounds of the features used to place alignment holes."""
+
+    def __init__(self, obj=None):
+        if obj is not None:
+            obj.Proxy = self
+
+    def execute(self, obj):
+        features = [
+            feature
+            for feature in (obj.InputFeature1, obj.InputFeature2)
+            if feature is not None and not feature.Shape.isNull()
+        ]
+        if not features:
+            return
+        for axis in "XYZ":
+            setattr(
+                obj, axis + "Min",
+                min(getattr(feature.Shape.BoundBox, axis + "Min") for feature in features),
+            )
+            setattr(
+                obj, axis + "Max",
+                max(getattr(feature.Shape.BoundBox, axis + "Max") for feature in features),
+            )
+
+    def dumps(self):
+        return None
+
+    def loads(self, state):
+        return None
+
+
+def create_alignment_bounds(container, name, features):
+    """Create an expression source tied to panel shapes before their hole cuts."""
+    if len(features) != 2:
+        raise ValueError("Alignment bounds require two panel layers.")
+    bounds = container.newObject("App::FeaturePython", name)
+    bounds.Label = "Alignment hole bounds"
+    bounds.addProperty("App::PropertyLinkGlobal", "InputFeature1", "Inputs")
+    bounds.addProperty("App::PropertyLinkGlobal", "InputFeature2", "Inputs")
+    for axis in "XYZ":
+        for suffix in ("Min", "Max"):
+            bounds.addProperty("App::PropertyDistance", axis + suffix, "Bounds")
+    bounds.InputFeature1, bounds.InputFeature2 = features
+    AlignmentBoundsProxy(bounds)
+    bounds.Proxy.execute(bounds)
+    if getattr(bounds, "ViewObject", None) is not None:
+        bounds.ViewObject.Visibility = False
+    return bounds
+
+
 def _panel_link_expression(expression, panel):
     """Qualify bare panel properties for use on a downstream feature."""
     result = expression

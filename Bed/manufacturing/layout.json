@@ -1,0 +1,3511 @@
+{
+  "sheet_width_mm": 1193.8,
+  "sheet_height_mm": 787.4,
+  "part_gap_mm": 5.0,
+  "nested_face_frame_gap_mm": 25.199999999985266,
+  "allow_90_degree_rotation": true,
+  "selection_seed": 0,
+  "nested_groups": {
+    "Cabinet1DrawerFaceFrameOuterBody": [
+      "Cabinet1DrawerFaceOuterBody"
+    ],
+    "Cabinet1DrawerFaceFrameInnerBody": [
+      "Cabinet1DrawerFaceInnerBody"
+    ],
+    "Cabinet2DrawerFaceFrameOuterBody": [
+      "Cabinet2DrawerFaceOuterBody"
+    ],
+    "Cabinet2DrawerFaceFrameInnerBody": [
+      "Cabinet2DrawerFaceInnerBody"
+    ],
+    "Cabinet3DrawerFaceFrameOuterBody": [
+      "Cabinet3DrawerFaceOuterBody"
+    ],
+    "Cabinet3DrawerFaceFrameInnerBody": [
+      "Cabinet3DrawerFaceInnerBody"
+    ],
+    "Cabinet4DrawerFaceFrameOuterBody": [
+      "Cabinet4DrawerFaceOuterBody"
+    ],
+    "Cabinet4DrawerFaceFrameInnerBody": [
+      "Cabinet4DrawerFaceInnerBody"
+    ],
+    "Cabinet7LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet7LowerDrawerFaceOuterBody",
+      "Cabinet7UpperDrawerFaceOuterBody"
+    ],
+    "Cabinet7LowerDrawerCombinedFaceFrameInnerBody": [
+      "Cabinet7LowerDrawerFaceInnerBody",
+      "Cabinet7UpperDrawerFaceInnerBody"
+    ],
+    "Cabinet8LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet8LowerDrawerFaceOuterBody",
+      "Cabinet8UpperDrawerFaceOuterBody"
+    ],
+    "Cabinet8LowerDrawerCombinedFaceFrameInnerBody": [
+      "Cabinet8LowerDrawerFaceInnerBody",
+      "Cabinet8UpperDrawerFaceInnerBody"
+    ]
+  },
+  "cabinet_side_stacks": {
+    "Cabinet1LowSide": [
+      "Cabinet1LowerSideOuterBody",
+      "Cabinet1LowerSideInnerBody",
+      "Cabinet1DrawerCabinetLowSupportLayer3Body",
+      "Cabinet1DrawerCabinetLowSupportLayer4Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet1HighSide": [
+      "Cabinet1UpperSideOuterBody",
+      "Cabinet1UpperSideInnerBody",
+      "Cabinet1DrawerCabinetHighSupportLayer3Body",
+      "Cabinet1DrawerCabinetHighSupportLayer4Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet2LowSide": [
+      "Cabinet2LowerSideOuterBody",
+      "Cabinet2LowerSideInnerBody",
+      "Cabinet2DrawerCabinetLowSupportLayer3Body",
+      "Cabinet2DrawerCabinetLowSupportLayer4Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet2HighSide": [
+      "Cabinet2UpperSideOuterBody",
+      "Cabinet2UpperSideInnerBody",
+      "Cabinet2DrawerCabinetHighSupportLayer3Body",
+      "Cabinet2DrawerCabinetHighSupportLayer4Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet3LowSide": [
+      "Cabinet3LowerSideOuterBody",
+      "Cabinet3LowerSideInnerBody",
+      "Cabinet3DrawerCabinetLowSupportLayer3Body",
+      "Cabinet3DrawerCabinetLowSupportLayer4Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet3HighSide": [
+      "Cabinet3UpperSideOuterBody",
+      "Cabinet3UpperSideInnerBody",
+      "Cabinet3DrawerCabinetHighSupportLayer3Body",
+      "Cabinet3DrawerCabinetHighSupportLayer4Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet4LowSide": [
+      "Cabinet4LowerSideOuterBody",
+      "Cabinet4LowerSideInnerBody",
+      "Cabinet4DrawerCabinetLowSupportLayer3Body",
+      "Cabinet4DrawerCabinetLowSupportLayer4Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet4HighSide": [
+      "Cabinet4UpperSideOuterBody",
+      "Cabinet4UpperSideInnerBody",
+      "Cabinet4DrawerCabinetHighSupportLayer3Body",
+      "Cabinet4DrawerCabinetHighSupportLayer4Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet7LowSide": [
+      "Cabinet7LeftSideOuterBody",
+      "Cabinet7LeftSideInnerBody",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet7HighSide": [
+      "Cabinet7RightSideOuterBody",
+      "Cabinet7RightSideInnerBody",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet8LowSide": [
+      "Cabinet8LeftSideOuterBody",
+      "Cabinet8LeftSideInnerBody",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet8HighSide": [
+      "Cabinet8RightSideOuterBody",
+      "Cabinet8RightSideInnerBody",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer2Body"
+    ]
+  },
+  "sheets": [
+    {
+      "number": 1,
+      "parts": [
+        {
+          "body_name": "Cabinet7LeftSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 229.20000000000002,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LeftSideInnerBody",
+          "x_mm": 364.6,
+          "y_mm": 229.20000000000002,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 84.2,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 729.2,
+          "y_mm": 481.8,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 729.2,
+          "y_mm": 313.40000000000003,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 729.2,
+          "y_mm": 229.20000000000002,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 729.2,
+          "y_mm": 397.6,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 198.8,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 168.4,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetLowSupportLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 717.9999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 657.1999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetLowSupportLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 596.4,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 626.8,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetLowSupportLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 687.5999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 462.6,
+          "y_mm": 748.3999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetLowSupportLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 566.0,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 748.3999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "parts": [
+        {
+          "body_name": "Cabinet4UpperSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4UpperSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerBackOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetHighSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 759.6,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetHighSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 729.2,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "parts": [
+        {
+          "body_name": "Cabinet4LowerSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4LowerSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerBackInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "parts": [
+        {
+          "body_name": "Cabinet3UpperSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerBackOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 570.4,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 486.19999999999993,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 715.4,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 455.79999999999995,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 425.4,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetLowSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 654.6,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetHighSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 395.0,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetHighSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 745.8,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerCabinetLowSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 685.0,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "parts": [
+        {
+          "body_name": "Cabinet3UpperSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 229.20000000000002,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerBackInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 84.2,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 678.0000000000001,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 593.8000000000001,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 168.4,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 198.8,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "parts": [
+        {
+          "body_name": "Cabinet3LowerSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3LowerSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerBackOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetLowSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 729.2,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerCabinetLowSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 759.6,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "parts": [
+        {
+          "body_name": "Cabinet2UpperSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2UpperSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerBackInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "parts": [
+        {
+          "body_name": "Cabinet2LowerSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerBackOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 486.19999999999993,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 570.4,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 745.8,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 715.4,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetHighSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 685.0,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetHighSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 654.6,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetLowSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 395.0,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 455.79999999999995,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetLowSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 425.4,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "parts": [
+        {
+          "body_name": "Cabinet2LowerSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 229.20000000000002,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerBackInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 177.8,
+          "height_mm": 693.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 84.2,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 678.0000000000001,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 593.8000000000001,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 198.8,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 168.4,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "parts": [
+        {
+          "body_name": "Cabinet4DrawerBottomBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 947.8,
+          "height_mm": 693.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "parts": [
+        {
+          "body_name": "Cabinet1UpperSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1UpperSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4BackBottomStripInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetHighSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 759.6,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetHighSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 729.2,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "parts": [
+        {
+          "body_name": "Cabinet1LowerSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1LowerSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4BackBottomStripOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerHighSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 729.2,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerHighSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 759.6,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "parts": [
+        {
+          "body_name": "Cabinet8UpperDrawerBottomBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 439.4,
+          "height_mm": 490.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerBottomBody",
+          "x_mm": 444.4,
+          "y_mm": 0.0,
+          "width_mm": 439.4,
+          "height_mm": 490.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 495.6,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 579.8000000000001,
+          "width_mm": 914.8,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerSideLowInnerBody",
+          "x_mm": 888.8,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerSideLowOuterBody",
+          "x_mm": 993.8,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetLowSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 664.0000000000001,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 694.4000000000001,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetLowSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 724.8000000000001,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 755.2,
+          "width_mm": 914.8,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerLowSlideLayer2Body",
+          "x_mm": 1098.8,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerLowSlideLayer1Body",
+          "x_mm": 1129.2,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "parts": [
+        {
+          "body_name": "Cabinet6TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerSideHighOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4CenterSupportInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 739.0,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4CenterSupportOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 699.8,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "parts": [
+        {
+          "body_name": "Cabinet6TopOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerSideHighInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerBackInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 439.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerBackOuterBody",
+          "x_mm": 1079.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 439.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3CenterSupportOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 699.8,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3CenterSupportInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 739.0,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "parts": [
+        {
+          "body_name": "Cabinet6FrontSupportInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 118.6,
+          "width_mm": 969.2,
+          "height_mm": 113.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet6FrontSupportOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 113.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8BackBottomStripInnerBody",
+          "x_mm": 171.0,
+          "y_mm": 237.2,
+          "width_mm": 166.0,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8BackBottomStripOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 237.2,
+          "width_mm": 166.0,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8FrontBottomStripInnerBody",
+          "x_mm": 501.4,
+          "y_mm": 237.2,
+          "width_mm": 154.4,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8FrontBottomStripOuterBody",
+          "x_mm": 342.0,
+          "y_mm": 237.2,
+          "width_mm": 154.4,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerSideHighInnerBody",
+          "x_mm": 660.8,
+          "y_mm": 237.2,
+          "width_mm": 490.6,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerSideHighOuterBody",
+          "x_mm": 660.8,
+          "y_mm": 342.2,
+          "width_mm": 490.6,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerSideLowInnerBody",
+          "x_mm": 660.8,
+          "y_mm": 552.2,
+          "width_mm": 490.6,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerSideLowOuterBody",
+          "x_mm": 660.8,
+          "y_mm": 447.2,
+          "width_mm": 490.6,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerHighSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 754.2,
+          "width_mm": 471.2,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerHighSlideLayer2Body",
+          "x_mm": 476.2,
+          "y_mm": 754.2,
+          "width_mm": 471.2,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerLowSlideLayer1Body",
+          "x_mm": 1156.4,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerLowSlideLayer2Body",
+          "x_mm": 660.8,
+          "y_mm": 657.2,
+          "width_mm": 471.2,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "parts": [
+        {
+          "body_name": "Cabinet8BackOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7BackOuterBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7BackInnerBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerSideHighInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerHighSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 699.8,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerHighSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 730.1999999999999,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "parts": [
+        {
+          "body_name": "Cabinet8BackInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCombinedFaceFrameOuterBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerFaceOuterBody",
+          "x_mm": 556.0,
+          "y_mm": 25.19999999999997,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerFaceOuterBody",
+          "x_mm": 389.80000000000007,
+          "y_mm": 25.19999999999997,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCombinedFaceFrameInnerBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerFaceInnerBody",
+          "x_mm": 920.6000000000001,
+          "y_mm": 25.19999999999709,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerFaceInnerBody",
+          "x_mm": 754.4000000000002,
+          "y_mm": 25.19999999999709,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerSideHighOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "parts": [
+        {
+          "body_name": "Cabinet3BackInnerBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2BackInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3BackOuterBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "parts": [
+        {
+          "body_name": "Cabinet2BackOuterBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1BackInnerBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1BackOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "parts": [
+        {
+          "body_name": "Cabinet1DrawerBottomBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 947.8,
+          "height_mm": 693.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "parts": [
+        {
+          "body_name": "Cabinet5RightSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet5RightSideInnerBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet6LeftSideOuterBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerSideLowOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "parts": [
+        {
+          "body_name": "Cabinet6LeftSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet6RightSideOuterBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet6RightSideInnerBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerSideLowInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerLowSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 699.8,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2DrawerLowSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 730.1999999999999,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "parts": [
+        {
+          "body_name": "Cabinet2DrawerBottomBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 947.8,
+          "height_mm": 693.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "parts": [
+        {
+          "body_name": "Cabinet4TopOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "parts": [
+        {
+          "body_name": "Cabinet4TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerSideHighInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerSideHighOuterBody",
+          "x_mm": 1079.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "parts": [
+        {
+          "body_name": "Cabinet1TopOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2FrontBottomStripOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerHighSlideLayer1Body",
+          "x_mm": 1133.6000000000001,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerHighSlideLayer2Body",
+          "x_mm": 1164.0000000000002,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "parts": [
+        {
+          "body_name": "Cabinet1TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2FrontBottomStripInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerLowSlideLayer1Body",
+          "x_mm": 1133.6000000000001,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerLowSlideLayer2Body",
+          "x_mm": 1164.0000000000002,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "parts": [
+        {
+          "body_name": "Cabinet2TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3FrontBottomStripInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "parts": [
+        {
+          "body_name": "Cabinet2TopOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3FrontBottomStripOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerHighSlideLayer2Body",
+          "x_mm": 1164.0000000000002,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerHighSlideLayer1Body",
+          "x_mm": 1133.6000000000001,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "parts": [
+        {
+          "body_name": "Cabinet5TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerSideLowInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerSideHighOuterBody",
+          "x_mm": 1079.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerSideHighInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2CenterSupportInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 739.0,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet2CenterSupportOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 699.8,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "parts": [
+        {
+          "body_name": "Cabinet5TopOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerSideLowOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerSideLowInnerBody",
+          "x_mm": 1079.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerSideLowOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1CenterSupportInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 739.0,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1CenterSupportOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 699.8,
+          "width_mm": 961.4,
+          "height_mm": 34.2,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "parts": [
+        {
+          "body_name": "Cabinet6BackOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet6BackInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerHighSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 759.6,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerHighSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 729.2,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "parts": [
+        {
+          "body_name": "Cabinet3DrawerSideHighInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 182.8,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerSideLowInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerSideLowOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 548.4000000000001,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerSideHighOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 365.6,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerLowSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 761.6,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1DrawerLowSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 731.2,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "parts": [
+        {
+          "body_name": "Cabinet8LowerDrawerCombinedFaceFrameInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerFaceInnerBody",
+          "x_mm": 191.40000000000003,
+          "y_mm": 25.199999999985266,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerFaceInnerBody",
+          "x_mm": 25.200000000000045,
+          "y_mm": 25.199999999985266,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCombinedFaceFrameOuterBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerFaceOuterBody",
+          "x_mm": 556.0,
+          "y_mm": 25.20000000002574,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerFaceOuterBody",
+          "x_mm": 389.80000000000007,
+          "y_mm": 25.20000000002574,
+          "width_mm": 143.0,
+          "height_mm": 461.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3DrawerSideLowOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 609.5999999999999,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7BackBottomStripOuterBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7BackBottomStripInnerBody",
+          "x_mm": 900.2,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3DrawerLowSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3DrawerLowSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 547.4,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "parts": [
+        {
+          "body_name": "Cabinet7LowerDrawerBottomBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 439.4,
+          "height_mm": 490.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerBottomBody",
+          "x_mm": 444.4,
+          "y_mm": 0.0,
+          "width_mm": 490.6,
+          "height_mm": 439.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2BackBottomStripInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 495.6,
+          "width_mm": 766.0,
+          "height_mm": 166.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2BackBottomStripOuterBody",
+          "x_mm": 940.0,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerBackInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 666.6,
+          "width_mm": 439.4,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerBackOuterBody",
+          "x_mm": 444.4,
+          "y_mm": 666.6,
+          "width_mm": 439.4,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerHighSlideLayer2Body",
+          "x_mm": 1111.0,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 471.2,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerHighSlideLayer1Body",
+          "x_mm": 444.4,
+          "y_mm": 444.4,
+          "width_mm": 471.2,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "parts": [
+        {
+          "body_name": "Cabinet4DrawerSideLowInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerSideHighInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 182.8,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerSideHighOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 365.6,
+          "width_mm": 947.8,
+          "height_mm": 177.8,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5BackBottomStripOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 548.4000000000001,
+          "width_mm": 969.2,
+          "height_mm": 166.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerSideHighOuterBody",
+          "x_mm": 1057.8,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerSideHighInnerBody",
+          "x_mm": 952.8,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 490.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerHighSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 749.8000000000001,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerHighSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 719.4000000000001,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "parts": [
+        {
+          "body_name": "Cabinet8TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 512.0,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5LeftSideOuterBody",
+          "x_mm": 517.0,
+          "y_mm": 0.0,
+          "width_mm": 512.0,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5LeftSideInnerBody",
+          "x_mm": 517.0,
+          "y_mm": 364.6,
+          "width_mm": 512.0,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7FrontBottomStripOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 512.0,
+          "height_mm": 154.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7FrontBottomStripInnerBody",
+          "x_mm": 1034.0,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerLowSlideLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 759.6,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4DrawerLowSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 729.2,
+          "width_mm": 928.4,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "parts": [
+        {
+          "body_name": "Cabinet6BackBottomStripOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 171.0,
+          "width_mm": 969.2,
+          "height_mm": 166.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5BackBottomStripInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 166.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet6BackBottomStripInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 342.0,
+          "width_mm": 969.2,
+          "height_mm": 166.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5FrontBottomStripOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 513.0,
+          "width_mm": 969.2,
+          "height_mm": 152.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5FrontSupportInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 670.4,
+          "width_mm": 969.2,
+          "height_mm": 113.6,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "parts": [
+        {
+          "body_name": "Cabinet6FrontBottomStripInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 314.8,
+          "width_mm": 969.2,
+          "height_mm": 152.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5FrontBottomStripInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 152.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet6FrontBottomStripOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 157.4,
+          "width_mm": 969.2,
+          "height_mm": 152.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1BackBottomStripOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1BackBottomStripInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 472.20000000000005,
+          "width_mm": 766.0,
+          "height_mm": 166.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet5FrontSupportOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 643.2,
+          "width_mm": 969.2,
+          "height_mm": 113.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerLowSlideLayer2Body",
+          "x_mm": 476.2,
+          "y_mm": 761.8000000000001,
+          "width_mm": 471.2,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerLowSlideLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 761.8000000000001,
+          "width_mm": 471.2,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "parts": [
+        {
+          "body_name": "Cabinet7TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 512.0,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8TopOuterBody",
+          "x_mm": 517.0,
+          "y_mm": 0.0,
+          "width_mm": 512.0,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1FrontBottomStripOuterBody",
+          "x_mm": 1034.0,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet1FrontBottomStripInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 766.0,
+          "height_mm": 154.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerSideLowOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 676.4,
+          "width_mm": 490.6,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerSideLowInnerBody",
+          "x_mm": 495.6,
+          "y_mm": 676.4,
+          "width_mm": 490.6,
+          "height_mm": 100.0,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "parts": [
+        {
+          "body_name": "Cabinet4DrawerFaceFrameInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerFaceInnerBody",
+          "x_mm": 25.200000000000045,
+          "y_mm": 25.199999999999363,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7TopOuterBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 512.0,
+          "height_mm": 512.0,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "parts": [
+        {
+          "body_name": "Cabinet3DrawerFaceFrameOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3DrawerFaceOuterBody",
+          "x_mm": 25.200000000000045,
+          "y_mm": 25.19999999999459,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerFaceFrameOuterBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4DrawerFaceOuterBody",
+          "x_mm": 754.4000000000001,
+          "y_mm": 25.200000000000273,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3DrawerFaceFrameInnerBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3DrawerFaceInnerBody",
+          "x_mm": 389.8,
+          "y_mm": 25.199999999997885,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "parts": [
+        {
+          "body_name": "Cabinet8RightSideInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet3BackBottomStripOuterBody",
+          "x_mm": 827.2,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet3BackBottomStripInnerBody",
+          "x_mm": 998.2,
+          "y_mm": 0.0,
+          "width_mm": 166.0,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerBackInnerBody",
+          "x_mm": 605.0,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 439.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerBackInnerBody",
+          "x_mm": 395.0,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 439.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerBackOuterBody",
+          "x_mm": 710.0,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 439.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerBackOuterBody",
+          "x_mm": 500.0,
+          "y_mm": 0.0,
+          "width_mm": 100.0,
+          "height_mm": 439.4,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetHighSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 364.6,
+          "y_mm": 462.6,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 25.4,
+          "height_mm": 457.6,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "parts": [
+        {
+          "body_name": "Cabinet7RightSideInnerBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7RightSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 729.2,
+          "y_mm": 84.2,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 729.2,
+          "y_mm": 252.60000000000002,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 729.2,
+          "y_mm": 168.4,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 462.6,
+          "y_mm": 519.1999999999999,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetLowChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 579.9999999999999,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 462.6,
+          "y_mm": 603.4,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetLowChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 664.1999999999999,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 427.99999999999994,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetHighSupportLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 488.7999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetHighSupportLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 458.3999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 397.59999999999997,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetHighSupportLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 367.2,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7LowerDrawerCabinetHighSupportLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 336.8,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 549.5999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet7UpperDrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 519.1999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 462.6,
+          "y_mm": 748.4,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetLowSupportLayer4Body",
+          "x_mm": 462.6,
+          "y_mm": 687.6,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetLowSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 748.4,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 462.6,
+          "y_mm": 718.0,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "parts": [
+        {
+          "body_name": "Cabinet8RightSideOuterBody",
+          "x_mm": 729.2,
+          "y_mm": 121.6,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LeftSideInnerBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8LeftSideOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 512.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 462.6,
+          "y_mm": 638.6,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetHighChannelBackLayer2Body",
+          "x_mm": 0.0,
+          "y_mm": 638.6,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 1093.8000000000002,
+          "y_mm": 121.6,
+          "width_mm": 79.2,
+          "height_mm": 457.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetHighChannelBackLayer1Body",
+          "x_mm": 0.0,
+          "y_mm": 517.0,
+          "width_mm": 457.6,
+          "height_mm": 79.2,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetLowSupportLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 30.4,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetLowSupportLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetHighSupportLayer3Body",
+          "x_mm": 462.6,
+          "y_mm": 753.2,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetHighAntiTipLayer4Body",
+          "x_mm": 462.6,
+          "y_mm": 722.8000000000001,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetHighAntiTipLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 753.2,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetHighSupportLayer4Body",
+          "x_mm": 0.0,
+          "y_mm": 722.8000000000001,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8LowerDrawerCabinetHighSupportLayer3Body",
+          "x_mm": 0.0,
+          "y_mm": 601.2,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetLowAntiTipLayer4Body",
+          "x_mm": 729.2,
+          "y_mm": 91.19999999999999,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet8UpperDrawerCabinetLowAntiTipLayer3Body",
+          "x_mm": 729.2,
+          "y_mm": 60.8,
+          "width_mm": 457.6,
+          "height_mm": 25.4,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "parts": [
+        {
+          "body_name": "Cabinet4BackOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet4BackInnerBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1DrawerFaceFrameOuterBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1DrawerFaceOuterBody",
+          "x_mm": 754.4000000000001,
+          "y_mm": 25.199999999997885,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "parts": [
+        {
+          "body_name": "Cabinet2DrawerFaceFrameOuterBody",
+          "x_mm": 364.6,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerFaceOuterBody",
+          "x_mm": 389.8,
+          "y_mm": 25.2,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1DrawerFaceFrameInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet1DrawerFaceInnerBody",
+          "x_mm": 25.200000000000045,
+          "y_mm": 25.2,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerFaceFrameInnerBody",
+          "x_mm": 729.2,
+          "y_mm": 0.0,
+          "width_mm": 359.6,
+          "height_mm": 766.0,
+          "rotation_deg": 90
+        },
+        {
+          "body_name": "Cabinet2DrawerFaceInnerBody",
+          "x_mm": 754.4000000000001,
+          "y_mm": 25.199999999999704,
+          "width_mm": 309.2,
+          "height_mm": 715.6,
+          "rotation_deg": 90
+        }
+      ]
+    },
+    {
+      "number": 49,
+      "parts": [
+        {
+          "body_name": "Cabinet3TopOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4FrontBottomStripOuterBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "parts": [
+        {
+          "body_name": "Cabinet3TopInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet4FrontBottomStripInnerBody",
+          "x_mm": 974.2,
+          "y_mm": 0.0,
+          "width_mm": 154.4,
+          "height_mm": 766.0,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 51,
+      "parts": [
+        {
+          "body_name": "Cabinet5BackOuterBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        },
+        {
+          "body_name": "Cabinet5BackInnerBody",
+          "x_mm": 0.0,
+          "y_mm": 364.6,
+          "width_mm": 969.2,
+          "height_mm": 359.6,
+          "rotation_deg": 0
+        }
+      ]
+    },
+    {
+      "number": 52,
+      "parts": [
+        {
+          "body_name": "Cabinet3DrawerBottomBody",
+          "x_mm": 0.0,
+          "y_mm": 0.0,
+          "width_mm": 947.8,
+          "height_mm": 693.4,
+          "rotation_deg": 0
+        }
+      ]
+    }
+  ],
+  "packing_groups": {
+    "Cabinet1LowCabinetSide": [
+      "Cabinet1LowerSideOuterBody",
+      "Cabinet1LowerSideInnerBody",
+      "Cabinet1DrawerCabinetLowSupportLayer3Body",
+      "Cabinet1DrawerCabinetLowSupportLayer4Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet1HighCabinetSide": [
+      "Cabinet1UpperSideOuterBody",
+      "Cabinet1UpperSideInnerBody",
+      "Cabinet1DrawerCabinetHighSupportLayer3Body",
+      "Cabinet1DrawerCabinetHighSupportLayer4Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet2LowCabinetSide": [
+      "Cabinet2LowerSideOuterBody",
+      "Cabinet2LowerSideInnerBody",
+      "Cabinet2DrawerCabinetLowSupportLayer3Body",
+      "Cabinet2DrawerCabinetLowSupportLayer4Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet2HighCabinetSide": [
+      "Cabinet2UpperSideOuterBody",
+      "Cabinet2UpperSideInnerBody",
+      "Cabinet2DrawerCabinetHighSupportLayer3Body",
+      "Cabinet2DrawerCabinetHighSupportLayer4Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet3LowCabinetSide": [
+      "Cabinet3LowerSideOuterBody",
+      "Cabinet3LowerSideInnerBody",
+      "Cabinet3DrawerCabinetLowSupportLayer3Body",
+      "Cabinet3DrawerCabinetLowSupportLayer4Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet3HighCabinetSide": [
+      "Cabinet3UpperSideOuterBody",
+      "Cabinet3UpperSideInnerBody",
+      "Cabinet3DrawerCabinetHighSupportLayer3Body",
+      "Cabinet3DrawerCabinetHighSupportLayer4Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet4LowCabinetSide": [
+      "Cabinet4LowerSideOuterBody",
+      "Cabinet4LowerSideInnerBody",
+      "Cabinet4DrawerCabinetLowSupportLayer3Body",
+      "Cabinet4DrawerCabinetLowSupportLayer4Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet4HighCabinetSide": [
+      "Cabinet4UpperSideOuterBody",
+      "Cabinet4UpperSideInnerBody",
+      "Cabinet4DrawerCabinetHighSupportLayer3Body",
+      "Cabinet4DrawerCabinetHighSupportLayer4Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet7LowCabinetSide": [
+      "Cabinet7LeftSideOuterBody",
+      "Cabinet7LeftSideInnerBody",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet7HighCabinetSide": [
+      "Cabinet7RightSideOuterBody",
+      "Cabinet7RightSideInnerBody",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet8LowCabinetSide": [
+      "Cabinet8LeftSideOuterBody",
+      "Cabinet8LeftSideInnerBody",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet8HighCabinetSide": [
+      "Cabinet8RightSideOuterBody",
+      "Cabinet8RightSideInnerBody",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet1DrawerLowSide": [
+      "Cabinet1DrawerSideLowOuterBody",
+      "Cabinet1DrawerSideLowInnerBody",
+      "Cabinet1DrawerLowSlideLayer1Body",
+      "Cabinet1DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet1DrawerHighSide": [
+      "Cabinet1DrawerSideHighOuterBody",
+      "Cabinet1DrawerSideHighInnerBody",
+      "Cabinet1DrawerHighSlideLayer1Body",
+      "Cabinet1DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet2DrawerLowSide": [
+      "Cabinet2DrawerSideLowOuterBody",
+      "Cabinet2DrawerSideLowInnerBody",
+      "Cabinet2DrawerLowSlideLayer1Body",
+      "Cabinet2DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet2DrawerHighSide": [
+      "Cabinet2DrawerSideHighOuterBody",
+      "Cabinet2DrawerSideHighInnerBody",
+      "Cabinet2DrawerHighSlideLayer1Body",
+      "Cabinet2DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet3DrawerLowSide": [
+      "Cabinet3DrawerSideLowOuterBody",
+      "Cabinet3DrawerSideLowInnerBody",
+      "Cabinet3DrawerLowSlideLayer1Body",
+      "Cabinet3DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet3DrawerHighSide": [
+      "Cabinet3DrawerSideHighOuterBody",
+      "Cabinet3DrawerSideHighInnerBody",
+      "Cabinet3DrawerHighSlideLayer1Body",
+      "Cabinet3DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet4DrawerLowSide": [
+      "Cabinet4DrawerSideLowOuterBody",
+      "Cabinet4DrawerSideLowInnerBody",
+      "Cabinet4DrawerLowSlideLayer1Body",
+      "Cabinet4DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet4DrawerHighSide": [
+      "Cabinet4DrawerSideHighOuterBody",
+      "Cabinet4DrawerSideHighInnerBody",
+      "Cabinet4DrawerHighSlideLayer1Body",
+      "Cabinet4DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet7LowerDrawerLowSide": [
+      "Cabinet7LowerDrawerSideLowOuterBody",
+      "Cabinet7LowerDrawerSideLowInnerBody",
+      "Cabinet7LowerDrawerLowSlideLayer1Body",
+      "Cabinet7LowerDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet7LowerDrawerHighSide": [
+      "Cabinet7LowerDrawerSideHighOuterBody",
+      "Cabinet7LowerDrawerSideHighInnerBody",
+      "Cabinet7LowerDrawerHighSlideLayer1Body",
+      "Cabinet7LowerDrawerHighSlideLayer2Body"
+    ],
+    "Cabinet7UpperDrawerLowSide": [
+      "Cabinet7UpperDrawerSideLowOuterBody",
+      "Cabinet7UpperDrawerSideLowInnerBody",
+      "Cabinet7UpperDrawerLowSlideLayer1Body",
+      "Cabinet7UpperDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet7UpperDrawerHighSide": [
+      "Cabinet7UpperDrawerSideHighOuterBody",
+      "Cabinet7UpperDrawerSideHighInnerBody",
+      "Cabinet7UpperDrawerHighSlideLayer1Body",
+      "Cabinet7UpperDrawerHighSlideLayer2Body"
+    ],
+    "Cabinet8LowerDrawerLowSide": [
+      "Cabinet8LowerDrawerSideLowOuterBody",
+      "Cabinet8LowerDrawerSideLowInnerBody",
+      "Cabinet8LowerDrawerLowSlideLayer1Body",
+      "Cabinet8LowerDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet8LowerDrawerHighSide": [
+      "Cabinet8LowerDrawerSideHighOuterBody",
+      "Cabinet8LowerDrawerSideHighInnerBody",
+      "Cabinet8LowerDrawerHighSlideLayer1Body",
+      "Cabinet8LowerDrawerHighSlideLayer2Body"
+    ],
+    "Cabinet8UpperDrawerLowSide": [
+      "Cabinet8UpperDrawerSideLowOuterBody",
+      "Cabinet8UpperDrawerSideLowInnerBody",
+      "Cabinet8UpperDrawerLowSlideLayer1Body",
+      "Cabinet8UpperDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet8UpperDrawerHighSide": [
+      "Cabinet8UpperDrawerSideHighOuterBody",
+      "Cabinet8UpperDrawerSideHighInnerBody",
+      "Cabinet8UpperDrawerHighSlideLayer1Body",
+      "Cabinet8UpperDrawerHighSlideLayer2Body"
+    ],
+    "Pair:Cabinet1BackBottomStripInnerBody|Cabinet1BackBottomStripOuterBody": [
+      "Cabinet1BackBottomStripInnerBody",
+      "Cabinet1BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet1BackInnerBody|Cabinet1BackOuterBody": [
+      "Cabinet1BackInnerBody",
+      "Cabinet1BackOuterBody"
+    ],
+    "Pair:Cabinet1CenterSupportInnerBody|Cabinet1CenterSupportOuterBody": [
+      "Cabinet1CenterSupportInnerBody",
+      "Cabinet1CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet1DrawerBackInnerBody|Cabinet1DrawerBackOuterBody": [
+      "Cabinet1DrawerBackInnerBody",
+      "Cabinet1DrawerBackOuterBody"
+    ],
+    "Single:Cabinet1DrawerBottomBody": [
+      "Cabinet1DrawerBottomBody"
+    ],
+    "Pair:Cabinet1DrawerFaceFrameInnerBody|Cabinet1DrawerFaceFrameOuterBody": [
+      "Cabinet1DrawerFaceFrameInnerBody",
+      "Cabinet1DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet1FrontBottomStripInnerBody|Cabinet1FrontBottomStripOuterBody": [
+      "Cabinet1FrontBottomStripInnerBody",
+      "Cabinet1FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet1TopInnerBody|Cabinet1TopOuterBody": [
+      "Cabinet1TopInnerBody",
+      "Cabinet1TopOuterBody"
+    ],
+    "Pair:Cabinet2BackBottomStripInnerBody|Cabinet2BackBottomStripOuterBody": [
+      "Cabinet2BackBottomStripInnerBody",
+      "Cabinet2BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet2BackInnerBody|Cabinet2BackOuterBody": [
+      "Cabinet2BackInnerBody",
+      "Cabinet2BackOuterBody"
+    ],
+    "Pair:Cabinet2CenterSupportInnerBody|Cabinet2CenterSupportOuterBody": [
+      "Cabinet2CenterSupportInnerBody",
+      "Cabinet2CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet2DrawerBackInnerBody|Cabinet2DrawerBackOuterBody": [
+      "Cabinet2DrawerBackInnerBody",
+      "Cabinet2DrawerBackOuterBody"
+    ],
+    "Single:Cabinet2DrawerBottomBody": [
+      "Cabinet2DrawerBottomBody"
+    ],
+    "Pair:Cabinet2DrawerFaceFrameInnerBody|Cabinet2DrawerFaceFrameOuterBody": [
+      "Cabinet2DrawerFaceFrameInnerBody",
+      "Cabinet2DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet2FrontBottomStripInnerBody|Cabinet2FrontBottomStripOuterBody": [
+      "Cabinet2FrontBottomStripInnerBody",
+      "Cabinet2FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet2TopInnerBody|Cabinet2TopOuterBody": [
+      "Cabinet2TopInnerBody",
+      "Cabinet2TopOuterBody"
+    ],
+    "Pair:Cabinet3BackBottomStripInnerBody|Cabinet3BackBottomStripOuterBody": [
+      "Cabinet3BackBottomStripInnerBody",
+      "Cabinet3BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet3BackInnerBody|Cabinet3BackOuterBody": [
+      "Cabinet3BackInnerBody",
+      "Cabinet3BackOuterBody"
+    ],
+    "Pair:Cabinet3CenterSupportInnerBody|Cabinet3CenterSupportOuterBody": [
+      "Cabinet3CenterSupportInnerBody",
+      "Cabinet3CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet3DrawerBackInnerBody|Cabinet3DrawerBackOuterBody": [
+      "Cabinet3DrawerBackInnerBody",
+      "Cabinet3DrawerBackOuterBody"
+    ],
+    "Single:Cabinet3DrawerBottomBody": [
+      "Cabinet3DrawerBottomBody"
+    ],
+    "Pair:Cabinet3DrawerFaceFrameInnerBody|Cabinet3DrawerFaceFrameOuterBody": [
+      "Cabinet3DrawerFaceFrameInnerBody",
+      "Cabinet3DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet3FrontBottomStripInnerBody|Cabinet3FrontBottomStripOuterBody": [
+      "Cabinet3FrontBottomStripInnerBody",
+      "Cabinet3FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet3TopInnerBody|Cabinet3TopOuterBody": [
+      "Cabinet3TopInnerBody",
+      "Cabinet3TopOuterBody"
+    ],
+    "Pair:Cabinet4BackBottomStripInnerBody|Cabinet4BackBottomStripOuterBody": [
+      "Cabinet4BackBottomStripInnerBody",
+      "Cabinet4BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet4BackInnerBody|Cabinet4BackOuterBody": [
+      "Cabinet4BackInnerBody",
+      "Cabinet4BackOuterBody"
+    ],
+    "Pair:Cabinet4CenterSupportInnerBody|Cabinet4CenterSupportOuterBody": [
+      "Cabinet4CenterSupportInnerBody",
+      "Cabinet4CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet4DrawerBackInnerBody|Cabinet4DrawerBackOuterBody": [
+      "Cabinet4DrawerBackInnerBody",
+      "Cabinet4DrawerBackOuterBody"
+    ],
+    "Single:Cabinet4DrawerBottomBody": [
+      "Cabinet4DrawerBottomBody"
+    ],
+    "Pair:Cabinet4DrawerFaceFrameInnerBody|Cabinet4DrawerFaceFrameOuterBody": [
+      "Cabinet4DrawerFaceFrameInnerBody",
+      "Cabinet4DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet4FrontBottomStripInnerBody|Cabinet4FrontBottomStripOuterBody": [
+      "Cabinet4FrontBottomStripInnerBody",
+      "Cabinet4FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet4TopInnerBody|Cabinet4TopOuterBody": [
+      "Cabinet4TopInnerBody",
+      "Cabinet4TopOuterBody"
+    ],
+    "Pair:Cabinet5BackBottomStripInnerBody|Cabinet5BackBottomStripOuterBody": [
+      "Cabinet5BackBottomStripInnerBody",
+      "Cabinet5BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet5BackInnerBody|Cabinet5BackOuterBody": [
+      "Cabinet5BackInnerBody",
+      "Cabinet5BackOuterBody"
+    ],
+    "Pair:Cabinet5FrontBottomStripInnerBody|Cabinet5FrontBottomStripOuterBody": [
+      "Cabinet5FrontBottomStripInnerBody",
+      "Cabinet5FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet5FrontSupportInnerBody|Cabinet5FrontSupportOuterBody": [
+      "Cabinet5FrontSupportInnerBody",
+      "Cabinet5FrontSupportOuterBody"
+    ],
+    "Pair:Cabinet5LeftSideInnerBody|Cabinet5LeftSideOuterBody": [
+      "Cabinet5LeftSideInnerBody",
+      "Cabinet5LeftSideOuterBody"
+    ],
+    "Pair:Cabinet5RightSideInnerBody|Cabinet5RightSideOuterBody": [
+      "Cabinet5RightSideInnerBody",
+      "Cabinet5RightSideOuterBody"
+    ],
+    "Pair:Cabinet5TopInnerBody|Cabinet5TopOuterBody": [
+      "Cabinet5TopInnerBody",
+      "Cabinet5TopOuterBody"
+    ],
+    "Pair:Cabinet6BackBottomStripInnerBody|Cabinet6BackBottomStripOuterBody": [
+      "Cabinet6BackBottomStripInnerBody",
+      "Cabinet6BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet6BackInnerBody|Cabinet6BackOuterBody": [
+      "Cabinet6BackInnerBody",
+      "Cabinet6BackOuterBody"
+    ],
+    "Pair:Cabinet6FrontBottomStripInnerBody|Cabinet6FrontBottomStripOuterBody": [
+      "Cabinet6FrontBottomStripInnerBody",
+      "Cabinet6FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet6FrontSupportInnerBody|Cabinet6FrontSupportOuterBody": [
+      "Cabinet6FrontSupportInnerBody",
+      "Cabinet6FrontSupportOuterBody"
+    ],
+    "Pair:Cabinet6LeftSideInnerBody|Cabinet6LeftSideOuterBody": [
+      "Cabinet6LeftSideInnerBody",
+      "Cabinet6LeftSideOuterBody"
+    ],
+    "Pair:Cabinet6RightSideInnerBody|Cabinet6RightSideOuterBody": [
+      "Cabinet6RightSideInnerBody",
+      "Cabinet6RightSideOuterBody"
+    ],
+    "Pair:Cabinet6TopInnerBody|Cabinet6TopOuterBody": [
+      "Cabinet6TopInnerBody",
+      "Cabinet6TopOuterBody"
+    ],
+    "Pair:Cabinet7BackBottomStripInnerBody|Cabinet7BackBottomStripOuterBody": [
+      "Cabinet7BackBottomStripInnerBody",
+      "Cabinet7BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet7BackInnerBody|Cabinet7BackOuterBody": [
+      "Cabinet7BackInnerBody",
+      "Cabinet7BackOuterBody"
+    ],
+    "Pair:Cabinet7FrontBottomStripInnerBody|Cabinet7FrontBottomStripOuterBody": [
+      "Cabinet7FrontBottomStripInnerBody",
+      "Cabinet7FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet7LowerDrawerBackInnerBody|Cabinet7LowerDrawerBackOuterBody": [
+      "Cabinet7LowerDrawerBackInnerBody",
+      "Cabinet7LowerDrawerBackOuterBody"
+    ],
+    "Single:Cabinet7LowerDrawerBottomBody": [
+      "Cabinet7LowerDrawerBottomBody"
+    ],
+    "Pair:Cabinet7LowerDrawerCombinedFaceFrameInnerBody|Cabinet7LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet7LowerDrawerCombinedFaceFrameInnerBody",
+      "Cabinet7LowerDrawerCombinedFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet7TopInnerBody|Cabinet7TopOuterBody": [
+      "Cabinet7TopInnerBody",
+      "Cabinet7TopOuterBody"
+    ],
+    "Pair:Cabinet7UpperDrawerBackInnerBody|Cabinet7UpperDrawerBackOuterBody": [
+      "Cabinet7UpperDrawerBackInnerBody",
+      "Cabinet7UpperDrawerBackOuterBody"
+    ],
+    "Single:Cabinet7UpperDrawerBottomBody": [
+      "Cabinet7UpperDrawerBottomBody"
+    ],
+    "Pair:Cabinet8BackBottomStripInnerBody|Cabinet8BackBottomStripOuterBody": [
+      "Cabinet8BackBottomStripInnerBody",
+      "Cabinet8BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet8BackInnerBody|Cabinet8BackOuterBody": [
+      "Cabinet8BackInnerBody",
+      "Cabinet8BackOuterBody"
+    ],
+    "Pair:Cabinet8FrontBottomStripInnerBody|Cabinet8FrontBottomStripOuterBody": [
+      "Cabinet8FrontBottomStripInnerBody",
+      "Cabinet8FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet8LowerDrawerBackInnerBody|Cabinet8LowerDrawerBackOuterBody": [
+      "Cabinet8LowerDrawerBackInnerBody",
+      "Cabinet8LowerDrawerBackOuterBody"
+    ],
+    "Single:Cabinet8LowerDrawerBottomBody": [
+      "Cabinet8LowerDrawerBottomBody"
+    ],
+    "Pair:Cabinet8LowerDrawerCombinedFaceFrameInnerBody|Cabinet8LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet8LowerDrawerCombinedFaceFrameInnerBody",
+      "Cabinet8LowerDrawerCombinedFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet8TopInnerBody|Cabinet8TopOuterBody": [
+      "Cabinet8TopInnerBody",
+      "Cabinet8TopOuterBody"
+    ],
+    "Pair:Cabinet8UpperDrawerBackInnerBody|Cabinet8UpperDrawerBackOuterBody": [
+      "Cabinet8UpperDrawerBackInnerBody",
+      "Cabinet8UpperDrawerBackOuterBody"
+    ],
+    "Single:Cabinet8UpperDrawerBottomBody": [
+      "Cabinet8UpperDrawerBottomBody"
+    ]
+  },
+  "packing_strategy": "group_search_overall_proximity",
+  "group_span_max": 4,
+  "group_span_total": 61
+}
