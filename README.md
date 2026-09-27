@@ -1,6 +1,29 @@
 # Design System
 
-FreeCAD tools for designing laser-cut sheet structures.
+Reusable FreeCAD tools for designing and manufacturing laser-cut sheet
+structures. The `Bed/` directory is one project built with these tools.
+
+## Repository map
+
+| Location | Purpose |
+| --- | --- |
+| `freecad/DesignSystem/` | FreeCAD workbench, parametric finger joint, panel and drawer helpers. |
+| `tools/manufacturing/` | Reusable profile DXF export, group-aware sheet packing, sheet DXF export, and engraving helpers. See its README for inputs and command sequence. |
+| `tools/check_overlaps.py` | Positive-volume collision check for any saved FreeCAD project. |
+| `tools/audit_panel_symmetry.py` | In-plane symmetry audit of saved panel bodies. |
+| `fixtures/`, `tests/` | Workbench examples and integration checks. |
+| `Bed/` | Bed model, parameters, packing configuration, artwork, project-specific generation, and manufacturing publication. |
+
+The shared manufacturing tools use explicit project configuration and the
+saved FreeCAD model. For another project, create a config like
+`Bed/packing_config.json`, supply body metadata and any artwork placement, then
+run the commands in `tools/manufacturing/README.md`. The Bed orchestration
+script shows one complete implementation.
+
+Run `python tools/run_freecad.py tools/check_overlaps.py model.FCStd` for
+intersections and `python tools/run_freecad.py tools/audit_panel_symmetry.py
+model.FCStd` for panel symmetry.
+Set `PANEL_AUDIT_CSV` for a per-body symmetry report.
 
 ## Finger Joint
 

@@ -14,7 +14,12 @@ import zipfile
 
 BED = Path(__file__).resolve().parent.parent
 TOOLS = BED / "tools"
-FREECAD = Path("/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd")
+SHARED = BED.parent / "tools" / "manufacturing"
+CONFIG = BED / "packing_config.json"
+FREECAD = Path(os.environ.get("FREECAD_CMD") or shutil.which("FreeCADCmd") or
+               shutil.which("freecadcmd") or
+               (r"C:\Program Files\FreeCAD 1.1\bin\freecadcmd.exe" if os.name == "nt" else
+                "/Applications/FreeCAD.app/Contents/Resources/bin/FreeCADCmd"))
 ARCHIVE = "bed_laser_layout_face_up_nested_vector_engraving.zip"
 
 
@@ -28,7 +33,7 @@ def run(label, command, environment, log_dir):
     if result.returncode or "Traceback (most recent call last)" in output:
         raise RuntimeError(f"{label} failed (exit {result.returncode}):\n{output[-5000:]}")
     for line in output.splitlines():
-        if line.startswith(("DONE ", "NESTED_LAYOUT ", "GROUP_LAYOUT ", "ENGRAVING_LINKS ",
+        if line.startswith(("DONE ", "NESTED_LAYOUT ", "GROUP_LAYOUT ", "BODY_METADATA ", "ENGRAVING_LINKS ",
                             "SVG_VECTORS ", "ENGRAVED ", "SHEETS_EXPORTED ")):
             print("  " + line, flush=True)
 
@@ -102,7 +107,7 @@ def validate(publication, model, parameters):
         raise ValueError("Body, profile, or sheet placement count mismatch")
     sheet_for = {p["body_name"]: sheet["number"]
                  for sheet in layout["sheets"] for p in sheet["parts"]}
-    stacks = layout.get("cabinet_side_stacks", {})
+    stacks = layout.get("adjacent_stacks", {})
     if len(stacks) != 12 or any(name not in sheet_for for names in stacks.values() for name in names):
         raise ValueError("Cabinet side stack metadata is incomplete")
     if any(abs(r["thickness_mm"] - parameters["ply_mm"]) > 1e-4 for r in records):
@@ -184,22 +189,24 @@ def main():
         layout = publication / "layout.json"
         baseline_layout = stage / "baseline_layout.json"
         env = os.environ.copy()
-        env.update(LASER_BED_FILE=str(model), LASER_OUTPUT_DIR=str(raw),
+        env.update(LASER_MODEL_FILE=str(model), LASER_BED_FILE=str(model),
+                   LASER_CONFIG_JSON=str(CONFIG), LASER_OUTPUT_DIR=str(raw),
                    LASER_PARAMETERS_JSON=str(stage / "model_parameters.json"),
                    LASER_ENGRAVING_PLACEMENTS_JSON=str(placements),
                    LASER_BODY_METADATA_JSON=str(metadata),
                    LASER_MANIFEST_JSON=str(raw / "manifest.json"),
                    LASER_LAYOUT_JSON=str(layout), LASER_SHEETS_DIR=str(sheets))
-        run("Export profiles", [str(FREECAD), str(TOOLS / "export_laser_profiles.py")], env, stage)
+        run("Export profiles", [str(FREECAD), str(SHARED / "export_laser_profiles.py")], env, stage)
         manifest = raw / "manifest.json"
         env["LASER_MANIFEST_JSON"] = str(manifest)
+        run("Export body metadata", [str(FREECAD), str(SHARED / "export_body_metadata.py")], env, stage)
         run("Export engraving placements", [str(FREECAD), str(TOOLS / "export_engraving_placements.py")], env, stage)
-        run("Pack sheets", [sys.executable, str(TOOLS / "pack_nested_frames.py"),
-                             str(manifest), str(metadata), str(baseline_layout)], env, stage)
-        run("Optimize groups", [sys.executable, str(TOOLS / "group_search.py"),
-                                str(manifest), str(metadata), str(baseline_layout),
+        run("Pack sheets", [sys.executable, str(SHARED / "pack_nested_frames.py"),
+                             str(manifest), str(metadata), str(CONFIG), str(baseline_layout)], env, stage)
+        run("Optimize groups", [sys.executable, str(SHARED / "group_search.py"),
+                                str(manifest), str(metadata), str(CONFIG), str(baseline_layout),
                                 str(layout)], env, stage)
-        run("Export sheets", [str(FREECAD), str(TOOLS / "export_laser_sheets.py")], env, stage)
+        run("Export sheets", [str(FREECAD), str(SHARED / "export_laser_sheets.py")], env, stage)
         shutil.move(str(raw / "profiles"), str(publication / "profiles"))
         shutil.move(str(raw / "manifest.csv"), str(publication / "profiles/manifest.csv"))
         shutil.move(str(raw / "manifest.json"), str(publication / "profiles/manifest.json"))

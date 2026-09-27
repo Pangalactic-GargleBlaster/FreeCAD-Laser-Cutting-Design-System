@@ -6,14 +6,6 @@ import sys
 import FreeCAD as App
 
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(SCRIPT_DIR)
-PROJECT_ROOT = os.path.dirname(ROOT)
-MODULE_DIR = os.path.join(PROJECT_ROOT, "freecad", "DesignSystem")
-if MODULE_DIR not in sys.path:
-    sys.path.insert(0, MODULE_DIR)
-
-
 TOLERANCE = 1e-6
 
 
@@ -66,9 +58,11 @@ def check(path):
         App.closeDocument(doc.Name)
 
 
-if __name__ in ("__main__", "check_bed_overlaps"):
+if __name__ in ("__main__", "check_overlaps"):
     requested_path = next(
         (argument for argument in sys.argv[1:] if argument.lower().endswith(".fcstd")),
-        os.path.join(ROOT, "Bed.FCStd"),
+        os.environ.get("PANEL_MODEL_PATH"),
     )
+    if not requested_path:
+        raise SystemExit("Provide a .FCStd model path or set PANEL_MODEL_PATH")
     check(requested_path)

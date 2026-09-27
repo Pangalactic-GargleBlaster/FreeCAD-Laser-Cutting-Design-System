@@ -9,8 +9,8 @@ def optimize(layout,groups,iterations=300000,seed=17):
     sheets=layout['sheets']; n=len(sheets)
     at={p['body_name']:i for i,s in enumerate(sheets) for p in s['parts']}
     required=set()
-    for group,names in groups.items():
-        if not (group.startswith('Pair:') or group.endswith('CabinetSide')):continue
+    for group in layout.get('hard_groups',[]):
+        names=groups[group]
         occupied=sorted({at[name] for name in names})
         if occupied[-1]-occupied[0]>1:raise ValueError(('Input violates hard group',group,occupied))
         if len(occupied)==2:required.add(occupied[0])
@@ -68,7 +68,8 @@ def main():
     parser.add_argument('layout');parser.add_argument('groups');parser.add_argument('output')
     parser.add_argument('--iterations',type=int,default=300000)
     args=parser.parse_args()
-    l=json.load(open(args.layout));g=json.load(open(args.groups))['packing_groups']
+    l=json.load(open(args.layout));configuration=json.load(open(args.groups));g=configuration['packing_groups']
+    l['hard_groups']=configuration.get('hard_groups',[])
     order,count,before,after=optimize(l,g,args.iterations)
     l['sheets']=[l['sheets'][i] for i in order]
     for i,s in enumerate(l['sheets'],1):s['number']=i

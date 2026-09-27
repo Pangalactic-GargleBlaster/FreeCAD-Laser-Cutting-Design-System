@@ -1,15 +1,15 @@
-"""Audit saved Bed panels for symmetry about either in-plane midline.
+"""Audit saved panel bodies for symmetry about either in-plane midline.
 
 Run with FreeCAD's Python, for example:
-    FreeCADCmd Bed/tools/audit_bed_symmetry.py
-Set BED_AUDIT_CSV to save one result per body, or BED_MODEL_PATH to audit a
-candidate model. The FCStd archive is read
+    python tools/run_freecad.py tools/audit_panel_symmetry.py path/to/model.FCStd
+Set PANEL_AUDIT_CSV to save one result per body. The FCStd archive is read
 directly, so the script checks saved shapes without loading proxies,
 recomputing, or changing the document.
 """
 
 import csv
 import os
+import sys
 import time
 import xml.etree.ElementTree as ET
 import zipfile
@@ -43,14 +43,10 @@ def document_bodies(archive):
     return names, labels
 
 
-def audit():
-    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    model = os.environ.get("BED_MODEL_PATH", os.path.join(root, "Bed", "Bed.FCStd"))
+def audit(model, output=None, limit=0):
     fieldnames = ["name", "label", "thickness_axis", "in_plane_axes",
                   "symmetric_axes", "volume_mm3", "tolerance_mm3",
                   "x_mismatch_mm3", "y_mismatch_mm3", "z_mismatch_mm3"]
-    output = os.environ.get("BED_AUDIT_CSV")
-    limit = int(os.environ.get("BED_AUDIT_LIMIT", "0"))
     start = time.time()
     with zipfile.ZipFile(model) as archive:
         names, labels = document_bodies(archive)
@@ -101,4 +97,11 @@ def audit():
                 stream.close()
 
 
-audit()
+if __name__ in ("__main__", "audit_panel_symmetry"):
+    model = next((argument for argument in sys.argv[1:]
+                  if argument.lower().endswith(".fcstd")),
+                 os.environ.get("PANEL_MODEL_PATH", os.environ.get("BED_MODEL_PATH")))
+    if not model:
+        raise SystemExit("Provide a .FCStd model path or set PANEL_MODEL_PATH")
+    audit(model, os.environ.get("PANEL_AUDIT_CSV", os.environ.get("BED_AUDIT_CSV")),
+          int(os.environ.get("PANEL_AUDIT_LIMIT", os.environ.get("BED_AUDIT_LIMIT", "0"))))

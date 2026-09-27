@@ -1,4 +1,4 @@
-"""Place face-up bed profiles into cut-only sheet DXFs and labeled SVG maps."""
+"""Place face-up profiles into cut-only sheet DXFs and labeled SVG maps."""
 
 import csv
 import hashlib
@@ -10,11 +10,6 @@ import sys
 import FreeCAD as App
 import Part
 import importDXF
-
-
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(ROOT)
-sys.path.insert(0, os.path.join(PROJECT_ROOT, 'freecad', 'DesignSystem'))
 
 
 def profile_for_body(body, record):
@@ -82,7 +77,10 @@ def generate(manifest_path, layout_path, destination):
     records = json.load(open(manifest_path))
     record_by_name = {r['body_name']: r for r in records}
     layout = json.load(open(layout_path))
-    doc = App.openDocument(os.environ.get('LASER_BED_FILE', os.path.join(ROOT, 'Bed.FCStd')))
+    model = os.environ.get('LASER_MODEL_FILE')
+    if not model:
+        raise ValueError('Set LASER_MODEL_FILE to the source model')
+    doc = App.openDocument(model)
     out_doc = App.newDocument('LaserSheets')
     feature = out_doc.addObject('Part::Feature', 'SheetCutProfiles')
     bodies = {b.Name: b for b in doc.Objects if b.TypeId == 'PartDesign::Body'}

@@ -1,4 +1,4 @@
-"""Produce one deterministic, group-aware bed sheet layout."""
+"""Improve a sheet layout for explicitly configured assembly groups."""
 import argparse
 import json
 import subprocess
@@ -10,49 +10,14 @@ from optimize_hard_blocks import optimize as optimize_hard_blocks
 from optimize_sheet_order import optimize as optimize_sheet_order
 
 
-def group_definitions(layout, manifest):
+def group_definitions(layout, manifest, config):
     records={r['body_name']:r for r in manifest}
-    nested={n for faces in layout['nested_groups'].values() for n in faces}
-    packing={name for name in records if name not in nested}
-    groups={}
-    for name,names in layout['cabinet_side_stacks'].items():
-        groups[name.replace('Side','CabinetSide')]=names
-    for cabinet in (1,2,3,4):
-        prefix=f'Cabinet{cabinet}Drawer'
-        for side in ('Low','High'):
-            names=[f'{prefix}Side{side}{ply}Body' for ply in ('Outer','Inner')]
-            names += [f'{prefix}{side}SlideLayer{layer}Body' for layer in (1,2)]
-            groups[f'{prefix}{side}Side']=names
-    for cabinet in (7,8):
-        for drawer in ('Lower','Upper'):
-            prefix=f'Cabinet{cabinet}{drawer}Drawer'
-            for side in ('Low','High'):
-                names=[f'{prefix}Side{side}{ply}Body' for ply in ('Outer','Inner')]
-                names += [f'{prefix}{side}SlideLayer{layer}Body' for layer in (1,2)]
-                groups[f'{prefix}{side}Side']=names
-    owner={}
-    for group,names in groups.items():
-        for name in names:
-            if name not in packing or name in owner:
-                raise ValueError(('Invalid assembly group',group,name))
-            owner[name]=group
-    for name in sorted(packing):
-        if name in owner:continue
-        mate=records[name]['mate_name']
-        if mate and mate in packing:
-            group='Pair:'+'|'.join(sorted((name,mate)))
-            groups.setdefault(group,sorted((name,mate)))
-            owner[name]=group
-        elif mate and mate in nested:
-            group='Pair:'+'|'.join(sorted((name,mate)))
-            groups.setdefault(group,[name])
-            owner[name]=group
-        else:
-            group='Single:'+name
-            groups[group]=[name]
-            owner[name]=group
-    if set(owner)!=packing or len(groups)!=92:
-        raise ValueError(('Incomplete packing groups',len(groups),len(owner)))
+    nested={n for faces in layout.get('nested_groups',{}).values() for n in faces}
+    packing=set(records)-nested
+    groups=config['packing_groups']
+    members=[name for names in groups.values() for name in names]
+    if len(members)!=len(set(members)) or set(members)!=packing:
+        raise ValueError('Packing groups must cover each independent body exactly once')
     return groups
 
 
@@ -61,7 +26,7 @@ def metrics(layout,groups):
         for p in sheet['parts']}
     spans={group:max(at[n] for n in names)-min(at[n] for n in names)
            for group,names in groups.items()}
-    return (len(layout['sheets']),max(spans.values()),sum(spans.values()))
+    return (len(layout['sheets']),max(spans.values(),default=0),sum(spans.values()))
 
 
 def reorder(layout,groups,hard_blocks=False):
@@ -92,13 +57,16 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('manifest')
     parser.add_argument('metadata')
+    parser.add_argument('config')
     parser.add_argument('baseline')
     parser.add_argument('output')
     args=parser.parse_args()
     manifest=json.load(open(args.manifest))
+    config=json.load(open(args.config))
     baseline=json.load(open(args.baseline))
-    groups=group_definitions(baseline,manifest)
+    groups=group_definitions(baseline,manifest,config)
     baseline['packing_groups']=groups
+    baseline['hard_groups']=config.get('hard_groups',[])
     best=reorder(baseline,groups,hard_blocks=True)
     with tempfile.TemporaryDirectory(prefix='group-search-') as temporary:
         directory=Path(temporary)

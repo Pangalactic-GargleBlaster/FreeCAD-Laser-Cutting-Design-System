@@ -1,4 +1,4 @@
-"""Small large-neighborhood search for the bed's sheet count and group spans."""
+"""Large-neighborhood search for fewer sheets and shorter assembly spans."""
 import argparse
 import copy
 import json
@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from pack_laser_rectangles import Sheet, SHEET_W, SHEET_H, ceil_mm, validate
+from pack_laser_rectangles import Sheet, ceil_mm, validate
 
 
 def main():
@@ -29,6 +29,8 @@ def main():
     dims = {name: (ceil_mm(records[name]['width_mm']),
                    ceil_mm(records[name]['height_mm'])) for name in names}
     gap = layout['part_gap_mm']
+    sheet_width = layout['sheet_width_mm']
+    sheet_height = layout['sheet_height_mm']
     rng = random.Random(19)
 
     def key(name):
@@ -44,13 +46,13 @@ def main():
                 if w+gap > fw+1e-7 or h+gap > fh+1e-7: continue
                 for x in (fx, fx+fw-w-gap):
                     for y in (fy, fy+fh-h-gap):
-                        if x+w>SHEET_W+1e-7 or y+h>SHEET_H+1e-7:continue
+                        if x+w>sheet_width+1e-7 or y+h>sheet_height+1e-7:continue
                         p=(x,y,w,h,rotation)
                         options[tuple(round(v,4) for v in p)]=p
         return list(options.values())
 
     def repack(parts, mode=0):
-        sheet=Sheet(gap)
+        sheet=Sheet(gap,sheet_width,sheet_height)
         ordered=sorted(parts,key=key,reverse=True)
         for index,name in enumerate(ordered):
             choices=place_options(sheet,name)
@@ -85,7 +87,7 @@ def main():
         return [p['body_name'] for p in parts if p['body_name'] not in nested]
 
     def from_positions(parts):
-        sheet=Sheet(gap)
+        sheet=Sheet(gap,sheet_width,sheet_height)
         for p in sorted(parts,key=lambda p:key(p['body_name']),reverse=True):
             sheet.place(p['body_name'],(p['x_mm'],p['y_mm'],p['width_mm'],
                                         p['height_mm'],int(p['rotation_deg']==90)))
@@ -191,7 +193,7 @@ def main():
             if len(sheets)<len(candidates):break
         print('ELIMINATION_ATTEMPTS',attempts,flush=True)
 
-    # Expand the drawer faces in the existing face-frame openings.
+    # Expand nested parts in their configured frame openings.
     def projected_min(name,axis_key):
         vector=records[name][axis_key]
         axis=next(i for i,v in enumerate(vector) if abs(v)>0.5)

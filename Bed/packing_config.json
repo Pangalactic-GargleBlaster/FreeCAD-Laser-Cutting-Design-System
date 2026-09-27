@@ -1,0 +1,776 @@
+{
+  "sheet_width_mm": 1193.8,
+  "sheet_height_mm": 787.4,
+  "part_gap_mm": 5.0,
+  "nested_groups": {
+    "Cabinet1DrawerFaceFrameOuterBody": [
+      "Cabinet1DrawerFaceOuterBody"
+    ],
+    "Cabinet1DrawerFaceFrameInnerBody": [
+      "Cabinet1DrawerFaceInnerBody"
+    ],
+    "Cabinet2DrawerFaceFrameOuterBody": [
+      "Cabinet2DrawerFaceOuterBody"
+    ],
+    "Cabinet2DrawerFaceFrameInnerBody": [
+      "Cabinet2DrawerFaceInnerBody"
+    ],
+    "Cabinet3DrawerFaceFrameOuterBody": [
+      "Cabinet3DrawerFaceOuterBody"
+    ],
+    "Cabinet3DrawerFaceFrameInnerBody": [
+      "Cabinet3DrawerFaceInnerBody"
+    ],
+    "Cabinet4DrawerFaceFrameOuterBody": [
+      "Cabinet4DrawerFaceOuterBody"
+    ],
+    "Cabinet4DrawerFaceFrameInnerBody": [
+      "Cabinet4DrawerFaceInnerBody"
+    ],
+    "Cabinet7LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet7LowerDrawerFaceOuterBody",
+      "Cabinet7UpperDrawerFaceOuterBody"
+    ],
+    "Cabinet7LowerDrawerCombinedFaceFrameInnerBody": [
+      "Cabinet7LowerDrawerFaceInnerBody",
+      "Cabinet7UpperDrawerFaceInnerBody"
+    ],
+    "Cabinet8LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet8LowerDrawerFaceOuterBody",
+      "Cabinet8UpperDrawerFaceOuterBody"
+    ],
+    "Cabinet8LowerDrawerCombinedFaceFrameInnerBody": [
+      "Cabinet8LowerDrawerFaceInnerBody",
+      "Cabinet8UpperDrawerFaceInnerBody"
+    ]
+  },
+  "packing_groups": {
+    "Cabinet1LowCabinetSide": [
+      "Cabinet1LowerSideOuterBody",
+      "Cabinet1LowerSideInnerBody",
+      "Cabinet1DrawerCabinetLowSupportLayer3Body",
+      "Cabinet1DrawerCabinetLowSupportLayer4Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet1HighCabinetSide": [
+      "Cabinet1UpperSideOuterBody",
+      "Cabinet1UpperSideInnerBody",
+      "Cabinet1DrawerCabinetHighSupportLayer3Body",
+      "Cabinet1DrawerCabinetHighSupportLayer4Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet2LowCabinetSide": [
+      "Cabinet2LowerSideOuterBody",
+      "Cabinet2LowerSideInnerBody",
+      "Cabinet2DrawerCabinetLowSupportLayer3Body",
+      "Cabinet2DrawerCabinetLowSupportLayer4Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet2HighCabinetSide": [
+      "Cabinet2UpperSideOuterBody",
+      "Cabinet2UpperSideInnerBody",
+      "Cabinet2DrawerCabinetHighSupportLayer3Body",
+      "Cabinet2DrawerCabinetHighSupportLayer4Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet3LowCabinetSide": [
+      "Cabinet3LowerSideOuterBody",
+      "Cabinet3LowerSideInnerBody",
+      "Cabinet3DrawerCabinetLowSupportLayer3Body",
+      "Cabinet3DrawerCabinetLowSupportLayer4Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet3HighCabinetSide": [
+      "Cabinet3UpperSideOuterBody",
+      "Cabinet3UpperSideInnerBody",
+      "Cabinet3DrawerCabinetHighSupportLayer3Body",
+      "Cabinet3DrawerCabinetHighSupportLayer4Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet4LowCabinetSide": [
+      "Cabinet4LowerSideOuterBody",
+      "Cabinet4LowerSideInnerBody",
+      "Cabinet4DrawerCabinetLowSupportLayer3Body",
+      "Cabinet4DrawerCabinetLowSupportLayer4Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet4HighCabinetSide": [
+      "Cabinet4UpperSideOuterBody",
+      "Cabinet4UpperSideInnerBody",
+      "Cabinet4DrawerCabinetHighSupportLayer3Body",
+      "Cabinet4DrawerCabinetHighSupportLayer4Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet7LowCabinetSide": [
+      "Cabinet7LeftSideOuterBody",
+      "Cabinet7LeftSideInnerBody",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet7HighCabinetSide": [
+      "Cabinet7RightSideOuterBody",
+      "Cabinet7RightSideInnerBody",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet8LowCabinetSide": [
+      "Cabinet8LeftSideOuterBody",
+      "Cabinet8LeftSideInnerBody",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet8HighCabinetSide": [
+      "Cabinet8RightSideOuterBody",
+      "Cabinet8RightSideInnerBody",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet1DrawerLowSide": [
+      "Cabinet1DrawerSideLowOuterBody",
+      "Cabinet1DrawerSideLowInnerBody",
+      "Cabinet1DrawerLowSlideLayer1Body",
+      "Cabinet1DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet1DrawerHighSide": [
+      "Cabinet1DrawerSideHighOuterBody",
+      "Cabinet1DrawerSideHighInnerBody",
+      "Cabinet1DrawerHighSlideLayer1Body",
+      "Cabinet1DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet2DrawerLowSide": [
+      "Cabinet2DrawerSideLowOuterBody",
+      "Cabinet2DrawerSideLowInnerBody",
+      "Cabinet2DrawerLowSlideLayer1Body",
+      "Cabinet2DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet2DrawerHighSide": [
+      "Cabinet2DrawerSideHighOuterBody",
+      "Cabinet2DrawerSideHighInnerBody",
+      "Cabinet2DrawerHighSlideLayer1Body",
+      "Cabinet2DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet3DrawerLowSide": [
+      "Cabinet3DrawerSideLowOuterBody",
+      "Cabinet3DrawerSideLowInnerBody",
+      "Cabinet3DrawerLowSlideLayer1Body",
+      "Cabinet3DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet3DrawerHighSide": [
+      "Cabinet3DrawerSideHighOuterBody",
+      "Cabinet3DrawerSideHighInnerBody",
+      "Cabinet3DrawerHighSlideLayer1Body",
+      "Cabinet3DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet4DrawerLowSide": [
+      "Cabinet4DrawerSideLowOuterBody",
+      "Cabinet4DrawerSideLowInnerBody",
+      "Cabinet4DrawerLowSlideLayer1Body",
+      "Cabinet4DrawerLowSlideLayer2Body"
+    ],
+    "Cabinet4DrawerHighSide": [
+      "Cabinet4DrawerSideHighOuterBody",
+      "Cabinet4DrawerSideHighInnerBody",
+      "Cabinet4DrawerHighSlideLayer1Body",
+      "Cabinet4DrawerHighSlideLayer2Body"
+    ],
+    "Cabinet7LowerDrawerLowSide": [
+      "Cabinet7LowerDrawerSideLowOuterBody",
+      "Cabinet7LowerDrawerSideLowInnerBody",
+      "Cabinet7LowerDrawerLowSlideLayer1Body",
+      "Cabinet7LowerDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet7LowerDrawerHighSide": [
+      "Cabinet7LowerDrawerSideHighOuterBody",
+      "Cabinet7LowerDrawerSideHighInnerBody",
+      "Cabinet7LowerDrawerHighSlideLayer1Body",
+      "Cabinet7LowerDrawerHighSlideLayer2Body"
+    ],
+    "Cabinet7UpperDrawerLowSide": [
+      "Cabinet7UpperDrawerSideLowOuterBody",
+      "Cabinet7UpperDrawerSideLowInnerBody",
+      "Cabinet7UpperDrawerLowSlideLayer1Body",
+      "Cabinet7UpperDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet7UpperDrawerHighSide": [
+      "Cabinet7UpperDrawerSideHighOuterBody",
+      "Cabinet7UpperDrawerSideHighInnerBody",
+      "Cabinet7UpperDrawerHighSlideLayer1Body",
+      "Cabinet7UpperDrawerHighSlideLayer2Body"
+    ],
+    "Cabinet8LowerDrawerLowSide": [
+      "Cabinet8LowerDrawerSideLowOuterBody",
+      "Cabinet8LowerDrawerSideLowInnerBody",
+      "Cabinet8LowerDrawerLowSlideLayer1Body",
+      "Cabinet8LowerDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet8LowerDrawerHighSide": [
+      "Cabinet8LowerDrawerSideHighOuterBody",
+      "Cabinet8LowerDrawerSideHighInnerBody",
+      "Cabinet8LowerDrawerHighSlideLayer1Body",
+      "Cabinet8LowerDrawerHighSlideLayer2Body"
+    ],
+    "Cabinet8UpperDrawerLowSide": [
+      "Cabinet8UpperDrawerSideLowOuterBody",
+      "Cabinet8UpperDrawerSideLowInnerBody",
+      "Cabinet8UpperDrawerLowSlideLayer1Body",
+      "Cabinet8UpperDrawerLowSlideLayer2Body"
+    ],
+    "Cabinet8UpperDrawerHighSide": [
+      "Cabinet8UpperDrawerSideHighOuterBody",
+      "Cabinet8UpperDrawerSideHighInnerBody",
+      "Cabinet8UpperDrawerHighSlideLayer1Body",
+      "Cabinet8UpperDrawerHighSlideLayer2Body"
+    ],
+    "Pair:Cabinet1BackBottomStripInnerBody|Cabinet1BackBottomStripOuterBody": [
+      "Cabinet1BackBottomStripInnerBody",
+      "Cabinet1BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet1BackInnerBody|Cabinet1BackOuterBody": [
+      "Cabinet1BackInnerBody",
+      "Cabinet1BackOuterBody"
+    ],
+    "Pair:Cabinet1CenterSupportInnerBody|Cabinet1CenterSupportOuterBody": [
+      "Cabinet1CenterSupportInnerBody",
+      "Cabinet1CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet1DrawerBackInnerBody|Cabinet1DrawerBackOuterBody": [
+      "Cabinet1DrawerBackInnerBody",
+      "Cabinet1DrawerBackOuterBody"
+    ],
+    "Single:Cabinet1DrawerBottomBody": [
+      "Cabinet1DrawerBottomBody"
+    ],
+    "Pair:Cabinet1DrawerFaceFrameInnerBody|Cabinet1DrawerFaceFrameOuterBody": [
+      "Cabinet1DrawerFaceFrameInnerBody",
+      "Cabinet1DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet1FrontBottomStripInnerBody|Cabinet1FrontBottomStripOuterBody": [
+      "Cabinet1FrontBottomStripInnerBody",
+      "Cabinet1FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet1TopInnerBody|Cabinet1TopOuterBody": [
+      "Cabinet1TopInnerBody",
+      "Cabinet1TopOuterBody"
+    ],
+    "Pair:Cabinet2BackBottomStripInnerBody|Cabinet2BackBottomStripOuterBody": [
+      "Cabinet2BackBottomStripInnerBody",
+      "Cabinet2BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet2BackInnerBody|Cabinet2BackOuterBody": [
+      "Cabinet2BackInnerBody",
+      "Cabinet2BackOuterBody"
+    ],
+    "Pair:Cabinet2CenterSupportInnerBody|Cabinet2CenterSupportOuterBody": [
+      "Cabinet2CenterSupportInnerBody",
+      "Cabinet2CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet2DrawerBackInnerBody|Cabinet2DrawerBackOuterBody": [
+      "Cabinet2DrawerBackInnerBody",
+      "Cabinet2DrawerBackOuterBody"
+    ],
+    "Single:Cabinet2DrawerBottomBody": [
+      "Cabinet2DrawerBottomBody"
+    ],
+    "Pair:Cabinet2DrawerFaceFrameInnerBody|Cabinet2DrawerFaceFrameOuterBody": [
+      "Cabinet2DrawerFaceFrameInnerBody",
+      "Cabinet2DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet2FrontBottomStripInnerBody|Cabinet2FrontBottomStripOuterBody": [
+      "Cabinet2FrontBottomStripInnerBody",
+      "Cabinet2FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet2TopInnerBody|Cabinet2TopOuterBody": [
+      "Cabinet2TopInnerBody",
+      "Cabinet2TopOuterBody"
+    ],
+    "Pair:Cabinet3BackBottomStripInnerBody|Cabinet3BackBottomStripOuterBody": [
+      "Cabinet3BackBottomStripInnerBody",
+      "Cabinet3BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet3BackInnerBody|Cabinet3BackOuterBody": [
+      "Cabinet3BackInnerBody",
+      "Cabinet3BackOuterBody"
+    ],
+    "Pair:Cabinet3CenterSupportInnerBody|Cabinet3CenterSupportOuterBody": [
+      "Cabinet3CenterSupportInnerBody",
+      "Cabinet3CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet3DrawerBackInnerBody|Cabinet3DrawerBackOuterBody": [
+      "Cabinet3DrawerBackInnerBody",
+      "Cabinet3DrawerBackOuterBody"
+    ],
+    "Single:Cabinet3DrawerBottomBody": [
+      "Cabinet3DrawerBottomBody"
+    ],
+    "Pair:Cabinet3DrawerFaceFrameInnerBody|Cabinet3DrawerFaceFrameOuterBody": [
+      "Cabinet3DrawerFaceFrameInnerBody",
+      "Cabinet3DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet3FrontBottomStripInnerBody|Cabinet3FrontBottomStripOuterBody": [
+      "Cabinet3FrontBottomStripInnerBody",
+      "Cabinet3FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet3TopInnerBody|Cabinet3TopOuterBody": [
+      "Cabinet3TopInnerBody",
+      "Cabinet3TopOuterBody"
+    ],
+    "Pair:Cabinet4BackBottomStripInnerBody|Cabinet4BackBottomStripOuterBody": [
+      "Cabinet4BackBottomStripInnerBody",
+      "Cabinet4BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet4BackInnerBody|Cabinet4BackOuterBody": [
+      "Cabinet4BackInnerBody",
+      "Cabinet4BackOuterBody"
+    ],
+    "Pair:Cabinet4CenterSupportInnerBody|Cabinet4CenterSupportOuterBody": [
+      "Cabinet4CenterSupportInnerBody",
+      "Cabinet4CenterSupportOuterBody"
+    ],
+    "Pair:Cabinet4DrawerBackInnerBody|Cabinet4DrawerBackOuterBody": [
+      "Cabinet4DrawerBackInnerBody",
+      "Cabinet4DrawerBackOuterBody"
+    ],
+    "Single:Cabinet4DrawerBottomBody": [
+      "Cabinet4DrawerBottomBody"
+    ],
+    "Pair:Cabinet4DrawerFaceFrameInnerBody|Cabinet4DrawerFaceFrameOuterBody": [
+      "Cabinet4DrawerFaceFrameInnerBody",
+      "Cabinet4DrawerFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet4FrontBottomStripInnerBody|Cabinet4FrontBottomStripOuterBody": [
+      "Cabinet4FrontBottomStripInnerBody",
+      "Cabinet4FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet4TopInnerBody|Cabinet4TopOuterBody": [
+      "Cabinet4TopInnerBody",
+      "Cabinet4TopOuterBody"
+    ],
+    "Pair:Cabinet5BackBottomStripInnerBody|Cabinet5BackBottomStripOuterBody": [
+      "Cabinet5BackBottomStripInnerBody",
+      "Cabinet5BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet5BackInnerBody|Cabinet5BackOuterBody": [
+      "Cabinet5BackInnerBody",
+      "Cabinet5BackOuterBody"
+    ],
+    "Pair:Cabinet5FrontBottomStripInnerBody|Cabinet5FrontBottomStripOuterBody": [
+      "Cabinet5FrontBottomStripInnerBody",
+      "Cabinet5FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet5FrontSupportInnerBody|Cabinet5FrontSupportOuterBody": [
+      "Cabinet5FrontSupportInnerBody",
+      "Cabinet5FrontSupportOuterBody"
+    ],
+    "Pair:Cabinet5LeftSideInnerBody|Cabinet5LeftSideOuterBody": [
+      "Cabinet5LeftSideInnerBody",
+      "Cabinet5LeftSideOuterBody"
+    ],
+    "Pair:Cabinet5RightSideInnerBody|Cabinet5RightSideOuterBody": [
+      "Cabinet5RightSideInnerBody",
+      "Cabinet5RightSideOuterBody"
+    ],
+    "Pair:Cabinet5TopInnerBody|Cabinet5TopOuterBody": [
+      "Cabinet5TopInnerBody",
+      "Cabinet5TopOuterBody"
+    ],
+    "Pair:Cabinet6BackBottomStripInnerBody|Cabinet6BackBottomStripOuterBody": [
+      "Cabinet6BackBottomStripInnerBody",
+      "Cabinet6BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet6BackInnerBody|Cabinet6BackOuterBody": [
+      "Cabinet6BackInnerBody",
+      "Cabinet6BackOuterBody"
+    ],
+    "Pair:Cabinet6FrontBottomStripInnerBody|Cabinet6FrontBottomStripOuterBody": [
+      "Cabinet6FrontBottomStripInnerBody",
+      "Cabinet6FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet6FrontSupportInnerBody|Cabinet6FrontSupportOuterBody": [
+      "Cabinet6FrontSupportInnerBody",
+      "Cabinet6FrontSupportOuterBody"
+    ],
+    "Pair:Cabinet6LeftSideInnerBody|Cabinet6LeftSideOuterBody": [
+      "Cabinet6LeftSideInnerBody",
+      "Cabinet6LeftSideOuterBody"
+    ],
+    "Pair:Cabinet6RightSideInnerBody|Cabinet6RightSideOuterBody": [
+      "Cabinet6RightSideInnerBody",
+      "Cabinet6RightSideOuterBody"
+    ],
+    "Pair:Cabinet6TopInnerBody|Cabinet6TopOuterBody": [
+      "Cabinet6TopInnerBody",
+      "Cabinet6TopOuterBody"
+    ],
+    "Pair:Cabinet7BackBottomStripInnerBody|Cabinet7BackBottomStripOuterBody": [
+      "Cabinet7BackBottomStripInnerBody",
+      "Cabinet7BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet7BackInnerBody|Cabinet7BackOuterBody": [
+      "Cabinet7BackInnerBody",
+      "Cabinet7BackOuterBody"
+    ],
+    "Pair:Cabinet7FrontBottomStripInnerBody|Cabinet7FrontBottomStripOuterBody": [
+      "Cabinet7FrontBottomStripInnerBody",
+      "Cabinet7FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet7LowerDrawerBackInnerBody|Cabinet7LowerDrawerBackOuterBody": [
+      "Cabinet7LowerDrawerBackInnerBody",
+      "Cabinet7LowerDrawerBackOuterBody"
+    ],
+    "Single:Cabinet7LowerDrawerBottomBody": [
+      "Cabinet7LowerDrawerBottomBody"
+    ],
+    "Pair:Cabinet7LowerDrawerCombinedFaceFrameInnerBody|Cabinet7LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet7LowerDrawerCombinedFaceFrameInnerBody",
+      "Cabinet7LowerDrawerCombinedFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet7TopInnerBody|Cabinet7TopOuterBody": [
+      "Cabinet7TopInnerBody",
+      "Cabinet7TopOuterBody"
+    ],
+    "Pair:Cabinet7UpperDrawerBackInnerBody|Cabinet7UpperDrawerBackOuterBody": [
+      "Cabinet7UpperDrawerBackInnerBody",
+      "Cabinet7UpperDrawerBackOuterBody"
+    ],
+    "Single:Cabinet7UpperDrawerBottomBody": [
+      "Cabinet7UpperDrawerBottomBody"
+    ],
+    "Pair:Cabinet8BackBottomStripInnerBody|Cabinet8BackBottomStripOuterBody": [
+      "Cabinet8BackBottomStripInnerBody",
+      "Cabinet8BackBottomStripOuterBody"
+    ],
+    "Pair:Cabinet8BackInnerBody|Cabinet8BackOuterBody": [
+      "Cabinet8BackInnerBody",
+      "Cabinet8BackOuterBody"
+    ],
+    "Pair:Cabinet8FrontBottomStripInnerBody|Cabinet8FrontBottomStripOuterBody": [
+      "Cabinet8FrontBottomStripInnerBody",
+      "Cabinet8FrontBottomStripOuterBody"
+    ],
+    "Pair:Cabinet8LowerDrawerBackInnerBody|Cabinet8LowerDrawerBackOuterBody": [
+      "Cabinet8LowerDrawerBackInnerBody",
+      "Cabinet8LowerDrawerBackOuterBody"
+    ],
+    "Single:Cabinet8LowerDrawerBottomBody": [
+      "Cabinet8LowerDrawerBottomBody"
+    ],
+    "Pair:Cabinet8LowerDrawerCombinedFaceFrameInnerBody|Cabinet8LowerDrawerCombinedFaceFrameOuterBody": [
+      "Cabinet8LowerDrawerCombinedFaceFrameInnerBody",
+      "Cabinet8LowerDrawerCombinedFaceFrameOuterBody"
+    ],
+    "Pair:Cabinet8TopInnerBody|Cabinet8TopOuterBody": [
+      "Cabinet8TopInnerBody",
+      "Cabinet8TopOuterBody"
+    ],
+    "Pair:Cabinet8UpperDrawerBackInnerBody|Cabinet8UpperDrawerBackOuterBody": [
+      "Cabinet8UpperDrawerBackInnerBody",
+      "Cabinet8UpperDrawerBackOuterBody"
+    ],
+    "Single:Cabinet8UpperDrawerBottomBody": [
+      "Cabinet8UpperDrawerBottomBody"
+    ]
+  },
+  "hard_groups": [
+    "Cabinet1LowCabinetSide",
+    "Cabinet1HighCabinetSide",
+    "Cabinet2LowCabinetSide",
+    "Cabinet2HighCabinetSide",
+    "Cabinet3LowCabinetSide",
+    "Cabinet3HighCabinetSide",
+    "Cabinet4LowCabinetSide",
+    "Cabinet4HighCabinetSide",
+    "Cabinet7LowCabinetSide",
+    "Cabinet7HighCabinetSide",
+    "Cabinet8LowCabinetSide",
+    "Cabinet8HighCabinetSide",
+    "Pair:Cabinet1BackBottomStripInnerBody|Cabinet1BackBottomStripOuterBody",
+    "Pair:Cabinet1BackInnerBody|Cabinet1BackOuterBody",
+    "Pair:Cabinet1CenterSupportInnerBody|Cabinet1CenterSupportOuterBody",
+    "Pair:Cabinet1DrawerBackInnerBody|Cabinet1DrawerBackOuterBody",
+    "Pair:Cabinet1DrawerFaceFrameInnerBody|Cabinet1DrawerFaceFrameOuterBody",
+    "Pair:Cabinet1FrontBottomStripInnerBody|Cabinet1FrontBottomStripOuterBody",
+    "Pair:Cabinet1TopInnerBody|Cabinet1TopOuterBody",
+    "Pair:Cabinet2BackBottomStripInnerBody|Cabinet2BackBottomStripOuterBody",
+    "Pair:Cabinet2BackInnerBody|Cabinet2BackOuterBody",
+    "Pair:Cabinet2CenterSupportInnerBody|Cabinet2CenterSupportOuterBody",
+    "Pair:Cabinet2DrawerBackInnerBody|Cabinet2DrawerBackOuterBody",
+    "Pair:Cabinet2DrawerFaceFrameInnerBody|Cabinet2DrawerFaceFrameOuterBody",
+    "Pair:Cabinet2FrontBottomStripInnerBody|Cabinet2FrontBottomStripOuterBody",
+    "Pair:Cabinet2TopInnerBody|Cabinet2TopOuterBody",
+    "Pair:Cabinet3BackBottomStripInnerBody|Cabinet3BackBottomStripOuterBody",
+    "Pair:Cabinet3BackInnerBody|Cabinet3BackOuterBody",
+    "Pair:Cabinet3CenterSupportInnerBody|Cabinet3CenterSupportOuterBody",
+    "Pair:Cabinet3DrawerBackInnerBody|Cabinet3DrawerBackOuterBody",
+    "Pair:Cabinet3DrawerFaceFrameInnerBody|Cabinet3DrawerFaceFrameOuterBody",
+    "Pair:Cabinet3FrontBottomStripInnerBody|Cabinet3FrontBottomStripOuterBody",
+    "Pair:Cabinet3TopInnerBody|Cabinet3TopOuterBody",
+    "Pair:Cabinet4BackBottomStripInnerBody|Cabinet4BackBottomStripOuterBody",
+    "Pair:Cabinet4BackInnerBody|Cabinet4BackOuterBody",
+    "Pair:Cabinet4CenterSupportInnerBody|Cabinet4CenterSupportOuterBody",
+    "Pair:Cabinet4DrawerBackInnerBody|Cabinet4DrawerBackOuterBody",
+    "Pair:Cabinet4DrawerFaceFrameInnerBody|Cabinet4DrawerFaceFrameOuterBody",
+    "Pair:Cabinet4FrontBottomStripInnerBody|Cabinet4FrontBottomStripOuterBody",
+    "Pair:Cabinet4TopInnerBody|Cabinet4TopOuterBody",
+    "Pair:Cabinet5BackBottomStripInnerBody|Cabinet5BackBottomStripOuterBody",
+    "Pair:Cabinet5BackInnerBody|Cabinet5BackOuterBody",
+    "Pair:Cabinet5FrontBottomStripInnerBody|Cabinet5FrontBottomStripOuterBody",
+    "Pair:Cabinet5FrontSupportInnerBody|Cabinet5FrontSupportOuterBody",
+    "Pair:Cabinet5LeftSideInnerBody|Cabinet5LeftSideOuterBody",
+    "Pair:Cabinet5RightSideInnerBody|Cabinet5RightSideOuterBody",
+    "Pair:Cabinet5TopInnerBody|Cabinet5TopOuterBody",
+    "Pair:Cabinet6BackBottomStripInnerBody|Cabinet6BackBottomStripOuterBody",
+    "Pair:Cabinet6BackInnerBody|Cabinet6BackOuterBody",
+    "Pair:Cabinet6FrontBottomStripInnerBody|Cabinet6FrontBottomStripOuterBody",
+    "Pair:Cabinet6FrontSupportInnerBody|Cabinet6FrontSupportOuterBody",
+    "Pair:Cabinet6LeftSideInnerBody|Cabinet6LeftSideOuterBody",
+    "Pair:Cabinet6RightSideInnerBody|Cabinet6RightSideOuterBody",
+    "Pair:Cabinet6TopInnerBody|Cabinet6TopOuterBody",
+    "Pair:Cabinet7BackBottomStripInnerBody|Cabinet7BackBottomStripOuterBody",
+    "Pair:Cabinet7BackInnerBody|Cabinet7BackOuterBody",
+    "Pair:Cabinet7FrontBottomStripInnerBody|Cabinet7FrontBottomStripOuterBody",
+    "Pair:Cabinet7LowerDrawerBackInnerBody|Cabinet7LowerDrawerBackOuterBody",
+    "Pair:Cabinet7LowerDrawerCombinedFaceFrameInnerBody|Cabinet7LowerDrawerCombinedFaceFrameOuterBody",
+    "Pair:Cabinet7TopInnerBody|Cabinet7TopOuterBody",
+    "Pair:Cabinet7UpperDrawerBackInnerBody|Cabinet7UpperDrawerBackOuterBody",
+    "Pair:Cabinet8BackBottomStripInnerBody|Cabinet8BackBottomStripOuterBody",
+    "Pair:Cabinet8BackInnerBody|Cabinet8BackOuterBody",
+    "Pair:Cabinet8FrontBottomStripInnerBody|Cabinet8FrontBottomStripOuterBody",
+    "Pair:Cabinet8LowerDrawerBackInnerBody|Cabinet8LowerDrawerBackOuterBody",
+    "Pair:Cabinet8LowerDrawerCombinedFaceFrameInnerBody|Cabinet8LowerDrawerCombinedFaceFrameOuterBody",
+    "Pair:Cabinet8TopInnerBody|Cabinet8TopOuterBody",
+    "Pair:Cabinet8UpperDrawerBackInnerBody|Cabinet8UpperDrawerBackOuterBody"
+  ],
+  "expected_body_count": 320,
+  "model_parameter_object": "BedParameters",
+  "model_parameter_fields": {
+    "ply_mm": "ply",
+    "drawer_clearance_mm": "DrawerClearance"
+  },
+  "mate_suffix_pairs": [
+    [
+      "OuterBody",
+      "InnerBody"
+    ],
+    [
+      "Layer1Body",
+      "Layer2Body"
+    ],
+    [
+      "Layer3Body",
+      "Layer4Body"
+    ]
+  ],
+  "unpaired_suffix_normals": {
+    "DrawerBottomBody": "+Z"
+  },
+  "adjacent_stacks": {
+    "Cabinet1LowSide": [
+      "Cabinet1LowerSideOuterBody",
+      "Cabinet1LowerSideInnerBody",
+      "Cabinet1DrawerCabinetLowSupportLayer3Body",
+      "Cabinet1DrawerCabinetLowSupportLayer4Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet1HighSide": [
+      "Cabinet1UpperSideOuterBody",
+      "Cabinet1UpperSideInnerBody",
+      "Cabinet1DrawerCabinetHighSupportLayer3Body",
+      "Cabinet1DrawerCabinetHighSupportLayer4Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet1DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet1DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet2LowSide": [
+      "Cabinet2LowerSideOuterBody",
+      "Cabinet2LowerSideInnerBody",
+      "Cabinet2DrawerCabinetLowSupportLayer3Body",
+      "Cabinet2DrawerCabinetLowSupportLayer4Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet2HighSide": [
+      "Cabinet2UpperSideOuterBody",
+      "Cabinet2UpperSideInnerBody",
+      "Cabinet2DrawerCabinetHighSupportLayer3Body",
+      "Cabinet2DrawerCabinetHighSupportLayer4Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet2DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet2DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet3LowSide": [
+      "Cabinet3LowerSideOuterBody",
+      "Cabinet3LowerSideInnerBody",
+      "Cabinet3DrawerCabinetLowSupportLayer3Body",
+      "Cabinet3DrawerCabinetLowSupportLayer4Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet3HighSide": [
+      "Cabinet3UpperSideOuterBody",
+      "Cabinet3UpperSideInnerBody",
+      "Cabinet3DrawerCabinetHighSupportLayer3Body",
+      "Cabinet3DrawerCabinetHighSupportLayer4Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet3DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet3DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet4LowSide": [
+      "Cabinet4LowerSideOuterBody",
+      "Cabinet4LowerSideInnerBody",
+      "Cabinet4DrawerCabinetLowSupportLayer3Body",
+      "Cabinet4DrawerCabinetLowSupportLayer4Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet4HighSide": [
+      "Cabinet4UpperSideOuterBody",
+      "Cabinet4UpperSideInnerBody",
+      "Cabinet4DrawerCabinetHighSupportLayer3Body",
+      "Cabinet4DrawerCabinetHighSupportLayer4Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet4DrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet4DrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet7LowSide": [
+      "Cabinet7LeftSideOuterBody",
+      "Cabinet7LeftSideInnerBody",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet7HighSide": [
+      "Cabinet7RightSideOuterBody",
+      "Cabinet7RightSideInnerBody",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet7UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet7UpperDrawerCabinetHighChannelBackLayer2Body"
+    ],
+    "Cabinet8LowSide": [
+      "Cabinet8LeftSideOuterBody",
+      "Cabinet8LeftSideInnerBody",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetLowAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetLowChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetLowChannelBackLayer2Body"
+    ],
+    "Cabinet8HighSide": [
+      "Cabinet8RightSideOuterBody",
+      "Cabinet8RightSideInnerBody",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8LowerDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighSupportLayer4Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer3Body",
+      "Cabinet8UpperDrawerCabinetHighAntiTipLayer4Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8LowerDrawerCabinetHighChannelBackLayer2Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer1Body",
+      "Cabinet8UpperDrawerCabinetHighChannelBackLayer2Body"
+    ]
+  }
+}

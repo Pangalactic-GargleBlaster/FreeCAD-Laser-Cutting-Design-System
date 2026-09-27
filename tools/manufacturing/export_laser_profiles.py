@@ -1,4 +1,4 @@
-"""Export one face-up, millimetre DXF cut profile for every final bed body."""
+"""Export a face-up, millimetre DXF cut profile for each final panel body."""
 
 import csv
 import json
@@ -10,19 +10,11 @@ import Part
 import importDXF
 
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(ROOT)
-sys.path.insert(0, os.path.join(PROJECT_ROOT, 'freecad', 'DesignSystem'))
-
-
-def mate_name(name):
-    for ending, replacement in (
-        ('OuterBody', 'InnerBody'), ('InnerBody', 'OuterBody'),
-        ('Layer1Body', 'Layer2Body'), ('Layer2Body', 'Layer1Body'),
-        ('Layer3Body', 'Layer4Body'), ('Layer4Body', 'Layer3Body'),
-    ):
-        if name.endswith(ending):
-            return name[:-len(ending)] + replacement
+def mate_name(name, pairs):
+    for first, second in pairs:
+        for ending, replacement in ((first, second), (second, first)):
+            if name.endswith(ending):
+                return name[:-len(ending)] + replacement
     return None
 
 
@@ -39,24 +31,28 @@ def vector_list(vector):
     return [vector.x, vector.y, vector.z]
 
 
-def generate(destination):
+def generate(model_path, config_path, destination):
+    config = json.load(open(config_path))
     os.makedirs(destination, exist_ok=True)
     profiles_dir = os.path.join(destination, 'profiles')
     os.makedirs(profiles_dir, exist_ok=True)
-    doc = App.openDocument(os.environ.get('LASER_BED_FILE', os.path.join(ROOT, 'Bed.FCStd')))
+    doc = App.openDocument(model_path)
     doc.recompute()
-    parameters = {
-        'ply_mm': doc.BedParameters.ply.Value,
-        'drawer_clearance_mm': doc.BedParameters.DrawerClearance.Value,
-    }
-    with open(os.environ['LASER_PARAMETERS_JSON'], 'w') as stream:
-        json.dump(parameters, stream, indent=2)
+    parameter_object = doc.getObject(config['model_parameter_object'])
+    if parameter_object is None:
+        raise ValueError('Model parameter object was not found')
+    parameters = {name: getattr(parameter_object, property_name).Value
+                  for name, property_name in config['model_parameter_fields'].items()}
+    if os.environ.get('LASER_PARAMETERS_JSON'):
+        with open(os.environ['LASER_PARAMETERS_JSON'], 'w') as stream:
+            json.dump(parameters, stream, indent=2)
     output_doc = App.newDocument('LaserProfiles')
     export_feature = output_doc.addObject('Part::Feature', 'CutProfile')
     bodies = [o for o in doc.Objects if o.TypeId == 'PartDesign::Body']
     by_name = {b.Name: b for b in bodies}
-    if len(bodies) != 320:
-        raise ValueError(f'Expected 320 bodies, found {len(bodies)}')
+    expected = config.get('expected_body_count')
+    if expected is not None and len(bodies) != expected:
+        raise ValueError(f'Expected {expected} bodies, found {len(bodies)}')
     records = []
     for index, body in enumerate(bodies, 1):
         shape = body.Shape
@@ -67,14 +63,19 @@ def generate(destination):
         thin_index = min(range(3), key=lengths.__getitem__)
         axis = 'XYZ'[thin_index]
         thickness = lengths[thin_index]
-        if abs(thickness - doc.BedParameters.ply.Value) > 1e-5:
+        if abs(thickness - parameters['ply_mm']) > 1e-5:
             raise ValueError(f'Unexpected thickness on {body.Name}: {thickness}')
-        mate = mate_name(body.Name)
+        mate = mate_name(body.Name, config.get('mate_suffix_pairs', []))
         if mate is None:
-            if not body.Name.endswith('DrawerBottomBody') or axis != 'Z':
-                raise ValueError(f'Unpaired body has no defined top face: {body.Name}')
-            sign = 1
+            normal = next((normal for suffix, normal in
+                           config.get('unpaired_suffix_normals', {}).items()
+                           if body.Name.endswith(suffix)), None)
+            if normal is None or normal[1] != axis:
+                raise ValueError(f'Unpaired body has no defined face: {body.Name}')
+            sign = 1 if normal[0] == '+' else -1
         else:
+            if mate not in by_name:
+                raise ValueError(f'Mate missing: {body.Name}, {mate}')
             other = by_name[mate]
             other_bounds = other.Shape.BoundBox
             other_lengths = [other_bounds.XLength, other_bounds.YLength, other_bounds.ZLength]
@@ -161,7 +162,9 @@ def generate(destination):
 
 
 if __name__ in ('__main__', 'export_laser_profiles'):
+    model = os.environ.get('LASER_MODEL_FILE')
+    config = os.environ.get('LASER_CONFIG_JSON')
     destination = os.environ.get('LASER_OUTPUT_DIR')
-    if not destination:
-        raise SystemExit('Set LASER_OUTPUT_DIR before running this FreeCADCmd script')
-    generate(os.path.abspath(destination))
+    if not all((model, config, destination)):
+        raise SystemExit('Set LASER_MODEL_FILE, LASER_CONFIG_JSON, and LASER_OUTPUT_DIR')
+    generate(model, config, os.path.abspath(destination))

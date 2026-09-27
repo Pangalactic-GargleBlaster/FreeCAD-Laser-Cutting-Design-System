@@ -1,24 +1,21 @@
-"""Pack each drawer face inside its matching face-frame opening."""
+"""Pack rectangular parts with nested parts, pairs, and adjacent-sheet stacks."""
 import copy, json, os, random, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from pack_laser_rectangles import Sheet, SHEET_W, SHEET_H, ceil_mm, validate
+from pack_laser_rectangles import Sheet, ceil_mm, validate
 
-def main(manifest_path, metadata_path, output_path, gap=5.0):
+def main(manifest_path, metadata_path, config_path, output_path):
     records={r['body_name']:r for r in json.load(open(manifest_path))}
     metadata={r['name']:r for r in json.load(open(metadata_path))}
-    groups={}
-    nested=set()
+    config=json.load(open(config_path))
+    gap=config['part_gap_mm']
+    sheet_width=config['sheet_width_mm']
+    sheet_height=config['sheet_height_mm']
+    groups=config.get('nested_groups',{})
+    stacks=config.get('adjacent_stacks',{})
+    nested={name for faces in groups.values() for name in faces}
+    if len(nested)!=sum(map(len,groups.values())):
+        raise ValueError('Nested body appears in multiple openings')
     minimum_frame_clearance=float('inf')
-    for cabinet in (1,2,3,4,7,8):
-        for ply in ('Outer','Inner'):
-            if cabinet<=4:
-                frame=f'Cabinet{cabinet}DrawerFaceFrame{ply}Body'
-                faces=[f'Cabinet{cabinet}DrawerFace{ply}Body']
-            else:
-                frame=f'Cabinet{cabinet}LowerDrawerCombinedFaceFrame{ply}Body'
-                faces=[f'Cabinet{cabinet}{position}DrawerFace{ply}Body' for position in ('Lower','Upper')]
-            groups[frame]=faces
-            nested.update(faces)
     items=[]
     for name,r in records.items():
         if name not in nested:
@@ -45,32 +42,11 @@ def main(manifest_path, metadata_path, output_path, gap=5.0):
                 raise ValueError(('Face not inside frame with clearance',frame,face,dx,dy))
             minimum_frame_clearance=min(minimum_frame_clearance,clearance)
             offsets[frame][face]=(dx,dy)
-    # A pair is placed as one scheduling unit: both pieces must land on the
-    # same panel or on consecutive panels. Nested drawer faces follow frames.
+    # A pair is placed as one scheduling unit on the same or adjacent sheets.
     by_name={p['body_name']:p for p in items}
-    stacks={}
-    for cabinet in (1,2,3,4):
-        for side,position in (('Low','LowerSide'),('High','UpperSide')):
-            prefix=f'Cabinet{cabinet}'
-            names=[f'{prefix}{position}{ply}Body' for ply in ('Outer','Inner')]
-            names += [f'{prefix}DrawerCabinet{side}{kind}Layer{layer}Body'
-                      for kind in ('Support','AntiTip') for layer in (3,4)]
-            names += [f'{prefix}DrawerCabinet{side}ChannelBackLayer{layer}Body'
-                      for layer in (1,2)]
-            stacks[f'{prefix}{side}Side']=names
-    for cabinet in (7,8):
-        for side,position in (('Low','LeftSide'),('High','RightSide')):
-            prefix=f'Cabinet{cabinet}'
-            names=[f'{prefix}{position}{ply}Body' for ply in ('Outer','Inner')]
-            names += [f'{prefix}{drawer}DrawerCabinet{side}{kind}Layer{layer}Body'
-                      for drawer in ('Lower','Upper')
-                      for kind in ('Support','AntiTip') for layer in (3,4)]
-            names += [f'{prefix}{drawer}DrawerCabinet{side}ChannelBackLayer{layer}Body'
-                      for drawer in ('Lower','Upper') for layer in (1,2)]
-            stacks[f'{prefix}{side}Side']=names
     stack_members=[name for names in stacks.values() for name in names]
     if len(stack_members)!=len(set(stack_members)) or any(name not in by_name for name in stack_members):
-        raise ValueError('Cabinet side stack names are missing or duplicated')
+        raise ValueError('Adjacent stack names are missing or duplicated')
     seen=set(stack_members); pairs=[]; singles=[]
     for part in items:
         name=part['body_name']
@@ -117,7 +93,7 @@ def main(manifest_path, metadata_path, output_path, gap=5.0):
                     key=(*score,si)
                     if candidate is None or key<candidate[0]:candidate=(key,si,placement)
             if candidate is None:
-                sheets.append(Sheet(gap));si=len(sheets)-1
+                sheets.append(Sheet(gap,sheet_width,sheet_height));si=len(sheets)-1
                 placement=options(sheets[si],part)[0][1]
             else:_,si,placement=candidate
             sheets[si].place(part['body_name'],placement)
@@ -135,7 +111,7 @@ def main(manifest_path, metadata_path, output_path, gap=5.0):
                 if choice is not None:break
             if choice is None:
                 for count in (1,2):
-                    expanded=sheets+[Sheet(gap) for _ in range(count)]
+                    expanded=sheets+[Sheet(gap,sheet_width,sheet_height) for _ in range(count)]
                     starts=(len(sheets)-1,) if count==1 and sheets else ()
                     starts+= (len(sheets),)
                     for start in starts:
@@ -144,7 +120,7 @@ def main(manifest_path, metadata_path, output_path, gap=5.0):
                         if trial is not None:
                             sheets=expanded;choice=(indices,trial);break
                     if choice is not None:break
-            if choice is None:raise ValueError(('Side stack does not fit two panels',names))
+            if choice is None:raise ValueError(('Adjacent stack does not fit two panels',names))
             _,trial=choice
             for i,repacked in trial.items():sheets[i]=repacked
         for first,second in order:
@@ -174,16 +150,16 @@ def main(manifest_path, metadata_path, output_path, gap=5.0):
             last=len(sheets)-1
             if last>=0 and options(sheets[last],first):
                 sheets[last].place(first['body_name'],options(sheets[last],first)[0][1])
-                sheets.append(Sheet(gap))
+                sheets.append(Sheet(gap,sheet_width,sheet_height))
                 sheets[-1].place(second['body_name'],options(sheets[-1],second)[0][1])
                 continue
-            sheets.append(Sheet(gap))
+            sheets.append(Sheet(gap,sheet_width,sheet_height))
             sheets[-1].place(first['body_name'],options(sheets[-1],first)[0][1])
             same=options(sheets[-1],second)
             if same:
                 sheets[-1].place(second['body_name'],same[0][1])
             else:
-                sheets.append(Sheet(gap))
+                sheets.append(Sheet(gap,sheet_width,sheet_height))
                 sheets[-1].place(second['body_name'],options(sheets[-1],second)[0][1])
         return sheets
 
@@ -224,14 +200,15 @@ def main(manifest_path, metadata_path, output_path, gap=5.0):
             raise ValueError(('Laminated pair exceeds one panel',name,mate))
     for stack,names in stacks.items():
         if max(sheet_for[name] for name in names)-min(sheet_for[name] for name in names)>1:
-            raise ValueError(('Cabinet side stack exceeds two adjacent panels',stack))
-    result={'sheet_width_mm':SHEET_W,'sheet_height_mm':SHEET_H,
-            'part_gap_mm':gap,'nested_face_frame_gap_mm':minimum_frame_clearance,
+            raise ValueError(('Stack exceeds two adjacent panels',stack))
+    result={'sheet_width_mm':sheet_width,'sheet_height_mm':sheet_height,
+            'part_gap_mm':gap,'nested_face_frame_gap_mm':
+            minimum_frame_clearance if groups else 0.0,
             'allow_90_degree_rotation':True,'selection_seed':seed,
             'nested_groups':groups,
-            'cabinet_side_stacks':stacks,
+            'adjacent_stacks':stacks,
             'sheets':[{'number':i+1,'parts':s.parts} for i,s in enumerate(sheets)]}
     with open(output_path,'w') as out:json.dump(result,out,indent=2)
     print('NESTED_LAYOUT',len(sheets),'SHEETS',len(items),'PACKING_ITEMS',len(all_names),'BODIES',flush=True)
 
-if __name__=='__main__':main(sys.argv[1],sys.argv[2],sys.argv[3])
+if __name__=='__main__':main(*sys.argv[1:5])
