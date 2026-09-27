@@ -120,10 +120,14 @@ def set_visibility(path, hidden_names=None):
                     if info.filename != "GuiDocument.xml":
                         destination.writestr(info, source.read(info.filename))
                 destination.writestr("GuiDocument.xml", gui_xml)
-            os.replace(temporary_path, path)
-        finally:
-            if temporary_path.exists():
-                temporary_path.unlink()
+        except Exception:
+            temporary_path.unlink(missing_ok=True)
+            raise
+    # Windows cannot replace the source archive while its read handle is open.
+    try:
+        os.replace(temporary_path, path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
     return targets
 
 

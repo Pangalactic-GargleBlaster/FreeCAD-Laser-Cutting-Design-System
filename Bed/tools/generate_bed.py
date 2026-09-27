@@ -345,11 +345,10 @@ def _apply_cabinet_joint(layers, source_key, axis, coordinate, receiver_keys, la
     )
 
 
-def add_cabinet_joints(layers, key, x0, y0, kind, front_direction=None):
+def add_cabinet_joints(layers, key, x0, y0, kind):
     """Finger-joint every laminated structural panel in one cabinet."""
     ply = next(iter(layers.values())).Document.BedParameters.ply.Value
     top_receivers = (("Top", "Inner"), ("Top", "Outer"))
-    back_receivers = (("Back", "Inner"), ("Back", "Outer"))
 
     if kind == "main":
         side_names = ("LowerSide", "UpperSide")
@@ -362,12 +361,7 @@ def add_cabinet_joints(layers, key, x0, y0, kind, front_direction=None):
             "LowerSide": y0 + 2 * ply,
             "UpperSide": y0 + WIDTH - 2 * ply,
         }
-        back_axis = App.Vector(1, 0, 0)
-        back_coordinate = (
-            x0 + DEPTH - 2 * ply if front_direction == "-X" else x0 + 2 * ply
-        )
     else:
-        size = WALL_DEPTH if kind == "wall" else BEDSIDE_SIZE
         side_names = ("LeftSide", "RightSide")
         side_receivers = {
             "LeftSide": (("LeftSide", "Inner"), ("LeftSide", "Outer")),
@@ -380,10 +374,6 @@ def add_cabinet_joints(layers, key, x0, y0, kind, front_direction=None):
             if kind == "wall"
             else x0 + BEDSIDE_SIZE - 2 * ply,
         }
-        back_axis = App.Vector(0, 1, 0)
-        back_coordinate = (
-            y0 + 2 * ply if kind == "wall" else y0 + size - 2 * ply
-        )
 
     # The back must use its untouched top face before side and strip cuts reach it.
     for layer_name in ("Outer", "Inner"):
@@ -396,7 +386,7 @@ def add_cabinet_joints(layers, key, x0, y0, kind, front_direction=None):
             f"{key} back {layer_name.lower()}-to-top joint",
         )
 
-    # Side plies join the top and back before the bottom strips cut their edges.
+    # Side plies join the top before the back and bottom strips cut their edges.
     for side_name in side_names:
         for layer_name in ("Outer", "Inner"):
             source_key = (side_name, layer_name)
@@ -408,16 +398,21 @@ def add_cabinet_joints(layers, key, x0, y0, kind, front_direction=None):
                 top_receivers,
                 f"{key} {side_name} {layer_name.lower()}-to-top joint",
             )
+
+    # The back fits between the sides, just as the face frame does. Its plies
+    # supply the fingers and the side plies receive them.
+    for side_name in side_names:
+        for layer_name in ("Outer", "Inner"):
             _apply_cabinet_joint(
                 layers,
-                source_key,
-                back_axis,
-                back_coordinate,
-                back_receivers,
-                f"{key} {side_name} {layer_name.lower()}-to-back joint",
+                ("Back", layer_name),
+                side_axis,
+                side_coordinates[side_name],
+                side_receivers[side_name],
+                f"{key} back {layer_name.lower()}-to-{side_name} joint",
             )
 
-    # Both bottom strips join both side stacks. The rear strip also joins the back.
+    # Both bottom strips join both side stacks.
     for strip_name in ("FrontBottomStrip", "BackBottomStrip"):
         for layer_name in ("Outer", "Inner"):
             source_key = (strip_name, layer_name)
@@ -430,15 +425,18 @@ def add_cabinet_joints(layers, key, x0, y0, kind, front_direction=None):
                     side_receivers[side_name],
                     f"{key} {strip_name} {layer_name.lower()}-to-{side_name} joint",
                 )
-            if strip_name == "BackBottomStrip":
-                _apply_cabinet_joint(
-                    layers,
-                    source_key,
-                    back_axis,
-                    back_coordinate,
-                    back_receivers,
-                    f"{key} {strip_name} {layer_name.lower()}-to-back joint",
-                )
+
+    # The back now sits above the rear strip, like the face frame above the
+    # front strip. Join its bottom fingers into both rear-strip plies.
+    for layer_name in ("Outer", "Inner"):
+        _apply_cabinet_joint(
+            layers,
+            ("Back", layer_name),
+            App.Vector(0, 0, 1),
+            2 * ply,
+            (("BackBottomStrip", "Inner"), ("BackBottomStrip", "Outer")),
+            f"{key} back {layer_name.lower()}-to-rear-sill joint",
+        )
 
 
 def add_face_frame_joints(layers, frames, key, x0, y0, kind):
@@ -2150,23 +2148,19 @@ def create_cabinet(doc, key, label, x0, y0, front_direction, color):
         layers[(panel_name, layer_name)] = item
 
     if front_direction == "-X":
-        side_x = x0
-        side_x_expr = f"{x0} mm"
         back_outer_x = x0 + DEPTH - ply
         back_inner_x = x0 + DEPTH - 2 * ply
         front_strip_x = x0
-        back_strip_x = x0 + DEPTH - 2 * ply - STRIP
-        back_strip_x_expr = f"{x0 + DEPTH - STRIP} mm - 2 * BedParameters.ply"
+        back_strip_x = x0 + DEPTH - STRIP
+        back_strip_x_expr = f"{x0 + DEPTH - STRIP} mm"
         outer_x_expr = f"{x0 + DEPTH} mm - BedParameters.ply"
         inner_x_expr = f"{x0 + DEPTH} mm - 2 * BedParameters.ply"
     else:
-        side_x = x0 + 2 * ply
-        side_x_expr = f"{x0} mm + 2 * BedParameters.ply"
         back_outer_x = x0
         back_inner_x = x0 + ply
         front_strip_x = x0 + DEPTH - STRIP
-        back_strip_x = x0 + 2 * ply
-        back_strip_x_expr = f"{x0} mm + 2 * BedParameters.ply"
+        back_strip_x = x0
+        back_strip_x_expr = f"{x0} mm"
         outer_x_expr = f"{x0} mm"
         inner_x_expr = f"{x0} mm + BedParameters.ply"
 
@@ -2180,15 +2174,17 @@ def create_cabinet(doc, key, label, x0, y0, front_direction, color):
         "Z": f"{HEIGHT} mm - 2 * BedParameters.ply",
     })
 
-    side_length = DEPTH - 2 * ply
+    side_x = x0
+    side_x_expr = f"{x0} mm"
+    side_length = DEPTH
     side_height = HEIGHT - 2 * ply
     side_expressions = {
-        "Length": f"{DEPTH} mm - 2 * BedParameters.ply",
+        "Length": f"{DEPTH} mm",
         "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
         "X": side_x_expr,
     }
 
-    # Sides butt against the back and the underside of the top.
+    # Full-depth sides surround both the inset face frame and inset back.
     layer("LowerSide", "Outer", (side_x, y0, 0, side_length, ply, side_height), "Width", {
         **side_expressions,
         "Width": "BedParameters.ply",
@@ -2209,15 +2205,27 @@ def create_cabinet(doc, key, label, x0, y0, front_direction, color):
         "Y": f"{y0 + WIDTH} mm - 2 * BedParameters.ply",
     })
 
-    layer("Back", "Outer", (back_outer_x, y0, 0, ply, WIDTH, side_height), "Length", {
+    back_y = y0 + 2 * ply
+    back_width = WIDTH - 4 * ply
+    back_common = {
+        "Width": f"{WIDTH} mm - 4 * BedParameters.ply",
+        "Y": f"{y0} mm + 2 * BedParameters.ply",
+    }
+    back_z = 2 * ply
+    back_height = HEIGHT - 4 * ply
+    layer("Back", "Outer", (back_outer_x, back_y, back_z, ply, back_width, back_height), "Length", {
+        **back_common,
         "Length": "BedParameters.ply",
-        "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
+        "Height": f"{HEIGHT} mm - 4 * BedParameters.ply",
         "X": outer_x_expr,
+        "Z": "2 * BedParameters.ply",
     })
-    layer("Back", "Inner", (back_inner_x, y0, 0, ply, WIDTH, side_height), "Length", {
+    layer("Back", "Inner", (back_inner_x, back_y, back_z, ply, back_width, back_height), "Length", {
+        **back_common,
         "Length": "BedParameters.ply",
-        "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
+        "Height": f"{HEIGHT} mm - 4 * BedParameters.ply",
         "X": inner_x_expr,
+        "Z": "2 * BedParameters.ply",
     })
 
     strip_y = y0 + 2 * ply
@@ -2265,13 +2273,13 @@ def create_wall_cabinet(doc, key, label, x0, y0, color):
         "Z": f"{HEIGHT} mm - 2 * BedParameters.ply",
     })
 
-    side_y = y0 + 2 * ply
-    side_depth = WALL_DEPTH - 2 * ply
+    side_y = y0
+    side_depth = WALL_DEPTH
     side_height = HEIGHT - 2 * ply
     common_side = {
-        "Width": f"{WALL_DEPTH} mm - 2 * BedParameters.ply",
+        "Width": f"{WALL_DEPTH} mm",
         "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
-        "Y": f"{y0} mm + 2 * BedParameters.ply",
+        "Y": f"{y0} mm",
     }
     layer("LeftSide", "Outer", (x0, side_y, 0, ply, side_depth, side_height), "Length", {
         **common_side,
@@ -2293,20 +2301,32 @@ def create_wall_cabinet(doc, key, label, x0, y0, color):
         "X": f"{x0 + DEPTH} mm - 2 * BedParameters.ply",
     })
 
-    layer("Back", "Outer", (x0, y0, 0, DEPTH, ply, side_height), "Width", {
+    back_x = x0 + 2 * ply
+    back_length = DEPTH - 4 * ply
+    back_common = {
+        "Length": f"{DEPTH} mm - 4 * BedParameters.ply",
+        "X": f"{x0} mm + 2 * BedParameters.ply",
+    }
+    back_z = 2 * ply
+    back_height = HEIGHT - 4 * ply
+    layer("Back", "Outer", (back_x, y0, back_z, back_length, ply, back_height), "Width", {
+        **back_common,
         "Width": "BedParameters.ply",
-        "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
+        "Height": f"{HEIGHT} mm - 4 * BedParameters.ply",
+        "Z": "2 * BedParameters.ply",
     })
-    layer("Back", "Inner", (x0, y0 + ply, 0, DEPTH, ply, side_height), "Width", {
+    layer("Back", "Inner", (back_x, y0 + ply, back_z, back_length, ply, back_height), "Width", {
+        **back_common,
         "Width": "BedParameters.ply",
-        "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
+        "Height": f"{HEIGHT} mm - 4 * BedParameters.ply",
         "Y": f"{y0} mm + BedParameters.ply",
+        "Z": "2 * BedParameters.ply",
     })
 
     strip_x = x0 + 2 * ply
     strip_length = DEPTH - 4 * ply
     for panel_name, strip_y, y_expression in (
-        ("BackBottomStrip", y0 + 2 * ply, f"{y0} mm + 2 * BedParameters.ply"),
+        ("BackBottomStrip", y0, f"{y0} mm"),
         ("FrontBottomStrip", y0 + WALL_DEPTH - STRIP, f"{y0 + WALL_DEPTH - STRIP} mm"),
     ):
         common_strip = {
@@ -2352,10 +2372,10 @@ def create_bedside_cabinet(doc, key, label, x0, y0, color):
     })
 
     side_y = y0
-    side_depth = BEDSIDE_SIZE - 2 * ply
+    side_depth = BEDSIDE_SIZE
     side_height = HEIGHT - 2 * ply
     common_side = {
-        "Width": f"{BEDSIDE_SIZE} mm - 2 * BedParameters.ply",
+        "Width": f"{BEDSIDE_SIZE} mm",
         "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
         "Y": f"{y0} mm",
     }
@@ -2380,15 +2400,27 @@ def create_bedside_cabinet(doc, key, label, x0, y0, color):
     })
 
     # The back occupies the wall-side edge; the opposite edge remains open.
-    layer("Back", "Outer", (x0, y0 + BEDSIDE_SIZE - ply, 0, BEDSIDE_SIZE, ply, side_height), "Width", {
+    back_x = x0 + 2 * ply
+    back_length = BEDSIDE_SIZE - 4 * ply
+    back_common = {
+        "Length": f"{BEDSIDE_SIZE} mm - 4 * BedParameters.ply",
+        "X": f"{x0} mm + 2 * BedParameters.ply",
+    }
+    back_z = 2 * ply
+    back_height = HEIGHT - 4 * ply
+    layer("Back", "Outer", (back_x, y0 + BEDSIDE_SIZE - ply, back_z, back_length, ply, back_height), "Width", {
+        **back_common,
         "Width": "BedParameters.ply",
-        "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
+        "Height": f"{HEIGHT} mm - 4 * BedParameters.ply",
         "Y": f"{y0 + BEDSIDE_SIZE} mm - BedParameters.ply",
+        "Z": "2 * BedParameters.ply",
     })
-    layer("Back", "Inner", (x0, y0 + BEDSIDE_SIZE - 2 * ply, 0, BEDSIDE_SIZE, ply, side_height), "Width", {
+    layer("Back", "Inner", (back_x, y0 + BEDSIDE_SIZE - 2 * ply, back_z, back_length, ply, back_height), "Width", {
+        **back_common,
         "Width": "BedParameters.ply",
-        "Height": f"{HEIGHT} mm - 2 * BedParameters.ply",
+        "Height": f"{HEIGHT} mm - 4 * BedParameters.ply",
         "Y": f"{y0 + BEDSIDE_SIZE} mm - 2 * BedParameters.ply",
+        "Z": "2 * BedParameters.ply",
     })
 
     strip_x = x0 + 2 * ply
@@ -2397,8 +2429,8 @@ def create_bedside_cabinet(doc, key, label, x0, y0, color):
         ("FrontBottomStrip", y0, f"{y0} mm"),
         (
             "BackBottomStrip",
-            y0 + BEDSIDE_SIZE - 2 * ply - STRIP,
-            f"{y0 + BEDSIDE_SIZE - STRIP} mm - 2 * BedParameters.ply",
+            y0 + BEDSIDE_SIZE - STRIP,
+            f"{y0 + BEDSIDE_SIZE - STRIP} mm",
         ),
     ):
         common_strip = {
@@ -2585,7 +2617,7 @@ def generate(output_path):
         (c7, "Cabinet7", 0, wall_y, "bedside", None),
         (c8, "Cabinet8", right_bedside_x, wall_y, "bedside", None),
     ):
-        add_cabinet_joints(layers, key, x0, y0, kind, direction)
+        add_cabinet_joints(layers, key, x0, y0, kind)
     doc.recompute()
 
     add_wall_front_support(cabinet5, c5, "Cabinet5", bed_x, wall_y, colors[4])
@@ -2798,6 +2830,7 @@ def generate(output_path):
     doc.recompute()
     doc.recompute()
     doc.saveAs(output_path)
+    print("MODEL_SAVED", output_path, flush=True)
     App.closeDocument(doc.Name)
 
 
