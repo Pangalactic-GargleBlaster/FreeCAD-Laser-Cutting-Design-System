@@ -1,7 +1,8 @@
 # Design System
 
 Reusable FreeCAD tools for designing and manufacturing laser-cut sheet
-structures. The `Bed/` directory is one project built with these tools.
+structures. The [LaserCutBed](https://github.com/Pangalactic-GargleBlaster/LaserCutBed)
+project uses this repository as a pinned submodule.
 
 ## Repository map
 
@@ -12,13 +13,11 @@ structures. The `Bed/` directory is one project built with these tools.
 | `tools/check_overlaps.py` | Positive-volume collision check for any saved FreeCAD project. |
 | `tools/audit_panel_symmetry.py` | In-plane symmetry audit of saved panel bodies. |
 | `fixtures/`, `tests/` | Workbench examples and integration checks. |
-| `Bed/` | Bed model, parameters, packing configuration, artwork, project-specific generation, and manufacturing publication. |
 
 The shared manufacturing tools use explicit project configuration and the
-saved FreeCAD model. For another project, create a config like
-`Bed/packing_config.json`, supply body metadata and any artwork placement, then
-run the commands in `tools/manufacturing/README.md`. The Bed orchestration
-script shows one complete implementation.
+saved FreeCAD model. For another project, supply a packing configuration,
+body metadata, and any artwork placement, then run the commands in
+`tools/manufacturing/README.md`. LaserCutBed provides one complete example.
 
 Run `python tools/run_freecad.py tools/check_overlaps.py model.FCStd` for
 intersections and `python tools/run_freecad.py tools/audit_panel_symmetry.py
@@ -104,6 +103,5 @@ fillet radius when the requested finger width is too narrow for the default.
 Run all automated checks with `mise run test`. Tests modify temporary fixture
 copies only.
 
-The bed model, design assets, and manufacturing DXFs are in `Bed/`.
-Regenerate it with `mise run bed:generate`, then check every final body
-tip for positive-volume intersections with `mise run bed:overlaps`.
+The bed model, design assets, and manufacturing DXFs live in
+[LaserCutBed](https://github.com/Pangalactic-GargleBlaster/LaserCutBed).

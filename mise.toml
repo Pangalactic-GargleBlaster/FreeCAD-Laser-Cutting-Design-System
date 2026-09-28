@@ -28,19 +28,3 @@ run = "python tools/run_freecad.py tools/validate_fixtures.py"
 [tasks.test]
 description = "Run FreeCAD integration tests against temporary fixture copies"
 run = "python tools/run_freecad.py tests/run_freecad_tests.py"
-
-[tasks."bed:generate"]
-description = "Regenerate Bed.FCStd headlessly"
-run = "python tools/run_freecad.py Bed/tools/generate_bed.py"
-
-[tasks."bed:overlaps"]
-description = "Check final Bed body shapes for positive-volume overlaps"
-run = "python tools/run_freecad.py tools/check_overlaps.py Bed/Bed.FCStd"
-
-[tasks."bed:symmetry"]
-description = "Audit final Bed panels for in-plane symmetry"
-run = "python tools/run_freecad.py tools/audit_panel_symmetry.py Bed/Bed.FCStd"
-
-[tasks."bed:manufacturing"]
-description = "Build and validate Bed laser DXFs and sheet layout"
-run = "python3 Bed/tools/build_manufacturing.py"
