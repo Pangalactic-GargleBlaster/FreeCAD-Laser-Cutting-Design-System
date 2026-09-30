@@ -160,6 +160,33 @@ def close(actual, expected, tolerance=LINEAR_TOLERANCE):
     return abs(actual - expected) <= tolerance
 
 
+def validate_panel_shape(shape, label="body"):
+    """Require a single sheet-like solid with two broad parallel faces."""
+    if shape.isNull() or not shape.isValid() or len(shape.Solids) != 1:
+        raise JointValidationError(f"{label} must be one valid panel solid.")
+    faces = sorted(
+        (face for face in shape.Faces if _is_planar(face)),
+        key=lambda face: face.Area, reverse=True,
+    )
+    if not faces:
+        raise JointValidationError(f"{label} must be a panel with planar broad faces.")
+    first = faces[0]
+    normal = _unit(first.normalAt(0, 0))
+    offsets = [vertex.Point.dot(normal) for vertex in shape.Vertexes]
+    thickness = max(offsets) - min(offsets)
+    if thickness <= LINEAR_TOLERANCE or first.Area <= thickness * thickness:
+        raise JointValidationError(f"{label} must be a thin panel.")
+    opposite = any(
+        _parallel(face.normalAt(0, 0), normal)
+        and abs(face.CenterOfMass.dot(normal) - first.CenterOfMass.dot(normal))
+        >= thickness - LINEAR_TOLERANCE
+        for face in faces[1:]
+    )
+    if not opposite:
+        raise JointValidationError(f"{label} needs two opposite broad faces.")
+    return thickness
+
+
 def _body_and_base(obj, role):
     if obj is None:
         raise JointValidationError(f"The {role} object is missing.")
@@ -173,6 +200,7 @@ def _body_and_base(obj, role):
         raise JointValidationError(f"The {role} selection must belong to a Part Design body.")
     if base is None or base.Shape.isNull():
         raise JointValidationError(f"The {role} body has no solid tip feature.")
+    validate_panel_shape(base.Shape, f"The {role} body {body.Label!r}")
     return body, base
 
 

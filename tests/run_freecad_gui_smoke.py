@@ -55,7 +55,7 @@ App.closeDocument(doc.Name)
 # An invalid default radius must not disable controls needed to correct it,
 # and changing a formula must trigger validation even though FreeCAD's
 # ExpressionBinding does not emit the spinbox editing signals.
-mismatched = App.openDocument(str(PROJECT_DIR / "fixtures" / "Mismatched.FCStd"))
+mismatched = App.openDocument(str(PROJECT_DIR / "fixtures" / "finger joint" / "Mismatched.FCStd"))
 mismatched_panel = FingerJointTaskPanel()
 Gui.Control.showDialog(mismatched_panel)
 mismatched_panel._begin_pick("receiver")

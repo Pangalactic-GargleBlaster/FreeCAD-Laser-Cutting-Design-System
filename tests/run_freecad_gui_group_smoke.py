@@ -14,7 +14,7 @@ sys.path.insert(0, str(PROJECT_DIR / "freecad" / "DesignSystem"))
 from finger_joint_command import FingerJointTaskPanel  # noqa: E402
 
 
-doc = App.openDocument(str(PROJECT_DIR / "fixtures" / "Acute2.FCStd"))
+doc = App.openDocument(str(PROJECT_DIR / "fixtures" / "finger joint" / "Acute2.FCStd"))
 panel = FingerJointTaskPanel()
 Gui.Control.showDialog(panel)
 panel._begin_pick("receiver")

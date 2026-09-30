@@ -8,7 +8,7 @@ project uses this repository as a pinned submodule.
 
 | Location | Purpose |
 | --- | --- |
-| `freecad/DesignSystem/` | FreeCAD workbench, parametric finger joint, panel and drawer helpers. |
+| `freecad/DesignSystem/` | FreeCAD workbench, parametric finger and half-lap joints, panel and drawer helpers. |
 | `tools/manufacturing/` | Reusable profile DXF export, group-aware sheet packing, sheet DXF export, and engraving helpers. See its README for inputs and command sequence. |
 | `tools/check_overlaps.py` | Positive-volume collision check for any saved FreeCAD project. |
 | `tools/audit_panel_symmetry.py` | In-plane symmetry audit of saved panel bodies. |
@@ -62,15 +62,17 @@ For a parallel-face joint, edit the **Parameters** group on `Finger Joint
 (added)`. For an angled or laminated joint, edit `Finger Joint group`. All
 affected bodies recompute from those parameters.
 
-When the cutouts are enclosed within Panel B, as in `T.FCStd`, Panel B has no
+When the cutouts are enclosed within Panel B, as in `fixtures/finger joint/T.FCStd`, Panel B has no
 effective edge fingers. The two receiving-panel controls are disabled and have
-no geometric effect. When the slots meet an edge, as in `Corner.FCStd` and
-`Mismatched.FCStd`, those controls are enabled.
+no geometric effect. When the slots meet an edge, as in
+`fixtures/finger joint/Corner.FCStd` and
+`fixtures/finger joint/Mismatched.FCStd`, those controls are enabled.
 
 ### Validation and generated features
 
 The command requires rectangular source faces and at least one complete edge
-of one selected face to lie on a receiving body surface. It supports angled
+of one selected face to lie on a receiving body surface. Every selected body
+must be a panel with two broad parallel faces. It supports angled
 edge and T joints, including laminated panels. The older parallel-face joint
 path remains available for a single source face.
 
@@ -85,7 +87,8 @@ in each affected body. Edit the controller's parameters to recompute the group.
 
 ### Manual test with Corner
 
-Never save changes over a file in `fixtures/`. First duplicate `Corner.FCStd`
+Never save changes over a file in `fixtures/`. First duplicate
+`fixtures/finger joint/Corner.FCStd`
 to a working location, then:
 
 1. Restart FreeCAD and select the **Design System** workbench.
@@ -97,11 +100,30 @@ to a working location, then:
 7. Inspect both sides of the base edge and edit `Finger Joint (added)` to test
    live recomputation.
 
-`Mismatched.FCStd` demonstrates the exact-radius guard: reduce the relevant
+`fixtures/finger joint/Mismatched.FCStd` demonstrates the exact-radius guard: reduce the relevant
 fillet radius when the requested finger width is too narrow for the default.
 
 Run all automated checks with `mise run test`. Tests modify temporary fixture
 copies only.
+
+## Half Lap
+
+The **Half Lap** command takes two sets of panel bodies. Bodies in the same
+set must not overlap, and each body must overlap a body in the other set.
+Select the first set, pressing Enter when done; selected bodies hide so the
+second set is accessible. Bodies in the second set hide as they are selected.
+Press Enter after the second set. If an end face is needed, the dialog prompts
+for one and then focuses the fillet radius; otherwise it focuses the radius
+immediately. Its default is the thinnest selected panel's thickness.
+
+Each intersecting pair gets complementary slots meeting halfway along their
+overlap. The slot outline is projected through the full panel thickness for
+angled crossings. Only the edges at each slot mouth are filleted (normally
+two; one when a slot reaches a panel corner).
+`fixtures/half-lap/PartialX.FCStd` determines its opening sides from the
+offset panel ends. For aligned panels, select an end face to leave intact:
+its set opens on the opposite end, and the other set opens on that face's end.
+The resulting **Half Lap** controller holds the editable fillet radius.
 
 The bed model, design assets, and manufacturing DXFs live in
 [LaserCutBed](https://github.com/Pangalactic-GargleBlaster/LaserCutBed).

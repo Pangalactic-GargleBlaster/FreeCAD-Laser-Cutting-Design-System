@@ -1,16 +1,40 @@
 # Test fixtures
 
-These `.FCStd` files are immutable baseline inputs. Tests must never open and
+The `finger joint/` and `half-lap/` subfolders contain immutable `.FCStd`
+baseline inputs. Tests must never open and
 save them in place or otherwise overwrite them. Copy a fixture to a temporary
 directory before modifying it, and write all generated results outside this
 folder.
 
-`tools/generate_fixtures.py` is the source for these files. It refuses to
+`tools/generate_fixtures.py` is the source for generated fixtures. It refuses to
 replace an existing fixture unless a developer deliberately sets
 `DESIGN_SYSTEM_OVERWRITE_FIXTURES=1`; tests must not set that variable.
 Run it through `python tools/run_freecad.py tools/generate_fixtures.py NAME`.
+Quote `'#'` when generating the hash fixture from a shell.
 Command-line generation writes saved visibility for both bodies and their Tip
 features; when run from FreeCAD's GUI, it also saves the axonometric camera view.
+
+## Half-lap fixtures
+
+`half-lap/X.FCStd` contains two centered 100 x 100 x 10 mm vertical panels.
+The first spans x = -50–50, y = -5–5, z = 0–100. The second crosses it at
+90° around their shared vertical center axis.
+
+`half-lap/AngledX.FCStd` uses the same panels at 60°.
+
+`half-lap/X2.FCStd` and `half-lap/AngledX2.FCStd` have the same assembled
+geometry as `X` and `AngledX`, respectively. Each 10 mm panel consists of two
+separate 100 x 100 x 5 mm bodies that touch along their broad faces.
+
+`half-lap/PartialX.FCStd` uses the 90° arrangement, with the second panel
+raised 50 mm; the panels overlap vertically from z = 50 to 100 mm.
+
+`half-lap/#.FCStd` contains four 100 x 100 x 10 mm vertical panels: two
+parallel to XZ centered at y = -30 and 30 mm, and two parallel to YZ centered
+at x = -30 and 30 mm. Each XZ panel overlaps both YZ panels; parallel panels
+remain separate.
+
+## Finger joint fixtures
 
 ## Acute.FCStd, Obtuse.FCStd, Edge90.FCStd, AngledT.FCStd
 

@@ -17,6 +17,8 @@ if App.GuiUp:
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 FIXTURE_DIR = PROJECT_DIR / "fixtures"
+FINGER_JOINT_DIR = FIXTURE_DIR / "finger joint"
+HALF_LAP_DIR = FIXTURE_DIR / "half-lap"
 ALLOW_OVERWRITE = os.environ.get("DESIGN_SYSTEM_OVERWRITE_FIXTURES") == "1"
 sys.path.insert(0, str(PROJECT_DIR / "tools"))
 from set_fcstd_visibility import set_visibility
@@ -56,15 +58,16 @@ def add_shape_panel(doc, name, label, shape, plane, color, thickness, dimensions
     return body
 
 
-def save_fixture(name, build):
-    target = FIXTURE_DIR / f"{name}.FCStd"
+def save_fixture(name, build, directory):
+    target = directory / f"{name}.FCStd"
     if target.exists() and not ALLOW_OVERWRITE:
         raise RuntimeError(
             f"Refusing to overwrite immutable fixture: {target}. "
             "Set DESIGN_SYSTEM_OVERWRITE_FIXTURES=1 only for an intentional rebuild."
         )
 
-    doc = App.newDocument(name)
+    doc = App.newDocument("Hash" if name == "#" else name)
+    doc.Label = name
     try:
         build(doc)
         doc.recompute()
@@ -267,7 +270,82 @@ def build_cycle(doc):
     )
 
 
-BUILDERS = {
+def build_crossing_panels(doc, angle, second_z=0):
+    """Two vertical panels intersect along their common centerline."""
+    first = Part.makeBox(100, 10, 100, App.Vector(-50, -5, 0))
+    second = Part.makeBox(100, 10, 100, App.Vector(-50, -5, second_z))
+    second.rotate(App.Vector(0, 0, 0), App.Vector(0, 0, 1), angle)
+    add_shape_panel(
+        doc, "FirstPanel", "First panel", first, "XZ",
+        (0.86, 0.67, 0.39), 10, "100 x 100 x 10 mm",
+    )
+    add_shape_panel(
+        doc, "SecondPanel", "Second panel", second,
+        f"XZ rotated {angle:g} deg about Z", (0.76, 0.55, 0.28),
+        10, "100 x 100 x 10 mm",
+    )
+
+
+def build_x(doc):
+    build_crossing_panels(doc, 90)
+
+
+def build_angled_x(doc):
+    build_crossing_panels(doc, 60)
+
+
+def build_crossing_laminated_panels(doc, angle):
+    """Split both centered crossing panels into separate 5 mm plies."""
+    for side, local_y, color in (
+        ("Negative", -5, (0.86, 0.67, 0.39)),
+        ("Positive", 0, (0.95, 0.78, 0.48)),
+    ):
+        first = Part.makeBox(100, 5, 100, App.Vector(-50, local_y, 0))
+        add_shape_panel(
+            doc, f"First{side}", f"First {side.lower()} ply", first,
+            "XZ", color, 5, "100 x 100 x 5 mm",
+        )
+    for side, local_y, color in (
+        ("Negative", -5, (0.76, 0.55, 0.28)),
+        ("Positive", 0, (0.68, 0.47, 0.24)),
+    ):
+        second = Part.makeBox(100, 5, 100, App.Vector(-50, local_y, 0))
+        second.rotate(App.Vector(0, 0, 0), App.Vector(0, 0, 1), angle)
+        add_shape_panel(
+            doc, f"Second{side}", f"Second {side.lower()} ply", second,
+            f"XZ rotated {angle:g} deg about Z", color, 5,
+            "100 x 100 x 5 mm",
+        )
+
+
+def build_x2(doc):
+    build_crossing_laminated_panels(doc, 90)
+
+
+def build_angled_x2(doc):
+    build_crossing_laminated_panels(doc, 60)
+
+
+def build_partial_x(doc):
+    build_crossing_panels(doc, 90, second_z=50)
+
+
+def build_hash(doc):
+    """A four-panel grid with two separate panels in each direction."""
+    for name, label, origin, size, plane, color in (
+        ("XZNegativeY", "XZ panel at y=-30", (-50, -35, 0),
+         (100, 10, 100), "XZ", (0.86, 0.67, 0.39)),
+        ("XZPositiveY", "XZ panel at y=30", (-50, 25, 0),
+         (100, 10, 100), "XZ", (0.95, 0.78, 0.48)),
+        ("YZNegativeX", "YZ panel at x=-30", (-35, -50, 0),
+         (10, 100, 100), "YZ", (0.76, 0.55, 0.28)),
+        ("YZPositiveX", "YZ panel at x=30", (25, -50, 0),
+         (10, 100, 100), "YZ", (0.68, 0.47, 0.24)),
+    ):
+        add_panel(doc, name, label, origin, size, plane, color)
+
+
+FINGER_JOINT_BUILDERS = {
     "Acute": build_acute,
     "Acute2": build_acute2,
     "AngledT": build_angled_t,
@@ -280,13 +358,25 @@ BUILDERS = {
     "Pyramid": build_pyramid,
     "T": build_t,
 }
+HALF_LAP_BUILDERS = {
+    "#": build_hash,
+    "X": build_x,
+    "X2": build_x2,
+    "AngledX": build_angled_x,
+    "AngledX2": build_angled_x2,
+    "PartialX": build_partial_x,
+}
+BUILDERS = {**FINGER_JOINT_BUILDERS, **HALF_LAP_BUILDERS}
 
 
-FIXTURE_DIR.mkdir(parents=True, exist_ok=True)
+FINGER_JOINT_DIR.mkdir(parents=True, exist_ok=True)
+HALF_LAP_DIR.mkdir(parents=True, exist_ok=True)
 requested = [argument for argument in sys.argv[1:] if not argument.endswith(".py")]
 requested = requested or list(BUILDERS)
 unknown = [name for name in requested if name not in BUILDERS]
 if unknown:
     raise RuntimeError(f"Unknown fixture(s): {', '.join(unknown)}")
 for fixture_name in requested:
-    save_fixture(fixture_name, BUILDERS[fixture_name])
+    directory = (FINGER_JOINT_DIR if fixture_name in FINGER_JOINT_BUILDERS
+                 else HALF_LAP_DIR)
+    save_fixture(fixture_name, BUILDERS[fixture_name], directory)

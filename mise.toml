@@ -30,4 +30,5 @@ description = "Run FreeCAD integration tests against temporary fixture copies"
 run = [
   "python tests/test_delayed_gui_import.py",
   "python tools/run_freecad.py tests/run_freecad_tests.py",
+  "python tools/run_freecad.py tests/run_half_lap_tests.py",
 ]

@@ -9,7 +9,7 @@ import FreeCAD as App
 import FreeCADGui as Gui
 
 
-FIXTURE_DIR = Path("/Users/paolo/Desktop/Design System/fixtures")
+FIXTURE_DIR = Path(__file__).resolve().parent.parent / "fixtures" / "finger joint"
 FIXTURES = {
     "Corner.FCStd": ("BaseXY", "BackXZ", "SideYZ"),
     "Mismatched.FCStd": ("DrawerSideXZ", "DrawerFrontYZ"),

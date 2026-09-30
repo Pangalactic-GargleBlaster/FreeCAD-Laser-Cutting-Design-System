@@ -36,7 +36,7 @@ def find_face(feature, axis, coordinate, area):
 
 
 def copied_fixture(name, temp_dir):
-    source = PROJECT_DIR / "fixtures" / name
+    source = PROJECT_DIR / "fixtures" / "finger joint" / name
     target = Path(temp_dir) / name
     shutil.copy2(source, target)
     return target

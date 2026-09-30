@@ -10,6 +10,8 @@ import Part
 
 
 FIXTURE_DIR = Path(__file__).resolve().parent.parent / "fixtures"
+FINGER_JOINT_DIR = FIXTURE_DIR / "finger joint"
+HALF_LAP_DIR = FIXTURE_DIR / "half-lap"
 TOLERANCE = 1e-7
 
 
@@ -77,7 +79,7 @@ def check_saved_visibility(path, body_names):
 
 
 def validate_angled(name, angle, seam_y):
-    path = FIXTURE_DIR / f"{name}.FCStd"
+    path = FINGER_JOINT_DIR / f"{name}.FCStd"
     check_saved_visibility(path, ("BasePanel", "AngledPanel"))
     doc = App.openDocument(str(path))
     try:
@@ -118,7 +120,7 @@ def validate_angled(name, angle, seam_y):
 
 
 def validate_acute2():
-    path = FIXTURE_DIR / "Acute2.FCStd"
+    path = FINGER_JOINT_DIR / "Acute2.FCStd"
     names = ("BaseLower", "BaseUpper", "AngledInner", "AngledOuter")
     check_saved_visibility(path, names)
     doc = App.openDocument(str(path))
@@ -160,7 +162,7 @@ def validate_acute2():
 
 
 def validate_angled_t2():
-    path = FIXTURE_DIR / "AngledT2.FCStd"
+    path = FINGER_JOINT_DIR / "AngledT2.FCStd"
     names = ("BaseLower", "BaseUpper", "AngledInner", "AngledOuter")
     check_saved_visibility(path, names)
     doc = App.openDocument(str(path))
@@ -207,7 +209,7 @@ def validate_angled_t2():
 
 
 def validate_pyramid():
-    path = FIXTURE_DIR / "Pyramid.FCStd"
+    path = FINGER_JOINT_DIR / "Pyramid.FCStd"
     side_names = ("SouthFace", "EastFace", "NorthFace", "WestFace")
     names = ("BaseSquare", *side_names)
     check_saved_visibility(path, names)
@@ -259,7 +261,7 @@ def validate_pyramid():
 
 
 def validate_corner():
-    doc = App.openDocument(str(FIXTURE_DIR / "Corner.FCStd"))
+    doc = App.openDocument(str(FINGER_JOINT_DIR / "Corner.FCStd"))
     try:
         base = check_panel(doc, "BaseXY", (0, 0, 0, 100, 100, 10), 100_000)
         back = check_panel(doc, "BackXZ", (0, 0, 10, 100, 10, 100), 90_000)
@@ -272,7 +274,7 @@ def validate_corner():
 
 
 def validate_mismatched():
-    doc = App.openDocument(str(FIXTURE_DIR / "Mismatched.FCStd"))
+    doc = App.openDocument(str(FINGER_JOINT_DIR / "Mismatched.FCStd"))
     try:
         side = check_panel(doc, "DrawerSideXZ", (0, 0, 0, 100, 10, 30), 30_000)
         front = check_panel(doc, "DrawerFrontYZ", (100, 0, 0, 110, 100, 60), 60_000)
@@ -282,7 +284,7 @@ def validate_mismatched():
 
 
 def validate_t():
-    doc = App.openDocument(str(FIXTURE_DIR / "T.FCStd"))
+    doc = App.openDocument(str(FINGER_JOINT_DIR / "T.FCStd"))
     try:
         cross = check_panel(
             doc, "CrossPanelXZ", (0, 0, 0, 100, 10, 100), 100_000
@@ -296,7 +298,7 @@ def validate_t():
 
 
 def validate_cycle():
-    doc = App.openDocument(str(FIXTURE_DIR / "Cycle.FCStd"))
+    doc = App.openDocument(str(FINGER_JOINT_DIR / "Cycle.FCStd"))
     try:
         front = check_panel(doc, "FrontXZ", (0, 0, 0, 100, 10, 100), 100_000)
         right = check_panel(doc, "RightYZ", (100, 0, 0, 110, 100, 100), 100_000)
@@ -312,6 +314,112 @@ def validate_cycle():
         App.closeDocument(doc.Name)
 
 
+def validate_half_lap(name, angle, second_z):
+    path = HALF_LAP_DIR / f"{name}.FCStd"
+    check_saved_visibility(path, ("FirstPanel", "SecondPanel"))
+    doc = App.openDocument(str(path))
+    try:
+        assert len(doc.findObjects("PartDesign::Body")) == 2
+        first = doc.getObject("FirstPanel")
+        second = doc.getObject("SecondPanel")
+        expected_first = Part.makeBox(100, 10, 100, App.Vector(-50, -5, 0))
+        expected_second = Part.makeBox(
+            100, 10, 100, App.Vector(-50, -5, second_z)
+        )
+        expected_second.rotate(App.Vector(0, 0, 0), App.Vector(0, 0, 1), angle)
+        for body, expected in ((first, expected_first), (second, expected_second)):
+            assert body is not None and body.Tip is not None
+            shape = body.Shape
+            assert shape.isValid() and len(shape.Solids) == 1
+            assert close(shape.Volume, 100_000)
+            assert close(body.Tip.PanelThickness.Value, 10)
+            assert close(shape.cut(expected).Volume, 0)
+            assert close(expected.cut(shape).Volume, 0)
+        overlap = first.Shape.common(second.Shape)
+        assert overlap.isValid() and len(overlap.Solids) == 1
+        assert overlap.Volume > 0
+        expected_overlap = 100 * (100 - second_z) / math.sin(math.radians(angle))
+        assert close(overlap.Volume, expected_overlap), (
+            f"{name}: overlap {overlap.Volume}, expected {expected_overlap}"
+        )
+        assert close(overlap.BoundBox.ZMin, second_z)
+        assert close(overlap.BoundBox.ZMax, 100)
+    finally:
+        App.closeDocument(doc.Name)
+
+
+def validate_laminated_half_lap(name, angle):
+    path = HALF_LAP_DIR / f"{name}.FCStd"
+    first_names = ("FirstNegative", "FirstPositive")
+    second_names = ("SecondNegative", "SecondPositive")
+    check_saved_visibility(path, first_names + second_names)
+    doc = App.openDocument(str(path))
+    try:
+        assert len(doc.findObjects("PartDesign::Body")) == 4
+        shapes = {}
+        for prefix, names in (("First", first_names), ("Second", second_names)):
+            for name, local_y in zip(names, (-5, 0)):
+                body = doc.getObject(name)
+                assert body is not None and body.Tip is not None
+                shape = body.Shape
+                expected = Part.makeBox(
+                    100, 5, 100, App.Vector(-50, local_y, 0)
+                )
+                if prefix == "Second":
+                    expected.rotate(
+                        App.Vector(0, 0, 0), App.Vector(0, 0, 1), angle
+                    )
+                assert shape.isValid() and len(shape.Solids) == 1
+                assert close(shape.Volume, 50_000)
+                assert close(body.Tip.PanelThickness.Value, 5)
+                assert close(shape.cut(expected).Volume, 0)
+                assert close(expected.cut(shape).Volume, 0)
+                shapes[name] = shape
+        for names in (first_names, second_names):
+            assert close(shapes[names[0]].common(shapes[names[1]]).Volume, 0)
+            laminated = shapes[names[0]].fuse(shapes[names[1]])
+            assert laminated.isValid() and len(laminated.Solids) == 1
+            assert close(laminated.Volume, 100_000)
+        for first_name in first_names:
+            for second_name in second_names:
+                assert shapes[first_name].common(shapes[second_name]).Volume > 0
+    finally:
+        App.closeDocument(doc.Name)
+
+
+def validate_hash():
+    path = HALF_LAP_DIR / "#.FCStd"
+    xz_names = ("XZNegativeY", "XZPositiveY")
+    yz_names = ("YZNegativeX", "YZPositiveX")
+    check_saved_visibility(path, xz_names + yz_names)
+    doc = App.openDocument(str(path))
+    try:
+        assert len(doc.findObjects("PartDesign::Body")) == 4
+        shapes = {
+            "XZNegativeY": check_panel(
+                doc, "XZNegativeY", (-50, -35, 0, 50, -25, 100), 100_000
+            ),
+            "XZPositiveY": check_panel(
+                doc, "XZPositiveY", (-50, 25, 0, 50, 35, 100), 100_000
+            ),
+            "YZNegativeX": check_panel(
+                doc, "YZNegativeX", (-35, -50, 0, -25, 50, 100), 100_000
+            ),
+            "YZPositiveX": check_panel(
+                doc, "YZPositiveX", (25, -50, 0, 35, 50, 100), 100_000
+            ),
+        }
+        for names in (xz_names, yz_names):
+            assert shapes[names[0]].common(shapes[names[1]]).Volume <= TOLERANCE
+        for xz_name in xz_names:
+            for yz_name in yz_names:
+                overlap = shapes[xz_name].common(shapes[yz_name])
+                assert overlap.isValid() and len(overlap.Solids) == 1
+                assert close(overlap.Volume, 10_000)
+    finally:
+        App.closeDocument(doc.Name)
+
+
 validate_angled("Acute", 60, 0)
 validate_acute2()
 validate_angled("Obtuse", 120, 0)
@@ -323,4 +431,10 @@ validate_corner()
 validate_cycle()
 validate_mismatched()
 validate_t()
+validate_half_lap("X", 90, 0)
+validate_laminated_half_lap("X2", 90)
+validate_half_lap("AngledX", 60, 0)
+validate_laminated_half_lap("AngledX2", 60)
+validate_half_lap("PartialX", 90, 50)
+validate_hash()
 print("Fixture geometry is valid.")
