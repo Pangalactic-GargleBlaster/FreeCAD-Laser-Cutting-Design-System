@@ -204,6 +204,105 @@ def _body_and_base(obj, role):
     return body, base
 
 
+def _depends_on(obj, dependency):
+    """Follow document links from a feature to an upstream object."""
+    pending = [obj]
+    visited = set()
+    while pending:
+        current = pending.pop()
+        if current is dependency:
+            return True
+        if current in visited:
+            continue
+        visited.add(current)
+        pending.extend(current.OutList)
+    return False
+
+
+def _same_binder_shape(first, second):
+    """Compare support faces as well as solids; binders often have no volume."""
+    if first.isNull() or second.isNull():
+        return False
+    first_box, second_box = first.BoundBox, second.BoundBox
+    bounds = ("XMin", "YMin", "ZMin", "XMax", "YMax", "ZMax")
+    return (
+        first.distToShape(second)[0] <= LINEAR_TOLERANCE
+        and abs(first.Area - second.Area) <= LINEAR_TOLERANCE
+        and abs(first.Length - second.Length) <= LINEAR_TOLERANCE
+        and all(abs(getattr(first_box, name) - getattr(second_box, name))
+                <= LINEAR_TOLERANCE for name in bounds)
+    )
+
+
+def stabilize_receiver_bindings(source_pairs, receiver_pairs):
+    """Point binders at named upstream features before editing a receiving body.
+
+    A binder supported by ``(Body, 'Pad.Face6')`` depends on the body's Tip.
+    A joint result in that body then depends on the source panel built from
+    the binder, making a cycle. The explicit Pad reference is stable and
+    retains its parametric geometry.
+    """
+    source_bases = [base for _, base in source_pairs]
+    receiver_bodies = {body for body, _ in receiver_pairs}
+    if not any(_depends_on(base, body)
+               for base in source_bases for body in receiver_bodies):
+        return
+    doc = source_bases[0].Document
+    changes = []
+    for binder in doc.Objects:
+        if binder.TypeId != "PartDesign::SubShapeBinder":
+            continue
+        support = list(binder.Support)
+        updated = []
+        changed = False
+        for linked, subnames in support:
+            if linked not in receiver_bodies:
+                updated.append((linked, subnames))
+                continue
+            names = (subnames,) if isinstance(subnames, str) else subnames
+            replacements = []
+            for name in names:
+                if "." not in name:
+                    break
+                feature_name, subname = name.rsplit(".", 1)
+                feature = doc.getObject(feature_name)
+                if feature is None or feature not in linked.Group:
+                    break
+                replacements.append((feature, (subname,)))
+            else:
+                updated.extend(replacements)
+                changed = True
+                continue
+            updated.append((linked, subnames))
+        if changed:
+            changes.append((binder, support, updated, binder.Shape.copy()))
+    if not changes:
+        raise JointValidationError(
+            "A source panel depends on the receiving body's changing Tip. "
+            "Attach its binder to a fixed upstream feature before creating the joint."
+        )
+
+    try:
+        for binder, _, updated, _ in changes:
+            binder.Support = updated
+        doc.recompute()
+        if any(not _same_binder_shape(before, binder.Shape)
+               for binder, _, _, before in changes):
+            raise JointValidationError(
+                "Rebinding a panel support changed its geometry; the joint was not created."
+            )
+        if any(_depends_on(base, body)
+               for base in source_bases for body in receiver_bodies):
+            raise JointValidationError(
+                "A source panel still depends on the receiving body's changing Tip."
+            )
+    except Exception:
+        for binder, support, _, _ in changes:
+            binder.Support = support
+        doc.recompute()
+        raise
+
+
 def _subshape(base, name, prefix):
     if not name.startswith(prefix):
         raise JointValidationError(f"Expected a {prefix.lower()} selection, got {name!r}.")
@@ -1029,6 +1128,11 @@ def create_joint(
             receiver_overshoot,
             receiver_fillet_radius,
         )
+
+    stabilize_receiver_bindings(
+        ((geometry.source_body, geometry.source_base),),
+        tuple(zip(geometry.receiver_bodies, geometry.receiver_bases)),
+    )
 
     doc = geometry.source_body.Document
     if any(body.Document is not doc for body in geometry.receiver_bodies):

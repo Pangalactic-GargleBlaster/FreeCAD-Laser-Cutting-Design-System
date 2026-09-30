@@ -13,6 +13,7 @@ from finger_joint import (
     _parallel,
     _subshape,
     _unit,
+    keep_dominant_solid,
     show_body_tips,
 )
 from joint_group import _projected_cavity, broad_planes
@@ -102,7 +103,9 @@ def _mouth_edges(shape, plane, axis, mouth, transverse_bounds):
         coordinate = middle.dot(transverse)
         if any(abs(coordinate - bound) <= 1e-5 for bound in transverse_bounds):
             candidates.append(edge)
-    if not 1 <= len(candidates) <= 2:
+    # Earlier joints can remove the material at a nominal mouth entirely.
+    # In that case the retained panel has no exposed edge to round.
+    if len(candidates) > 2:
         raise JointValidationError(
             "Could not identify the slot-mouth edges to fillet."
         )
@@ -247,17 +250,16 @@ def solve_half_lap(first_objects, second_objects, fillet_radius=0, intact_face=N
         shape = base.Shape
         for cut in cutters[body]:
             shape = shape.cut(cut)
-        shape = shape.removeSplitter()
-        if not shape.isValid() or len(shape.Solids) != 1:
-            raise JointValidationError("A half-lap cut split a panel into multiple solids.")
+        shape = keep_dominant_solid(shape.removeSplitter())
         if radius > LINEAR_TOLERANCE:
             edges = []
             for direction, mouth, bounds in mouths[body]:
                 edges.extend(_mouth_edges(shape, planes[body], direction, mouth, bounds))
-            try:
-                shape = shape.makeFillet(radius, edges).removeSplitter()
-            except Part.OCCError as error:
-                raise JointValidationError(f"Could not fillet a half-lap opening: {error}")
+            if edges:
+                try:
+                    shape = shape.makeFillet(radius, edges).removeSplitter()
+                except Part.OCCError as error:
+                    raise JointValidationError(f"Could not fillet a half-lap opening: {error}")
             if not shape.isValid() or len(shape.Solids) != 1:
                 raise JointValidationError("The half-lap fillet produced an invalid panel.")
         results[body] = shape

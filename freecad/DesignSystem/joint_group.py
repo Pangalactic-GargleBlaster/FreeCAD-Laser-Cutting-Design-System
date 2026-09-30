@@ -20,6 +20,7 @@ from finger_joint import (
     build_finger_shapes,
     keep_dominant_solid,
     show_body_tips,
+    stabilize_receiver_bindings,
     validate_source_face_set,
 )
 
@@ -494,6 +495,8 @@ def create_joint_group(source_faces, receiver_objs, finger_count,
     if any(preview[bodies[i]].common(preview[bodies[j]]).Volume > LINEAR_TOLERANCE
            for i in range(len(bodies)) for j in range(i + 1, len(bodies))):
         raise JointValidationError("The joint would leave overlapping bodies.")
+
+    stabilize_receiver_bindings(source_pairs, receiver_pairs)
 
     inputs = doc.addObject("App::FeaturePython", "FingerJointGroupInputs")
     inputs.Label = "Finger Joint group (inputs)"
