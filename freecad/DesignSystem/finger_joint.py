@@ -5,11 +5,6 @@ from dataclasses import dataclass
 import FreeCAD as App
 import Part
 
-if getattr(App, "GuiUp", False):
-    import FreeCADGui as Gui
-    from PySide import QtCore
-
-
 LINEAR_TOLERANCE = 1e-7
 ANGULAR_TOLERANCE = 1e-7
 
@@ -39,6 +34,8 @@ def _schedule_recompute(doc):
         return
     _pending_recompute_documents[doc.Name] = doc
     if _recompute_timer is None:
+        from PySide import QtCore
+
         _recompute_timer = QtCore.QTimer()
         _recompute_timer.setSingleShot(True)
         _recompute_timer.timeout.connect(_flush_pending_recomputes)
@@ -47,6 +44,26 @@ def _schedule_recompute(doc):
 
 class JointValidationError(ValueError):
     """Raised when the selected geometry cannot define a finger joint."""
+
+
+def keep_dominant_solid(shape, minimum_fraction=0.75):
+    """Discard detached joint fragments when one solid dominates the result."""
+    solids = shape.Solids
+    if len(solids) == 1:
+        result = shape
+    elif solids:
+        largest = max(solids, key=lambda solid: solid.Volume)
+        total_volume = sum(solid.Volume for solid in solids)
+        if total_volume <= 0 or largest.Volume / total_volume < minimum_fraction:
+            raise JointValidationError(
+                "The joint split a body into substantial separate solids."
+            )
+        result = largest
+    else:
+        raise JointValidationError("The joint produced no solid.")
+    if not result.isValid():
+        raise JointValidationError("The joint produced an invalid solid.")
+    return result
 
 
 @dataclass(frozen=True)
@@ -208,6 +225,55 @@ def _source_frame(source_obj, face_name, edge_name):
         edge_length,
         distribution_length,
     )
+
+
+def validate_source_face_set(source_faces, receiver_objs):
+    """Validate rectangular source faces and find edges on receiver surfaces.
+
+    ``source_faces`` contains ``(feature_or_body, face_name)`` pairs. A
+    laminated source may contain faces that do not individually touch any
+    receiver; at least one selected face must provide the shared seam.
+    """
+    if not source_faces:
+        raise JointValidationError("Select at least one source face.")
+    receivers = (
+        list(receiver_objs)
+        if isinstance(receiver_objs, (list, tuple))
+        else [receiver_objs]
+    )
+    if not receivers:
+        raise JointValidationError("Select at least one receiving body.")
+    receiver_pairs = [_body_and_base(obj, "receiving") for obj in receivers]
+    receiver_bodies = {body for body, _ in receiver_pairs}
+    contact_edges = []
+    seen = set()
+    for source_obj, face_name in source_faces:
+        source_body, source_base = _body_and_base(source_obj, "source")
+        if source_body in receiver_bodies:
+            raise JointValidationError("Source and receiving bodies must be different.")
+        face = _subshape(source_base, face_name, "Face")
+        if not _is_rectangle(face):
+            raise JointValidationError(
+                f"Selected face {source_base.Label}.{face_name} must be a planar rectangle."
+            )
+        key = (source_base.Document.Name, source_base.Name, face_name)
+        if key in seen:
+            raise JointValidationError("Select each source face only once.")
+        seen.add(key)
+        for edge_index, edge in enumerate(source_base.Shape.Edges, start=1):
+            if not any(edge.isSame(face_edge) for face_edge in face.Edges):
+                continue
+            if any(
+                edge.common(receiver_face).Length >= edge.Length - LINEAR_TOLERANCE
+                for _, receiver_base in receiver_pairs
+                for receiver_face in receiver_base.Shape.Faces
+            ):
+                contact_edges.append((source_base, face_name, f"Edge{edge_index}"))
+    if not contact_edges:
+        raise JointValidationError(
+            "At least one edge of a selected source face must lie on a receiving body surface."
+        )
+    return tuple(contact_edges)
 
 
 def automatic_edge_name(source_obj, face_name):
@@ -739,7 +805,7 @@ class SourceJointProxy:
                 geometry, obj.FingerCount, overshoot, fillet_radius
             )
             obj.ToolShape = cutting_tool
-            obj.Shape = source.Shape.fuse(fingers).removeSplitter()
+            obj.Shape = keep_dominant_solid(source.Shape.fuse(fingers).removeSplitter())
             obj.FingerWidth = width
             obj.FingerDepth = depth
             obj.FilletRadius = radius
@@ -778,7 +844,9 @@ class JointResultProxy:
         if obj.InputFeature is None or obj.Joint is None or obj.Joint.Shape.isNull():
             return
         if self.operation == "Add":
-            obj.Shape = obj.InputFeature.Shape.fuse(obj.Joint.Shape).removeSplitter()
+            obj.Shape = keep_dominant_solid(
+                obj.InputFeature.Shape.fuse(obj.Joint.Shape).removeSplitter()
+            )
         else:
             tool = obj.Joint.ToolShape if hasattr(obj.Joint, "ToolShape") else obj.Joint.Shape
             result = obj.InputFeature.Shape.cut(tool)
@@ -803,7 +871,7 @@ class JointResultProxy:
                 )
                 if not receiver_fingers.isNull():
                     result = result.fuse(receiver_fingers)
-            obj.Shape = result.removeSplitter()
+            obj.Shape = keep_dominant_solid(result.removeSplitter())
 
     def dumps(self):
         return {"operation": self.operation}
@@ -876,6 +944,8 @@ def show_body_tips(*bodies):
     """Show each body and only its current tip feature."""
     if not getattr(App, "GuiUp", False):
         return
+    import FreeCADGui as Gui
+
     for body in bodies:
         tip = body.Tip
         body.ViewObject.Visibility = True
@@ -920,7 +990,7 @@ def create_joint(
         receiver_overshoot, geometry.receiver_thickness
     )
     receiver_fillet_radius = _length_value(
-        receiver_fillet_radius, 0
+        receiver_fillet_radius, geometry.receiver_thickness
     )
     build_fingers(geometry, finger_count, overshoot, fillet_radius)
     for receiver_base in geometry.receiver_bases:
@@ -1048,7 +1118,7 @@ def create_joint(
         expression = receiver_overshoot_expression or "ReceiverThickness"
         joint.setExpression("ReceiverOvershoot", transferred_expression(expression))
     if default_receiver_fillet_radius:
-        expression = receiver_fillet_radius_expression or "0 mm"
+        expression = receiver_fillet_radius_expression or "ReceiverThickness"
         joint.setExpression(
             "ReceiverFilletRadius", transferred_expression(expression)
         )

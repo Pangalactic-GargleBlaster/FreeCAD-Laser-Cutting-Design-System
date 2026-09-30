@@ -13,7 +13,9 @@ from finger_joint import (
     create_joint,
     receiver_fingers_applicable,
     show_body_tips,
+    validate_source_face_set,
 )
+from joint_group import broad_planes, create_joint_group, solve_joint
 
 
 _active_panel = None
@@ -83,7 +85,7 @@ class FingerJointTaskPanel:
         self.parameters.setExpression("Overshoot", "SelectedEdgeLength")
         self.parameters.setExpression("FilletRadius", "SelectedEdgeLength")
         self.parameters.setExpression("ReceiverOvershoot", "ReceiverThickness")
-        self.parameters.setExpression("ReceiverFilletRadius", "0 mm")
+        self.parameters.setExpression("ReceiverFilletRadius", "ReceiverThickness")
         self.parameters.setEditorMode("SelectedEdgeLength", 2)
         self.parameters.setEditorMode("ReceiverThickness", 2)
         if hasattr(self.parameters.ViewObject, "ShowInTree"):
@@ -92,6 +94,7 @@ class FingerJointTaskPanel:
         self.doc.recompute()
 
         self.source_face = None
+        self.source_faces = []
         self.first_edge = None
         self.receivers = []
         self.pick_mode = None
@@ -128,7 +131,7 @@ class FingerJointTaskPanel:
             layout, "1. Receiving bodies", "Select bodies…", "receiver"
         )
         self.face_value = self._add_picker(
-            layout, "2. Source face", "Select face…", "face"
+            layout, "2. Source faces", "Select faces…", "face"
         )
 
         count_row = QtWidgets.QHBoxLayout()
@@ -182,6 +185,8 @@ class FingerJointTaskPanel:
     def _finish_receiver_if_picking(self):
         if self.pick_mode == "receiver":
             self._finish_receiver_pick()
+        elif self.pick_mode == "face":
+            self._finish_face_pick()
 
     def _add_picker(self, parent_layout, label, button_text, mode):
         parent_layout.addWidget(QtWidgets.QLabel(label))
@@ -201,6 +206,8 @@ class FingerJointTaskPanel:
     def _picker_clicked(self, mode):
         if mode == "receiver" and self.pick_mode == "receiver":
             self._finish_receiver_pick()
+        elif mode == "face" and self.pick_mode == "face":
+            self._finish_face_pick()
         else:
             self._begin_pick(mode)
 
@@ -230,12 +237,17 @@ class FingerJointTaskPanel:
             self._restore_receiver_visibility()
             self.receivers = []
             self.receiver_value.setText("Not selected")
+        elif mode == "face":
+            self.source_face = None
+            self.source_faces = []
+            self.first_edge = None
+            self.face_value.setText("Not selected")
         prompts = {
-            "face": "Click the rectangular face from which the fingers should protrude.",
+            "face": "Click each rectangular source face, then click Done.",
             "receiver": "Click each receiving body in the scene or model tree, then click Done.",
         }
         labels = {
-            "face": "Select face…",
+            "face": "Select faces…",
             "receiver": "Select bodies…",
         }
         for key, button in self.pick_buttons.items():
@@ -258,6 +270,18 @@ class FingerJointTaskPanel:
         self._update_state()
         self._begin_pick("face")
 
+    def _finish_face_pick(self):
+        if not self.source_faces:
+            self._selection_error("Select at least one source face.")
+            return
+        self.pick_mode = None
+        self._remove_selection_gate()
+        self.pick_buttons["face"].setText("Change faces…")
+        self.prompt.setText("")
+        Gui.Selection.clearSelection()
+        self._show_saved_selection()
+        self._update_state()
+
     def addSelection(self, document_name, object_name, sub_name, *args):
         if self.pick_mode is None:
             return
@@ -271,30 +295,40 @@ class FingerJointTaskPanel:
                 self._selection_error("Please click a face, not an edge or tree item.")
                 return
             base = _base_feature(obj)
-            self.source_face = (base, sub_name)
-            self.face_value.setText(f"{base.Label} · {sub_name}")
+            if (base, sub_name) in self.source_faces:
+                self._selection_error("That source face is already selected.")
+                return
             try:
                 edge_name = automatic_edge_name(base, sub_name)
             except JointValidationError as error:
-                self.source_face = None
-                self.face_value.setText("Not selected")
                 self._selection_error(str(error))
                 return
-            self.first_edge = (base, edge_name)
-            edge_index = int(edge_name[4:]) - 1
-            default_length = base.Shape.Edges[edge_index].Length
-            self.parameters.SelectedEdgeLength = default_length
-            self.doc.recompute()
-            widgets = (
-                (self.overshoot, self.parameters.Overshoot),
-                (self.radius, self.parameters.FilletRadius),
-                (self.receiver_overshoot, self.parameters.ReceiverOvershoot),
-                (self.receiver_radius, self.parameters.ReceiverFilletRadius),
-            )
-            for widget, value in widgets:
-                widget.blockSignals(True)
-                widget.setProperty("value", value)
-                widget.blockSignals(False)
+            self.source_faces.append((base, sub_name))
+            if self.source_face is None:
+                self.source_face = (base, sub_name)
+                self.first_edge = (base, edge_name)
+                edge_index = int(edge_name[4:]) - 1
+                self.parameters.SelectedEdgeLength = base.Shape.Edges[edge_index].Length
+                self.doc.recompute()
+                widgets = (
+                    (self.overshoot, self.parameters.Overshoot),
+                    (self.radius, self.parameters.FilletRadius),
+                    (self.receiver_overshoot, self.parameters.ReceiverOvershoot),
+                    (self.receiver_radius, self.parameters.ReceiverFilletRadius),
+                )
+                for widget, value in widgets:
+                    widget.blockSignals(True)
+                    widget.setProperty("value", value)
+                    widget.blockSignals(False)
+            self.face_value.setText(", ".join(
+                f"{feature.Label} · {face}" for feature, face in self.source_faces
+            ))
+            self.pick_buttons["face"].setText(f"Done ({len(self.source_faces)})")
+            self.prompt.setText("Select another source face, or click Done / press Enter.")
+            Gui.Selection.clearSelection()
+            Gui.activeDocument().activeView().redraw()
+            self._update_state()
+            return
         else:
             body = _body(obj)
             if body is None:
@@ -333,11 +367,11 @@ class FingerJointTaskPanel:
         Gui.Selection.clearSelection()
 
     def _show_saved_selection(self):
-        if self.source_face is not None:
+        for source, face_name in self.source_faces:
             Gui.Selection.addSelection(
-                self.source_face[0].Document.Name,
-                self.source_face[0].Name,
-                self.source_face[1],
+                source.Document.Name,
+                source.Name,
+                face_name,
             )
         for receiver in self.receivers:
             Gui.Selection.addSelection(receiver.Document.Name, receiver.Name)
@@ -345,14 +379,63 @@ class FingerJointTaskPanel:
     def _validated_geometry(self):
         self._sync_parameters_from_widgets()
         self._receiver_parameters_applicable = False
-        if self.source_face is None or not self.receivers:
+        if not self.source_faces or not self.receivers:
             return None
-        geometry = analyze_joint(
-            self.source_face[0],
-            self.source_face[1],
-            self.receivers,
-            int(self.parameters.FingerCount),
-        )
+        validate_source_face_set(self.source_faces, self.receivers)
+        geometry = None
+        if len(self.source_faces) == 1:
+            source, face_name = self.source_faces[0]
+            face = source.Shape.Faces[int(face_name[4:]) - 1]
+            source_normal = face.normalAt(0, 0)
+            parallel_receivers = all(
+                abs(source_normal.dot(broad_planes(_base_feature(body).Shape).normal))
+                >= 1 - 1e-7
+                for body in self.receivers
+            )
+        else:
+            parallel_receivers = False
+        if parallel_receivers:
+            try:
+                geometry = analyze_joint(
+                    self.source_face[0],
+                    self.source_face[1],
+                    self.receivers,
+                    int(self.parameters.FingerCount),
+                )
+            except JointValidationError:
+                pass
+        if geometry is None:
+            receiver_thickness = broad_planes(
+                _base_feature(self.receivers[0]).Shape
+            ).thickness
+            changed = abs(
+                self.parameters.ReceiverThickness.Value - receiver_thickness
+            ) > 1e-7
+            if changed:
+                self.parameters.ReceiverThickness = receiver_thickness
+                self.doc.recompute()
+            preview = solve_joint(
+                self.source_faces,
+                self.receivers,
+                int(self.parameters.FingerCount),
+                self.parameters.Overshoot.Value,
+                self.parameters.FilletRadius.Value,
+                self.parameters.ReceiverOvershoot.Value,
+                self.parameters.ReceiverFilletRadius.Value,
+            )
+            applicable = any(
+                preview[body].Volume > _base_feature(body).Shape.Volume + 1e-7
+                for body in self.receivers
+            )
+            self._receiver_parameters_applicable = applicable
+            first_source, first_face = self.source_faces[0]
+            first_edge = automatic_edge_name(first_source, first_face)
+            edge_length = first_source.Shape.Edges[int(first_edge[4:]) - 1].Length
+            distribution_length = first_source.Shape.Faces[
+                int(first_face[4:]) - 1
+            ].Area / edge_length
+            width = distribution_length / (2 * int(self.parameters.FingerCount))
+            return None, width, None, self.parameters.FilletRadius.Value, applicable, "group"
         # Determine this before validating radii so the receiving controls stay
         # available when an invalid default needs to be corrected.
         applicable = receiver_fingers_applicable(geometry)
@@ -393,7 +476,7 @@ class FingerJointTaskPanel:
                 self.parameters.ReceiverOvershoot,
                 self.parameters.ReceiverFilletRadius,
             )
-        return geometry, width, depth, radius, applicable
+        return geometry, width, depth, radius, applicable, "legacy"
 
     def _sync_parameters_from_widgets(self):
         if self._syncing_parameters:
@@ -454,21 +537,28 @@ class FingerJointTaskPanel:
             if result is None:
                 self._set_receiver_parameters_enabled(False)
                 missing = []
-                if self.source_face is None:
-                    missing.append("source face")
+                if not self.source_faces:
+                    missing.append("source faces")
                 if not self.receivers:
                     missing.append("receiving bodies")
                 self.status.setText("Still needed: " + ", ".join(missing) + ".")
                 self.status.setStyleSheet("color: #606060;")
                 self.create_button.setEnabled(False)
                 return
-            geometry, width, depth, radius, applicable = result
+            geometry, width, depth, radius, applicable, mode = result
             self._set_receiver_parameters_enabled(applicable)
-            receiver_labels = ", ".join(body.Label for body in geometry.receiver_bodies)
-            self.status.setText(
-                f"Ready — {geometry.source_body.Label} → {receiver_labels}; "
-                f"width {width:g} mm, depth {depth:g} mm, tip radius {radius:g} mm."
-            )
+            if mode == "group":
+                receiver_labels = ", ".join(body.Label for body in self.receivers)
+                self.status.setText(
+                    f"Ready — {len(self.source_faces)} source faces → "
+                    f"{receiver_labels}; width {width:g} mm, tip radius {radius:g} mm."
+                )
+            else:
+                receiver_labels = ", ".join(body.Label for body in geometry.receiver_bodies)
+                self.status.setText(
+                    f"Ready — {geometry.source_body.Label} → {receiver_labels}; "
+                    f"width {width:g} mm, depth {depth:g} mm, tip radius {radius:g} mm."
+                )
             self.status.setStyleSheet("color: #207020;")
             self.create_button.setEnabled(True)
         except JointValidationError as error:
@@ -483,29 +573,43 @@ class FingerJointTaskPanel:
         self._validation_timer.stop()
         self._validation_pending = False
         try:
-            self._validated_geometry()
+            validation = self._validated_geometry()
+            if validation is None:
+                return
             expressions = dict(self.parameters.ExpressionEngine)
             doc = self.doc
             try:
-                joint = create_joint(
-                    self.source_face[0],
-                    self.source_face[1],
-                    self.receivers,
-                    int(self.parameters.FingerCount),
-                    self.parameters.Overshoot,
-                    self.parameters.FilletRadius,
-                    expressions.get("FingerCount"),
-                    expressions.get("Overshoot"),
-                    expressions.get("FilletRadius"),
-                    receiver_overshoot=self.parameters.ReceiverOvershoot,
-                    receiver_fillet_radius=self.parameters.ReceiverFilletRadius,
-                    receiver_overshoot_expression=expressions.get(
-                        "ReceiverOvershoot"
-                    ),
-                    receiver_fillet_radius_expression=expressions.get(
-                        "ReceiverFilletRadius"
-                    ),
-                )
+                if validation[-1] == "group":
+                    joint, _ = create_joint_group(
+                        self.source_faces, self.receivers,
+                        int(self.parameters.FingerCount),
+                        self.parameters.Overshoot,
+                        self.parameters.FilletRadius,
+                        self.parameters.ReceiverOvershoot,
+                        self.parameters.ReceiverFilletRadius,
+                        finger_count_expression=expressions.get("FingerCount"),
+                        overshoot_expression=expressions.get("Overshoot"),
+                        fillet_radius_expression=expressions.get("FilletRadius"),
+                        receiver_overshoot_expression=expressions.get("ReceiverOvershoot"),
+                        receiver_fillet_radius_expression=expressions.get("ReceiverFilletRadius"),
+                    )
+                    affected_bodies = list({
+                        _body(source) for source, _ in self.source_faces
+                    }) + list(self.receivers)
+                else:
+                    joint = create_joint(
+                        self.source_face[0], self.source_face[1], self.receivers,
+                        int(self.parameters.FingerCount), self.parameters.Overshoot,
+                        self.parameters.FilletRadius,
+                        expressions.get("FingerCount"),
+                        expressions.get("Overshoot"),
+                        expressions.get("FilletRadius"),
+                        receiver_overshoot=self.parameters.ReceiverOvershoot,
+                        receiver_fillet_radius=self.parameters.ReceiverFilletRadius,
+                        receiver_overshoot_expression=expressions.get("ReceiverOvershoot"),
+                        receiver_fillet_radius_expression=expressions.get("ReceiverFilletRadius"),
+                    )
+                    affected_bodies = [_body(joint), *self.receivers]
             except Exception:
                 raise
             self._finish()
@@ -517,7 +621,7 @@ class FingerJointTaskPanel:
             # Committing the transaction can reapply Part Design's automatic
             # child visibility. Restore both current tips after the dialog and
             # transaction have finished.
-            show_body_tips(_body(joint), *self.receivers)
+            show_body_tips(*affected_bodies)
             Gui.activeDocument().activeView().fitAll()
         except JointValidationError as error:
             self.status.setText(str(error))

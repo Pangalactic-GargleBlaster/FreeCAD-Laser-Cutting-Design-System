@@ -3,6 +3,7 @@
 import shutil
 import sys
 import tempfile
+from math import cos, radians, sin
 from pathlib import Path
 
 import FreeCAD as App
@@ -17,8 +18,11 @@ from finger_joint import (  # noqa: E402
     _is_rectangle,
     analyze_joint,
     create_joint,
+    keep_dominant_solid,
     receiver_fingers_applicable,
+    validate_source_face_set,
 )
+from joint_group import create_joint_group, solve_joint  # noqa: E402
 
 
 def find_face(feature, axis, coordinate, area):
@@ -38,6 +42,185 @@ def copied_fixture(name, temp_dir):
     return target
 
 
+def face_with_normal(feature, direction):
+    for index, face in enumerate(feature.Shape.Faces, start=1):
+        if face.normalAt(0, 0).dot(direction) >= 1 - 1e-7:
+            return f"Face{index}"
+    raise AssertionError("Expected face normal not found")
+
+
+def contacting_rectangular_face(source, receiver):
+    faces = []
+    for index, face in enumerate(source.Shape.Faces, start=1):
+        if not _is_rectangle(face):
+            continue
+        name = f"Face{index}"
+        try:
+            validate_source_face_set(((source, name),), (receiver,))
+        except JointValidationError:
+            continue
+        faces.append(name)
+    assert len(faces) == 1, (source.Label, receiver.Label, faces)
+    return faces[0]
+
+
+def test_laminated_source_face_set(temp_dir):
+    path = copied_fixture("Acute2.FCStd", temp_dir)
+    doc = App.openDocument(str(path))
+    try:
+        inner = doc.getObject("AngledInnerSolid")
+        outer = doc.getObject("AngledOuterSolid")
+        receivers = (doc.getObject("BaseLower"), doc.getObject("BaseUpper"))
+        end_normal = App.Vector(0, -0.5, -(3 ** 0.5) / 2)
+        inner_face = face_with_normal(inner, end_normal)
+        outer_face = face_with_normal(outer, end_normal)
+        contacts = validate_source_face_set(
+            ((inner, inner_face), (outer, outer_face)), receivers
+        )
+        assert any(source is inner for source, _, _ in contacts)
+        assert not any(source is outer for source, _, _ in contacts)
+        try:
+            validate_source_face_set(((outer, outer_face),), receivers)
+        except JointValidationError as error:
+            assert "At least one edge" in str(error)
+        else:
+            raise AssertionError("Non-contacting outer ply should fail alone")
+    finally:
+        App.closeDocument(doc.Name)
+
+
+def test_angled_joint_groups(temp_dir):
+    fixtures = (
+        ("Acute", ("AngledPanel",), ("BasePanel",), 60),
+        ("Edge90", ("AngledPanel",), ("BasePanel",), 90),
+        ("Obtuse", ("AngledPanel",), ("BasePanel",), 120),
+        ("AngledT", ("AngledPanel",), ("BasePanel",), 60),
+        ("Acute2", ("AngledInner", "AngledOuter"),
+         ("BaseLower", "BaseUpper"), 60),
+        ("AngledT2", ("AngledInner", "AngledOuter"),
+         ("BaseLower", "BaseUpper"), 60),
+    )
+    for name, source_names, receiver_names, angle in fixtures:
+        path = copied_fixture(f"{name}.FCStd", temp_dir)
+        doc = App.openDocument(str(path))
+        try:
+            normal = App.Vector(0, -cos(radians(angle)), -sin(radians(angle)))
+            sources = []
+            for body_name in source_names:
+                feature = doc.getObject(body_name).Tip
+                sources.append((feature, face_with_normal(feature, normal)))
+            receivers = [doc.getObject(body_name) for body_name in receiver_names]
+            # Exercise the task panel's default lengths and radii on every
+            # angled fixture, including the laminated source and receiver.
+            preview = solve_joint(sources, receivers, 2, 5, 5, 5, 5)
+            assert all(shape.isValid() and len(shape.Solids) == 1
+                       for shape in preview.values())
+            shapes = list(preview.values())
+            assert all(shapes[i].common(shapes[j]).Volume <= 1e-7
+                       for i in range(len(shapes)) for j in range(i + 1, len(shapes)))
+            plan, results = create_joint_group(
+                sources, receivers, 2, overshoot=0, fillet_radius=2.5,
+                receiver_overshoot=0, receiver_fillet_radius=0,
+            )
+            assert len(results) == len(source_names) + len(receiver_names)
+            assert plan.SourceCount == len(source_names)
+            assert all(result.Shape.isValid() and len(result.Shape.Solids) == 1
+                       for result in results)
+            assert all(
+                results[i].Shape.common(results[j].Shape).Volume <= 1e-7
+                for i in range(len(results)) for j in range(i + 1, len(results))
+            )
+            plan.Overshoot = 3
+            doc.recompute()
+            assert all(result.Shape.isValid() for result in results)
+            doc.save()
+        finally:
+            App.closeDocument(doc.Name)
+        reopened = App.openDocument(str(path))
+        try:
+            reopened.recompute()
+            reopened_results = [obj for obj in reopened.Objects
+                                if obj.Name.startswith("FingerJointGroupResult")]
+            assert len(reopened_results) == len(source_names) + len(receiver_names)
+            assert all(result.Shape.isValid() for result in reopened_results)
+        finally:
+            App.closeDocument(reopened.Name)
+
+
+def test_pyramid_side_joints_have_matching_receiving_fingers(temp_dir):
+    adjacent_pairs = (
+        ("SouthFace", "EastFace"),
+        ("EastFace", "NorthFace"),
+        ("NorthFace", "WestFace"),
+        ("WestFace", "SouthFace"),
+    )
+    pairs = (*adjacent_pairs, *((receiver, source)
+                                for source, receiver in adjacent_pairs))
+    for source_name, receiver_name in pairs:
+        path = copied_fixture("Pyramid.FCStd", temp_dir)
+        doc = App.openDocument(str(path))
+        try:
+            source = doc.getObject(source_name).Tip
+            receiver = doc.getObject(receiver_name)
+            face_name = contacting_rectangular_face(source, receiver)
+            original_receiver_volume = receiver.Tip.Shape.Volume
+            _, results = create_joint_group(
+                ((source, face_name),), (receiver,), 2,
+                overshoot=5, fillet_radius=5,
+                receiver_overshoot=5, receiver_fillet_radius=5,
+            )
+            assert len(results) == 2
+            assert all(result.Shape.isValid() and len(result.Shape.Solids) == 1
+                       for result in results)
+            assert receiver.Tip.Shape.Volume > original_receiver_volume
+            assert results[0].Shape.common(results[1].Shape).Volume <= 1e-7
+        finally:
+            App.closeDocument(doc.Name)
+
+
+def test_dominant_solid_threshold():
+    large = Part.makeBox(3, 1, 1)
+    small = Part.makeBox(1, 1, 1, App.Vector(5, 0, 0))
+    assert abs(keep_dominant_solid(Part.makeCompound((large, small))).Volume - 3) < 1e-7
+    equally_split = Part.makeCompound((Part.makeBox(2, 1, 1), small))
+    try:
+        keep_dominant_solid(equally_split)
+    except JointValidationError:
+        pass
+    else:
+        raise AssertionError("A largest solid below 75% must be rejected")
+
+
+def test_pyramid_two_joints_sharing_triangle(temp_dir):
+    path = copied_fixture("Pyramid.FCStd", temp_dir)
+    doc = App.openDocument(str(path))
+    try:
+        south = doc.getObject("SouthFace")
+        for receiver_name in ("EastFace", "WestFace"):
+            source = south.Tip
+            receiver = doc.getObject(receiver_name)
+            face_name = contacting_rectangular_face(source, receiver)
+            create_joint_group(
+                ((source, face_name),), (receiver,), 2,
+                overshoot=5, fillet_radius=5,
+                receiver_overshoot=5, receiver_fillet_radius=5,
+            )
+            doc.recompute()
+            assert all(body.Tip.Shape.isValid() and len(body.Tip.Shape.Solids) == 1
+                       for body in (south, receiver))
+        doc.save()
+    finally:
+        App.closeDocument(doc.Name)
+    reopened = App.openDocument(str(path))
+    try:
+        reopened.recompute()
+        for name in ("SouthFace", "EastFace", "WestFace"):
+            shape = reopened.getObject(name).Tip.Shape
+            assert shape.isValid() and len(shape.Solids) == 1
+    finally:
+        App.closeDocument(reopened.Name)
+
+
 def test_corner_success(temp_dir):
     path = copied_fixture("Corner.FCStd", temp_dir)
     doc = App.openDocument(str(path))
@@ -46,7 +229,8 @@ def test_corner_success(temp_dir):
         receiver = doc.getObject("BaseXYSolid")
         face_name, face = find_face(source, App.Vector(0, 0, 1), 10, 1000)
         source_volume = source.Shape.Volume
-        joint = create_joint(source, face_name, receiver, 2)
+        joint = create_joint(source, face_name, receiver, 2,
+                             receiver_fillet_radius=0)
         doc.recompute()
 
         source_result = joint
@@ -59,7 +243,7 @@ def test_corner_success(temp_dir):
         assert "FingerJointInputs.EdgeLength" in expressions["Overshoot"]
         assert "FingerJointInputs.EdgeLength" in expressions["FilletRadius"]
         assert "FingerJointInputs.ReceiverThickness" in expressions["ReceiverOvershoot"]
-        assert "FingerJointInputs.ReceiverThickness" not in expressions["ReceiverFilletRadius"]
+        assert "ReceiverFilletRadius" not in expressions
         assert abs(joint.ReceiverFilletRadius.Value) <= 1e-7
         assert abs(joint.ToolShape.BoundBox.XMin - 12.5) <= 1e-7
         assert abs(joint.ToolShape.BoundBox.XMax - 87.5) <= 1e-7
@@ -131,6 +315,40 @@ def test_mismatched_rejects_impossible_fillet(temp_dir):
         App.closeDocument(doc.Name)
 
 
+def test_default_receiver_fillet_tracks_thickness(temp_dir):
+    corner_path = copied_fixture("Corner.FCStd", temp_dir)
+    doc = App.openDocument(str(corner_path))
+    try:
+        source = doc.getObject("BackXZSolid")
+        receiver = doc.getObject("BaseXYSolid")
+        face_name, _ = find_face(source, App.Vector(0, 0, 1), 10, 1000)
+        joint = create_joint(source, face_name, receiver, 1)
+        assert abs(joint.ReceiverFilletRadius.Value - 10) <= 1e-7
+        assert "FingerJointInputs.ReceiverThickness" in dict(
+            joint.ExpressionEngine
+        )["ReceiverFilletRadius"]
+    finally:
+        App.closeDocument(doc.Name)
+
+    obtuse_path = copied_fixture("Obtuse.FCStd", temp_dir)
+    doc = App.openDocument(str(obtuse_path))
+    try:
+        source = doc.getObject("AngledPanel").Tip
+        receiver = doc.getObject("BasePanel")
+        normal = App.Vector(0, -cos(radians(120)), -sin(radians(120)))
+        face_name = face_with_normal(source, normal)
+        plan, results = create_joint_group(
+            ((source, face_name),), (receiver,), 1
+        )
+        assert abs(plan.ReceiverFilletRadius.Value - 5) <= 1e-7
+        assert "FingerJointGroupInputs.ReceivingThickness" in dict(
+            plan.ExpressionEngine
+        )["ReceiverFilletRadius"]
+        assert all(result.Shape.isValid() for result in results)
+    finally:
+        App.closeDocument(doc.Name)
+
+
 def test_t_joint_has_no_receiving_panel_finger_extensions(temp_dir):
     path = copied_fixture("T.FCStd", temp_dir)
     doc = App.openDocument(str(path))
@@ -173,7 +391,8 @@ def test_angled_binder_fixture_has_no_cycle_and_tracks_thickness(temp_dir):
     path = copied_fixture("Angled.FCStd", temp_dir)
     doc = App.openDocument(str(path))
     try:
-        joint = create_joint(doc.Pad, "Face3", doc.Body001, 2)
+        joint = create_joint(doc.Pad, "Face3", doc.Body001, 2,
+                             receiver_fillet_radius=0)
         doc.recompute()
         cut = doc.getObject("FingerJointCut")
         assert not joint.Shape.isNull()
@@ -199,7 +418,8 @@ def test_params_fixture_tracks_both_panel_thicknesses(temp_dir):
     path = copied_fixture("Params.FCStd", temp_dir)
     doc = App.openDocument(str(path))
     try:
-        joint = create_joint(doc.Pad, "Face4", doc.Body001, 2)
+        joint = create_joint(doc.Pad, "Face4", doc.Body001, 2,
+                             receiver_fillet_radius=0)
         doc.recompute()
         assert abs(joint.FingerDepth.Value - 20.0) <= 1e-7
 
@@ -235,7 +455,8 @@ def test_joint_cuts_through_multiple_receiving_bodies():
 
         face_name, face = find_face(source, App.Vector(0, 0, 1), 90, 1000)
         joint = create_joint(
-            source, face_name, [first_body, second_body], 2
+            source, face_name, [first_body, second_body], 2,
+            receiver_fillet_radius=0,
         )
         doc.recompute()
 
@@ -282,7 +503,8 @@ def test_receiver_coplanar_face_fragments_share_two_boundary_planes():
         face_name, face = find_face(
             source, App.Vector(0, 0, 1), 90, 1000
         )
-        joint = create_joint(source, face_name, receiver, 2)
+        joint = create_joint(source, face_name, receiver, 2,
+                             receiver_fillet_radius=0)
         doc.recompute()
         assert not joint.Shape.isNull()
         assert not receiver_body.Tip.Shape.isNull()
@@ -297,7 +519,8 @@ def test_saved_joint_reopens(temp_dir):
         source = doc.getObject("BackXZSolid")
         receiver = doc.getObject("BaseXYSolid")
         face_name, face = find_face(source, App.Vector(0, 0, 1), 10, 1000)
-        create_joint(source, face_name, receiver, 2)
+        create_joint(source, face_name, receiver, 2,
+                     receiver_fillet_radius=0)
         doc.recompute()
         doc.save()
     finally:
@@ -317,7 +540,13 @@ def test_saved_joint_reopens(temp_dir):
 
 
 with tempfile.TemporaryDirectory(prefix="design-system-tests-") as temp_dir:
+    test_laminated_source_face_set(temp_dir)
+    test_angled_joint_groups(temp_dir)
+    test_pyramid_side_joints_have_matching_receiving_fingers(temp_dir)
+    test_dominant_solid_threshold()
+    test_pyramid_two_joints_sharing_triangle(temp_dir)
     test_corner_success(temp_dir)
+    test_default_receiver_fillet_tracks_thickness(temp_dir)
     test_mismatched_rejects_impossible_fillet(temp_dir)
     test_t_joint_has_no_receiving_panel_finger_extensions(temp_dir)
     test_tilted_trapezoid_edge_faces_are_rectangles()

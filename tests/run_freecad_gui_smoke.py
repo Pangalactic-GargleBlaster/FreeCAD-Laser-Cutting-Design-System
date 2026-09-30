@@ -65,6 +65,10 @@ mismatched_panel._finish_receiver_pick()
 mismatched_panel.addSelection(
     mismatched.Name, mismatched.DrawerSideXZSolid.Name, "Face2"
 )
+assert mismatched_panel.pick_mode == "face"
+assert mismatched_panel.source_faces == [(mismatched.DrawerSideXZSolid, "Face2")]
+assert mismatched.DrawerSideXZ.ViewObject.Visibility
+mismatched_panel._receiver_shortcuts[0].activated.emit()
 assert mismatched_panel.pick_mode is None
 assert mismatched_panel.first_edge is not None
 assert not mismatched_panel.create_button.isEnabled()
@@ -75,7 +79,7 @@ mismatched_panel.parameters.setExpression(
     "FilletRadius", "SelectedEdgeLength / 5"
 )
 mismatched_panel.parameters.setExpression(
-    "ReceiverFilletRadius", "ReceiverThickness / 10"
+    "ReceiverFilletRadius", "ReceiverThickness / 20"
 )
 assert mismatched_panel._expression_update_pending
 mismatched_panel._run_scheduled_update()

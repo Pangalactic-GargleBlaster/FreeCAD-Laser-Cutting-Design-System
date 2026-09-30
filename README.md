@@ -36,12 +36,13 @@ fingers; every selected Panel B receives the matching cutouts.
 2. Click each receiving body in the 3D scene or model tree. Each selected body
    is temporarily hidden so bodies behind it remain accessible.
 3. Click **Done (N)** or press Enter.
-4. Select Panel A's rectangular end face.
-5. Adjust the parameters and click **Create Joint**.
+4. Click each rectangular source end face. Selected source bodies stay visible.
+5. Click **Done (N)** or press Enter.
+6. Adjust the parameters and click **Create Joint**.
 
-The selector accepts multiple receiving bodies. Their furthest parallel face
-determines the finger depth, and the finger cutting tool is subtracted from all
-of them. Hidden bodies are restored when the command is completed or cancelled.
+The selectors accept multiple receiving bodies and source faces. For a laminated
+source panel, select the end face of each ply. Hidden receiving bodies are
+restored when the command is completed or cancelled.
 
 ### Parameters
 
@@ -54,11 +55,12 @@ of them. Hidden bodies are restored when the command is completed or cancelled.
 - **Receiving-panel overshoot**: Extension of Panel B's effective fingers when
   the matching slots are open at a panel edge.
 - **Receiving-panel fillet radius**: Radius on those extended Panel B tips. Its
-  default is zero because the centered pattern has half-width end fingers.
+  default follows the receiving panel's thickness.
 
 All numerical controls support FreeCAD expressions through their `fx` buttons.
-After creation, select `Finger Joint (added)` and edit its **Parameters** group;
-both Panel A and every Panel B recompute immediately.
+For a parallel-face joint, edit the **Parameters** group on `Finger Joint
+(added)`. For an angled or laminated joint, edit `Finger Joint group`. All
+affected bodies recompute from those parameters.
 
 When the cutouts are enclosed within Panel B, as in `T.FCStd`, Panel B has no
 effective edge fingers. The two receiving-panel controls are disabled and have
@@ -67,21 +69,19 @@ no geometric effect. When the slots meet an edge, as in `Corner.FCStd` and
 
 ### Validation and generated features
 
-The command requires:
-
-- a planar rectangular source face at any orientation;
-- positive-area contact with exactly one selected receiving face; and
-- exactly two boundary planes on every receiving body parallel to the source
-  face.
+The command requires rectangular source faces and at least one complete edge
+of one selected face to lie on a receiving body surface. It supports angled
+edge and T joints, including laminated panels. The older parallel-face joint
+path remains available for a single source face.
 
 The exact requested radii are used. A joint is rejected if two tip fillets
 cannot fit within a finger width or if FreeCAD cannot construct the requested
 fillet.
 
-The operation creates `Finger Joint (inputs)` and `Finger Joint (added)` in
-Panel A, plus one `Finger Joint (cut)` feature in every Panel B. Earlier objects
-inside each body are normal FreeCAD feature history; the tool does not leave a
-standalone body or controller.
+The parallel-face path creates `Finger Joint (inputs)` and `Finger Joint
+(added)` in Panel A, plus one `Finger Joint (cut)` in every Panel B. Angled and
+laminated joints create a `Finger Joint group` controller and a result feature
+in each affected body. Edit the controller's parameters to recompute the group.
 
 ### Manual test with Corner
 

@@ -3,6 +3,7 @@
 import argparse
 import os
 from pathlib import Path
+import stat
 import tempfile
 import xml.etree.ElementTree as ET
 import zipfile
@@ -125,6 +126,7 @@ def set_visibility(path, hidden_names=None):
             raise
     # Windows cannot replace the source archive while its read handle is open.
     try:
+        os.chmod(temporary_path, stat.S_IMODE(path.stat().st_mode))
         os.replace(temporary_path, path)
     finally:
         temporary_path.unlink(missing_ok=True)
