@@ -1,10 +1,11 @@
-"""Place face-up profiles into cut-only sheet DXFs and labeled SVG maps."""
+"""Place face-up profiles into cut-only sheet DXFs and one labeled SVG map."""
 
 import csv
 import hashlib
 import html
 import json
 import os
+import re
 import sys
 
 import FreeCAD as App
@@ -90,7 +91,17 @@ def generate(manifest_path, layout_path, destination):
                   for index, record in enumerate(records, 1)}
     index_rows = []
     total = 0
-    for sheet in layout['sheets']:
+    W, H = layout['sheet_width_mm'], layout['sheet_height_mm']
+    margin, heading_height, sheet_gap = 12, 24, 16
+    map_width = W + 2 * margin
+    map_height = (2 * margin + len(layout['sheets']) * (H + heading_height)
+                  + max(0, len(layout['sheets']) - 1) * sheet_gap)
+    map_elements = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{map_width}mm" '
+        f'height="{map_height}mm" viewBox="0 0 {map_width} {map_height}">',
+        '<rect width="100%" height="100%" fill="white"/>',
+    ]
+    for sheet_index, sheet in enumerate(layout['sheets']):
         number = sheet['number']
         shapes = []
         svg_elements = []
@@ -138,9 +149,11 @@ def generate(manifest_path, layout_path, destination):
         importDXF.export([feature], path)
         if os.path.getsize(path) < 300:
             raise ValueError(f'Empty sheet DXF: {number}')
-        W, H = layout['sheet_width_mm'], layout['sheet_height_mm']
-        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{H}mm" '
-               f'viewBox="0 0 {W} {H}">'
+        top = margin + sheet_index * (H + heading_height + sheet_gap)
+        svg = (f'<g id="sheet-{number:02d}" transform="translate({margin} {top})">'
+               f'<text x="0" y="16" font-family="sans-serif" font-size="16" '
+               f'fill="#111827">Sheet {number}</text>'
+               f'<g transform="translate(0 {heading_height})">'
                f'<rect width="{W}" height="{H}" fill="white" stroke="#111827" stroke-width="2"/>'
                f'<g transform="translate(0 {H}) scale(1 -1)">')
         # Cut geometry is mirrored vertically for SVG's screen coordinate system.
@@ -151,9 +164,8 @@ def generate(manifest_path, layout_path, destination):
         for element in svg_elements:
             if element.startswith('<text'):
                 svg += element
-        svg += '</svg>'
-        with open(os.path.join(destination, f'sheet-{number:02d}-map.svg'), 'w') as stream:
-            stream.write(svg)
+        svg += '</g></g>'
+        map_elements.append(svg)
         total += len(sheet['parts'])
         if number % 10 == 0 or number == len(layout['sheets']):
             print('SHEETS_EXPORTED', number, len(layout['sheets']), flush=True)
@@ -163,6 +175,13 @@ def generate(manifest_path, layout_path, destination):
         writer.writerows(index_rows)
     if total != len(records):
         raise ValueError(f'Placed {total} of {len(records)} bodies')
+    map_elements.append('</svg>')
+    with open(os.path.join(destination, 'map.svg'), 'w') as stream:
+        stream.write(''.join(map_elements))
+    # Retire maps from earlier exports when reusing an output directory.
+    for filename in os.listdir(destination):
+        if re.fullmatch(r'sheet-\d+-map\.svg', filename):
+            os.remove(os.path.join(destination, filename))
     print('DONE',len(layout['sheets']),'SHEETS',total,'BODIES',flush=True)
     App.closeDocument(out_doc.Name)
     App.closeDocument(doc.Name)
