@@ -54,7 +54,9 @@ not infer assembly meaning from body names.
 `export_laser_sheets.py` reads `LASER_MODEL_FILE`, `LASER_MANIFEST_JSON`,
 `LASER_LAYOUT_JSON`, and `LASER_SHEETS_DIR`. It regenerates oriented section
 profiles from the model, checks them against the manifest and sheet bounds, and
-writes one cut DXF and one labeled SVG map per sheet, plus a CSV part index.
+writes one cut DXF per sheet, a single `map.svg` with all sheets stacked vertically
+and labeled by sheet number, and a CSV part index. The map retains the part IDs
+used in the CSV. Re-exporting removes obsolete `sheet-XX-map.svg` files.
 
 `dxf_engraving.py` can add closed red engraving polylines to the resulting
 ASCII DXFs. `vector_filigree.py` and `trace_filigree.py` provide SVG/vector
