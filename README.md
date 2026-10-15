@@ -84,6 +84,10 @@ The parallel-face path creates `Finger Joint (inputs)` and `Finger Joint
 (added)` in Panel A, plus one `Finger Joint (cut)` in every Panel B. Angled and
 laminated joints create a `Finger Joint group` controller and a result feature
 in each affected body. Edit the controller's parameters to recompute the group.
+New groups preserve each selected rectangular source end by its normal and
+position within the panel, so upstream booleans can renumber faces during
+parameter edits without detaching subsequent joints. The controller shares a
+computed solution across its panel results while the inputs are unchanged.
 
 ### Manual test with Corner
 

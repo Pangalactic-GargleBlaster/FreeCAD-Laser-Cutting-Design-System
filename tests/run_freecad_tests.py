@@ -64,6 +64,209 @@ def contacting_rectangular_face(source, receiver):
     return faces[0]
 
 
+def test_flush_orthogonal_groups():
+    def check(y, receiver_overshoot, laminated, x=0, width=100):
+        doc = App.newDocument("BedNativeCorner")
+        try:
+            sources = []
+            for i in range(2 if laminated else 1):
+                body = doc.addObject("PartDesign::Body", f"Side{i}")
+                feature = body.newObject("PartDesign::Feature", f"SideSolid{i}")
+                feature.Shape = Part.makeBox(width, 5.8, 50, App.Vector(x, y + i * 5.8, 0))
+                face = next(f"Face{n}" for n, f in enumerate(feature.Shape.Faces, 1)
+                            if f.normalAt(0, 0).z > 0.99)
+                sources.append((feature, face))
+            top = doc.addObject("PartDesign::Body", "Top")
+            feature = top.newObject("PartDesign::Feature", "TopSolid")
+            feature.Shape = Part.makeBox(100, 100, 5.8, App.Vector(0, 0, 50))
+            doc.recompute()
+            if laminated:
+                forward = solve_joint(sources, [top], 2, 2, 2,
+                                      receiver_overshoot, 2)
+                reverse = solve_joint(list(reversed(sources)), [top], 2, 2, 2,
+                                      receiver_overshoot, 2)
+                for body in forward:
+                    assert forward[body].cut(reverse[body]).Volume < 1e-7
+                    assert reverse[body].cut(forward[body]).Volume < 1e-7
+            plan, results = create_joint_group(
+                sources, [top], 2, overshoot=2, fillet_radius=2,
+                receiver_overshoot=receiver_overshoot, receiver_fillet_radius=2,
+            )
+            for overshoot in (receiver_overshoot, max(2, receiver_overshoot + 0.2)):
+                plan.ReceiverOvershoot = overshoot
+                doc.recompute()
+                assert all("Invalid" not in r.State and r.Shape.isValid()
+                           and len(r.Shape.Solids) == 1 for r in results)
+                assert all(a.Shape.common(b.Shape).Volume < 1e-7
+                           for i, a in enumerate(results) for b in results[i + 1:])
+            plan.Overshoot = 3
+            doc.recompute()
+            for source, _ in sources:
+                assert abs(source.getParentGeoFeatureGroup().Tip.Shape.BoundBox.ZMax - 58.8) < 1e-7
+            plan.Overshoot = 2
+            doc.recompute()
+            for source, _ in sources:
+                bounds = source.Shape.BoundBox
+                source.Shape = Part.makeBox(width, 5.8, 51,
+                                            App.Vector(x, bounds.YMin, 0))
+            feature.Shape = Part.makeBox(100, 100, 5.8, App.Vector(0, 0, 51))
+            doc.recompute()
+            for source, _ in sources:
+                assert abs(source.getParentGeoFeatureGroup().Tip.Shape.BoundBox.ZMax - 58.8) < 1e-7
+            extension = results[-1].Shape.cut(feature.Shape)
+            if extension.Volume > 1e-7:
+                assert abs(extension.BoundBox.XMin - x) < 1e-7
+                assert abs(extension.BoundBox.XMax - (x + width)) < 1e-7
+            print("PASS native corner", y, receiver_overshoot, laminated, x, width, flush=True)
+        finally:
+            App.closeDocument(doc.Name)
+
+
+    for y, overshoot, laminated in ((0, 2, False), (0, 0, False),
+                                    (-5.8, 2, False), (0, 2, True)):
+        check(y, overshoot, laminated)
+    check(-5.8, 2, False, 20, 60)
+
+
+def test_group_face_references_survive_pattern_changes(temp_dir):
+    doc = App.newDocument("ChainedLaminatedJoints")
+    try:
+        def panel(name, length, width, height, origin):
+            body = doc.addObject("PartDesign::Body", name)
+            feature = body.newObject("PartDesign::Feature", name + "Solid")
+            feature.Shape = Part.makeBox(length, width, height, App.Vector(*origin))
+            return body
+
+        sources = [panel(f"Back{i}", 100, 5.8, 100, (11.6, i * 5.8, 0))
+                   for i in range(2)]
+        top = panel("Roof", 123.2, 100, 5.8, (0, 0, 100))
+        sides = [[panel(f"{name}{i}", 5.8, 100, 100, (x + i * 5.8, 0, 0))
+                  for i in range(2)] for name, x in (("Left", 0), ("Right", 111.6))]
+        doc.recompute()
+        plans = []
+        for axis, coordinate, receivers in (
+                (App.Vector(0, 0, 1), 100, [top]),
+                (App.Vector(-1, 0, 0), -11.6, sides[0]),
+                (App.Vector(1, 0, 0), 111.6, sides[1])):
+            faces = [(body.Tip, find_face(body.Tip, axis, coordinate, 580)[0])
+                     for body in sources]
+            plan, _ = create_joint_group(faces, receivers, 4, 2, 2, 2, 2)
+            plans.append(plan)
+        for count in (3, 4):
+            for plan in plans:
+                plan.FingerCount = count
+            doc.recompute()
+            assert not [(o.Name, o.State) for o in doc.Objects if "Invalid" in o.State]
+            assert all(body.Tip.Shape.isValid() and len(body.Tip.Shape.Solids) == 1
+                       for body in sources + [top] + sides[0] + sides[1])
+        path = Path(temp_dir) / "ChainedLaminatedJoints.FCStd"
+        doc.saveAs(str(path))
+    finally:
+        App.closeDocument(doc.Name)
+    sys.path.insert(0, str(PROJECT_DIR / "tools"))
+    from set_fcstd_visibility import set_visibility
+    set_visibility(path)
+    doc = App.openDocument(str(path))
+    try:
+        for plan in [o for o in doc.Objects if hasattr(o, "SourceFacePositions")]:
+            plan.FingerCount = 3
+        doc.recompute()
+        assert not [(o.Name, o.State) for o in doc.Objects if "Invalid" in o.State]
+    finally:
+        App.closeDocument(doc.Name)
+
+
+def test_partial_frame_contact_uses_source_distribution():
+    doc = App.newDocument("PartialFrameJoint")
+    try:
+        sources = []
+        for i in range(2):
+            body = doc.addObject("PartDesign::Body", f"Rib{i}")
+            feature = body.newObject("PartDesign::Feature", f"RibSolid{i}")
+            feature.Shape = Part.makeBox(50, 5.8, 20.6, App.Vector(0, 20 + i * 5.8, 0))
+            sources.append((feature, face_with_normal(feature, App.Vector(1, 0, 0))))
+        body = doc.addObject("PartDesign::Body", "Frame")
+        frame = body.newObject("PartDesign::Feature", "FrameSolid")
+        frame.Shape = Part.makeBox(5.8, 100, 100.6, App.Vector(50, 0, -80)).cut(
+            Part.makeBox(5.8, 80, 90, App.Vector(50, 10, -80))
+        )
+        doc.recompute()
+        _, results = create_joint_group(sources, [body], 2, 0, 2, 0, 2)
+        assert all(r.Shape.isValid() and len(r.Shape.Solids) == 1 for r in results)
+        assert all(a.Shape.common(b.Shape).Volume < 1e-7
+                   for i, a in enumerate(results) for b in results[i + 1:])
+    finally:
+        App.closeDocument(doc.Name)
+
+
+def test_transformed_frame_and_joint_follow_parameter_placement():
+    from drawer_components import create_drawer_component
+    from panel import create_parametric_panel
+    doc = App.newDocument("MovingNativeFrame")
+    try:
+        params = doc.addObject("App::VarSet", "Dimensions")
+        for name, value in (("Ply", 6), ("Height", 100)):
+            params.addProperty("App::PropertyLength", name)
+            setattr(params, name, value)
+        source = doc.addObject("PartDesign::Body", "Frame")
+        frame = create_drawer_component(source, "FrameSolid", "Frame", "FaceFrame")
+        for name, value in dict(FrameWidth=100, Clearance=1, DrawerBoxWidth=80,
+                                DrawerBoxHeight=40, SlideWidth=10, HandleWidth=20,
+                                HandleHeight=10, WaveAmplitude=6).items():
+            setattr(frame, name, value)
+        frame.Axis = "X"
+        for name, expr in dict(FrameHeight="Dimensions.Height", Ply="Dimensions.Ply",
+                               Thickness="Dimensions.Ply", Y="2 * Dimensions.Ply",
+                               Z="2 * Dimensions.Ply").items():
+            frame.setExpression(name, expr)
+        receiver = doc.addObject("PartDesign::Body", "Roof")
+        roof = create_parametric_panel(receiver, "RoofSolid", "Roof")
+        roof.Length, roof.Width = 100, 124
+        roof.setExpression("Height", "Dimensions.Ply")
+        roof.setExpression("Z", "Dimensions.Height + 2 * Dimensions.Ply")
+        doc.recompute()
+        face, _ = find_face(frame, App.Vector(0, 0, 1), 112, 600)
+        create_joint_group(((frame, face),), [receiver], 2, 2, 2, 2, 2)
+        for ply, height in ((7, 110), (6, 100)):
+            params.Ply, params.Height = ply, height
+            doc.recompute()
+            assert not [(o.Name, o.State) for o in doc.Objects if "Invalid" in o.State]
+            assert abs(frame.Shape.BoundBox.YMin - 2 * ply) < 1e-7
+            assert abs(frame.Shape.BoundBox.ZMax - (height + 2 * ply)) < 1e-7
+            assert abs(source.Tip.Shape.BoundBox.ZMax - (height + 3 * ply + 2)) < 1e-7
+    finally:
+        App.closeDocument(doc.Name)
+
+
+def test_laminated_receivers_share_edge_finger_extensions():
+    doc = App.newDocument("ReceivingStack")
+    try:
+        sources = []
+        for i in range(2):
+            body = doc.addObject("PartDesign::Body", f"Source{i}")
+            feature = body.newObject("PartDesign::Feature", f"SourceSolid{i}")
+            feature.Shape = Part.makeBox(100, 5.8, 50, App.Vector(0, i * 5.8, 0))
+            sources.append((feature, face_with_normal(feature, App.Vector(0, 0, 1))))
+        receivers = []
+        for i in range(2):
+            body = doc.addObject("PartDesign::Body", f"Receiver{i}")
+            feature = body.newObject("PartDesign::Feature", f"ReceiverSolid{i}")
+            feature.Shape = Part.makeBox(100, 100, 5.8, App.Vector(0, 0, 50 + i * 5.8))
+            receivers.append(body)
+        doc.recompute()
+        plan, results = create_joint_group(sources, receivers, 2, 2, 2, 2, 2)
+        for extension in (3, 2):
+            plan.ReceiverOvershoot = extension
+            doc.recompute()
+            for body in receivers:
+                assert abs(body.Tip.Shape.BoundBox.YMin + extension) < 1e-7
+            assert all(r.Shape.isValid() and len(r.Shape.Solids) == 1 for r in results)
+            assert all(a.Shape.common(b.Shape).Volume < 1e-7
+                       for i, a in enumerate(results) for b in results[i + 1:])
+    finally:
+        App.closeDocument(doc.Name)
+
+
 def test_laminated_source_face_set(temp_dir):
     path = copied_fixture("Acute2.FCStd", temp_dir)
     doc = App.openDocument(str(path))
@@ -540,6 +743,11 @@ def test_saved_joint_reopens(temp_dir):
 
 
 with tempfile.TemporaryDirectory(prefix="design-system-tests-") as temp_dir:
+    test_flush_orthogonal_groups()
+    test_laminated_receivers_share_edge_finger_extensions()
+    test_transformed_frame_and_joint_follow_parameter_placement()
+    test_partial_frame_contact_uses_source_distribution()
+    test_group_face_references_survive_pattern_changes(temp_dir)
     test_laminated_source_face_set(temp_dir)
     test_angled_joint_groups(temp_dir)
     test_pyramid_side_joints_have_matching_receiving_fingers(temp_dir)

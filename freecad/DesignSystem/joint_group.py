@@ -12,6 +12,7 @@ from finger_joint import (
     _body_and_base,
     _distal_parallel_edges,
     _is_planar,
+    _is_rectangle,
     _parallel,
     _source_frame,
     _subshape,
@@ -58,7 +59,7 @@ def broad_planes(shape):
     raise JointValidationError("Could not identify the two broad faces of a panel.")
 
 
-def _ray_to_outer_planes(points, direction, panels):
+def _ray_to_outer_planes(points, direction, panels, allow_boundary=False):
     depths = []
     for panel in panels:
         denominator = direction.dot(panel.normal)
@@ -70,7 +71,7 @@ def _ray_to_outer_planes(points, direction, panels):
                 distance = (boundary - coordinate) / denominator
                 if distance >= -LINEAR_TOLERANCE:
                     depths.append(max(0, distance))
-    if not depths or max(depths) <= LINEAR_TOLERANCE:
+    if not depths or (max(depths) <= LINEAR_TOLERANCE and not allow_boundary):
         raise JointValidationError(
             "The finger direction does not cross the receiving panel thickness."
         )
@@ -113,6 +114,32 @@ def _receiver_edge_face(shape, planes, seam_start, seam_end):
     return max(candidates, key=lambda item: item[0].Area) if candidates else (None, None)
 
 
+def _receiver_edge_from_cutters(shape, planes, seam_direction, cutters):
+    """Find open edge cuts in plies beyond the original source contact plane."""
+    candidates = []
+    tools = [(tool, tool.BoundBox) for tool in cutters]
+    for face in shape.Faces:
+        if not _is_planar(face):
+            continue
+        normal = _unit(face.normalAt(0, 0))
+        if (abs(normal.dot(planes.normal)) > ANGULAR_TOLERANCE
+                or abs(normal.dot(seam_direction)) > ANGULAR_TOLERANCE):
+            continue
+        bounds = face.BoundBox
+        for tool, box in tools:
+            if any(max(getattr(bounds, a + "Min"), getattr(box, a + "Min"))
+                   > min(getattr(bounds, a + "Max"), getattr(box, a + "Max")) + LINEAR_TOLERANCE
+                   for a in "XYZ"):
+                continue
+            if face.common(tool).Area > LINEAR_TOLERANCE:
+                outward = normal
+                if outward.dot(face.CenterOfMass - shape.Solids[0].CenterOfMass) < 0:
+                    outward = -outward
+                candidates.append((face, outward))
+                break
+    return max(candidates, key=lambda item: item[0].Area) if candidates else (None, None)
+
+
 def _seam_on_broad_boundary(shape, planes, seam_start, seam_end):
     seam = Part.makeLine(seam_start, seam_end)
     return any(
@@ -129,11 +156,16 @@ def _make_receiver_fingers(face, planes, seam_start, seam_end, outward, length,
     direction = _unit(seam_end - seam_start)
     span = (seam_end - seam_start).Length
     vertices = [vertex.Point for vertex in face.Vertexes]
-    start_coordinate = min(point.dot(direction) for point in vertices)
+    start_coordinate = min(seam_start.dot(direction), seam_end.dot(direction))
     low_point = min(vertices, key=lambda point: (
         point.dot(direction), point.dot(planes.normal)
     ))
-    start = low_point + direction * (start_coordinate - low_point.dot(direction))
+    # Match the legacy solver's robust union: extend a hair into the panel
+    # so an exact radius==extension fillet has a non-degenerate base.
+    join_overlap = max(LINEAR_TOLERANCE * 100, length * 1e-9)
+    start = (low_point + direction * (start_coordinate - low_point.dot(direction))
+             - outward * join_overlap)
+    extrusion_length = length + join_overlap
     fingers = []
     cutters = []
     for start_offset, end_offset in _complementary_intervals(span, count):
@@ -148,11 +180,11 @@ def _make_receiver_fingers(face, planes, seam_start, seam_end, outward, length,
             first + planes.normal * planes.thickness,
         ]
         raw = Part.Face(Part.makePolygon(corners + [corners[0]])).extrude(
-            outward * length
+            outward * extrusion_length
         )
         cutters.append(raw)
         if radius > LINEAR_TOLERANCE:
-            tip_plane = first.dot(outward) + length
+            tip_plane = first.dot(outward) + extrusion_length
             tip_edges = _distal_parallel_edges(
                 raw, outward, planes.normal, tip_plane
             )
@@ -242,7 +274,19 @@ def solve_joint(source_faces, receiver_objs, finger_count, overshoot=0,
         source_pairs.append((body, base, face_name))
     contact_edges = [(_subshape(base, edge_name, "Edge"), base, face_name)
                      for base, face_name, edge_name in contacts]
-    seam_edge, _, _ = max(contact_edges, key=lambda entry: entry[0].Length)
+    first_source, first_face = source_faces[0]
+    first_frame = _source_frame(
+        first_source, first_face, automatic_edge_name(first_source, first_face)
+    )
+    distribution = first_frame[7]
+    seams = [edge for edge, _, _ in contact_edges
+             if _parallel(edge.Vertexes[1].Point - edge.Vertexes[0].Point, distribution)]
+    if not seams:
+        # A source can contact a frame only along a short thickness edge.
+        # Its finger pattern still follows the long direction of its end face.
+        seams = [edge for edge in first_frame[2].Edges
+                 if _parallel(edge.Vertexes[1].Point - edge.Vertexes[0].Point, distribution)]
+    seam_edge = max(seams, key=lambda edge: edge.Length)
     seam_start = seam_edge.Vertexes[0].Point
     seam_end = seam_edge.Vertexes[1].Point
     seam_direction = _unit(seam_end - seam_start)
@@ -286,9 +330,24 @@ def solve_joint(source_faces, receiver_objs, finger_count, overshoot=0,
     receiver_fingers_by_body = {}
     for body, base in receiver_pairs:
         planes = receiver_planes[body]
-        edge_face, outward = _receiver_edge_face(
-            base.Shape, planes, seam_start, seam_end
-        )
+        # A laminated source can touch this receiver at both an interior seam
+        # and its boundary. Find the boundary across all source contacts so
+        # the result does not depend on source-ply selection order.
+        edge_face, outward = None, None
+        own_seam_start, own_seam_end = seam_start, seam_end
+        for edge, _, _ in contact_edges:
+            first, last = edge.Vertexes[0].Point, edge.Vertexes[1].Point
+            if not _parallel(last - first, seam_direction):
+                continue
+            candidate, direction = _receiver_edge_face(base.Shape, planes, first, last)
+            if candidate is not None:
+                edge_face, outward = candidate, direction
+                own_seam_start, own_seam_end = first, last
+                break
+        if edge_face is None:
+            edge_face, outward = _receiver_edge_from_cutters(
+                base.Shape, planes, seam_direction, source_cutters
+            )
         if edge_face is None:
             if _seam_on_broad_boundary(
                 base.Shape, planes, seam_start, seam_end
@@ -299,10 +358,14 @@ def solve_joint(source_faces, receiver_objs, finger_count, overshoot=0,
             continue
         depth = _ray_to_outer_planes(
             [vertex.Point for vertex in edge_face.Vertexes], outward,
-            source_planes.values()
+            source_planes.values(), allow_boundary=True
         ) + receiver_overshoot
+        # Flush panels already reach the source's outside plane. Their only
+        # extension is overshoot; zero overshoot creates no receiving fingers.
+        if depth <= LINEAR_TOLERANCE:
+            continue
         own_fingers, own_cutters = _make_receiver_fingers(
-            edge_face, planes, seam_start, seam_end, outward, depth, finger_count,
+            edge_face, planes, own_seam_start, own_seam_end, outward, depth, finger_count,
             receiver_fillet_radius,
         )
         receiver_fingers.extend(own_fingers)
@@ -318,7 +381,11 @@ def solve_joint(source_faces, receiver_objs, finger_count, overshoot=0,
             if finger.common(base.Shape).Volume > LINEAR_TOLERANCE or \
                     finger.distToShape(base.Shape)[0] <= LINEAR_TOLERANCE:
                 shape = shape.fuse(finger)
-        finished[body] = keep_dominant_solid(shape.removeSplitter())
+        # OCC can invalidate planar wires while refining a valid boolean result.
+        refined = shape.removeSplitter()
+        finished[body] = keep_dominant_solid(
+            refined if refined.isValid() else shape
+        )
     for body, base in receiver_pairs:
         shape = base.Shape
         for finger in source_cutters:
@@ -328,7 +395,11 @@ def solve_joint(source_faces, receiver_objs, finger_count, overshoot=0,
             if finger.common(base.Shape).Volume > LINEAR_TOLERANCE or \
                     finger.distToShape(base.Shape)[0] <= LINEAR_TOLERANCE:
                 shape = shape.fuse(finger)
-        finished[body] = keep_dominant_solid(shape.removeSplitter())
+        # OCC can invalidate planar wires while refining a valid boolean result.
+        refined = shape.removeSplitter()
+        finished[body] = keep_dominant_solid(
+            refined if refined.isValid() else shape
+        )
     return finished
 
 
@@ -377,6 +448,24 @@ class GroupPlanProxy:
         self._hide_geometry(obj)
         return None
 
+    def solution(self, plan, source_faces, receiver_features):
+        """Solve once for all result panels while the group's inputs agree."""
+        features = [feature for feature, _ in source_faces] + list(receiver_features)
+        shapes = [feature.Shape for feature in features]
+        parameters = (
+            tuple(face for _, face in source_faces), plan.FingerCount,
+            plan.Overshoot.Value, plan.FilletRadius.Value,
+            plan.ReceiverOvershoot.Value, plan.ReceiverFilletRadius.Value,
+        )
+        cached = getattr(self, "_solution_cache", None)
+        if (cached is not None and cached[0] == features and cached[2] == parameters
+                and all(previous.isEqual(current)
+                        for previous, current in zip(cached[1], shapes))):
+            return cached[3]
+        finished = solve_joint(source_faces, receiver_features, *parameters[1:])
+        self._solution_cache = (features, shapes, parameters, finished)
+        return finished
+
     def onDocumentRestored(self, obj):
         self._hide_geometry(obj)
 
@@ -390,6 +479,49 @@ class GroupPlanProxy:
 
     def loads(self, state):
         return None
+
+
+def _relative_face_position(face, shape):
+    bounds = shape.BoundBox
+    point = face.CenterOfMass
+    return App.Vector(*[
+        (getattr(point, axis.lower()) - getattr(bounds, axis + "Min"))
+        / max(getattr(bounds, axis + "Length"), LINEAR_TOLERANCE)
+        for axis in "XYZ"
+    ])
+
+
+def _source_reference(feature, face_name):
+    shape = feature.Shape.copy()
+    shape.Placement = App.Placement()
+    face = shape.Faces[int(face_name[4:]) - 1]
+    return _unit(face.normalAt(0, 0)), _relative_face_position(face, shape)
+
+
+def _resolved_source_faces(plan, features):
+    """Preserve selected rectangular ends when upstream booleans renumber faces."""
+    if not hasattr(plan, "SourceFaceNormals"):
+        return tuple(zip(features, plan.SourceFaceNames))
+    selections = []
+    for feature, normal, position in zip(
+            features, plan.SourceFaceNormals, plan.SourceFacePositions):
+        shape = feature.Shape.copy()
+        shape.Placement = App.Placement()
+        candidates = []
+        for index, face in enumerate(shape.Faces, 1):
+            if not _is_rectangle(face):
+                continue
+            if _unit(face.normalAt(0, 0)).dot(normal) < 1 - ANGULAR_TOLERANCE:
+                continue
+            distance = (_relative_face_position(face, shape) - position).Length
+            candidates.append((distance, index))
+        candidates.sort()
+        if not candidates or candidates[0][0] > 0.25:
+            raise JointValidationError("The referenced rectangular source face no longer exists.")
+        if len(candidates) > 1 and abs(candidates[0][0] - candidates[1][0]) <= LINEAR_TOLERANCE:
+            raise JointValidationError("The source face is ambiguous after recomputing.")
+        selections.append((feature, f"Face{candidates[0][1]}"))
+    return tuple(selections)
 
 
 class GroupResultProxy:
@@ -410,18 +542,11 @@ class GroupResultProxy:
                            for index in range(1, plan.SourceCount + 1)]
         receiver_features = [getattr(plan, f"ReceivingFeature{index}")
                              for index in range(1, plan.ReceivingCount + 1)]
-        source_faces = tuple(zip(source_features, plan.SourceFaceNames))
-        finished = solve_joint(
-            source_faces,
-            receiver_features,
-            plan.FingerCount,
-            plan.Overshoot.Value,
-            plan.FilletRadius.Value,
-            plan.ReceiverOvershoot.Value,
-            plan.ReceiverFilletRadius.Value,
-        )
+        source_faces = _resolved_source_faces(plan, source_features)
+        finished = plan.Proxy.solution(plan, source_faces, receiver_features)
         body, _ = _body_and_base(obj.InputFeature, self.role)
         obj.Shape = finished[body]
+        obj.Placement = finished[body].Placement
 
     def onDocumentRestored(self, obj):
         self._ensure_view_provider(obj)
@@ -520,6 +645,15 @@ def create_joint_group(source_faces, receiver_objs, finger_count,
     plan.addProperty("App::PropertyInteger", "ReceivingCount", "Results")
     plan.InputFeature = inputs
     plan.SourceFaceNames = [name for _, name in source_faces]
+    references = [_source_reference(feature, face_name)
+                  for feature, face_name in zip(source_features, plan.SourceFaceNames)]
+    for name, values in (
+        ("SourceFaceNormals", [normal for normal, _ in references]),
+        ("SourceFacePositions", [position for _, position in references]),
+    ):
+        plan.addProperty("App::PropertyVectorList", name, "Internal")
+        setattr(plan, name, values)
+        plan.setEditorMode(name, 2)
     plan.SourceCount = len(source_features)
     plan.ReceivingCount = len(receiver_features)
     for index, feature in enumerate(source_features, start=1):

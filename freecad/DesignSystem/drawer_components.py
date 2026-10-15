@@ -68,6 +68,13 @@ def _transform(shape, axis, x, y, z):
     return transformed
 
 
+def _assign_shape(obj, shape):
+    # FeaturePython recomputes can retain the old feature placement unless it
+    # is assigned explicitly alongside transformed geometry.
+    obj.Shape = shape
+    obj.Placement = shape.Placement
+
+
 def _update_engraving_link(engraving, scale, placement):
     """Avoid touching a link when its preview transform is already current."""
     if abs(engraving.Scale - scale) > 1e-10:
@@ -150,7 +157,7 @@ class DrawerFrontPanelProxy:
             obj.Y.Value,
             obj.Z.Value,
         )
-        obj.Shape = cut_holes(shape, obj)
+        _assign_shape(obj, cut_holes(shape, obj))
 
     def dumps(self):
         return None
@@ -180,7 +187,7 @@ class RoundedStripProxy:
             obj.Y.Value,
             obj.Z.Value,
         )
-        obj.Shape = cut_holes(shape, obj)
+        _assign_shape(obj, cut_holes(shape, obj))
 
     def dumps(self):
         return None
@@ -277,7 +284,7 @@ class ConnectedStripPairProxy:
             obj.Y.Value,
             obj.Z.Value,
         )
-        obj.Shape = cut_holes(shape, obj)
+        _assign_shape(obj, cut_holes(shape, obj))
 
     def dumps(self):
         return None
